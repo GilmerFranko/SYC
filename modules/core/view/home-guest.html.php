@@ -1,0 +1,330 @@
+<?php defined('SYC') || exit;
+
+/**
+ *=======================================================
+ *  SYC Project
+ *-------------------------------------------------------
+ * @author Gilmer Franco <gil2017.com@gmail.com>
+ *=======================================================
+ *
+ * @Description Controlador principal de los creditos
+ *
+ *
+ */
+// HEADER
+require Core::view('head', 'core');
+// MENU
+require Core::view('menu-guest', 'core');
+?>
+
+<style type="text/css">
+	.index-icon {
+		height: 25px;
+		width: 25px;
+	}
+
+	.fs-12 {
+		font-size: 12px;
+	}
+</style>
+
+<section class="first-section content component usn_cmp_splitcomponent custom-bg" id="main" style="">
+	<div class="container">
+		<div class="row">
+			<div class="valign-wrapper col s3 text-center justify-content-center align-items-center position-relative">
+				<img src="https://nuevapasion.com/images/ico-public-advertisements.png" class="index-icon" alt="Publicar anuncio">
+				<a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="/client-panel/anuncio/nuevo">&nbsp;PUBLICAR<br>&nbsp;ANUNCIOS
+				</a>
+			</div>
+			<div class="valign-wrapper col s3 text-center justify-content-center align-items-center">
+				<img src="https://nuevapasion.com/images/edit-advertisements.png" class="index-icon" alt="Publicar anuncio">
+				<a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="/client-panel/anuncios">&nbsp;MODIFICAR<br>&nbsp; ANUNCIOS</a>
+			</div>
+			<div class="valign-wrapper col s3 text-center justify-content-center align-items-center">
+				<img src="https://nuevapasion.com/images/add-user.png" class="index-icon" alt="Mis anuncios favoritos">
+				<a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="/registrarse?publicist=true">&nbsp;REGISTRO<br>&nbsp;PUBLICISTAS</a>
+			</div>
+			<div class="valign-wrapper col s3 text-center justify-content-center align-items-center">
+				<img src="https://nuevapasion.com/images/fav-advertisements.png" class="index-icon" alt="Mis anuncios favoritos">
+				<a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="/anuncios/favoritos">&nbsp; ANUNCIOS<br>&nbsp;FAVORITOS</a>
+			</div>
+		</div>
+	</div>
+	<!--
+								<div class="d-flex d-md-none flex-row justify-content-around">
+									<div class="w-auto order-md-2 d-flex flex-row justify-content-center mt-2">
+										<div class="map-container">
+											<div class="map">
+												<img src="https://nuevapasion.com/images/mapa-np.png" height="129" width="136" id="mapa" usemap="#mapa" style="cursor:crosshair; display: block;">
+												<map name="mapa">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Álava');" shape="POLY" coords="73,14,69,12,65,10,63,11,65,13,63,14,66,17,72,19" alt="Anuncios en Vitoria-Álava" href="/anuncios-escort-para-hombre/en-alava">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Albacete');" shape="POLY" coords="74,83,88,71,89,73,90,71,84,64,70,65,71,76" alt="Anuncios en Albacete" href="/anuncios-escort-para-hombre/en-albacete">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Alicante');" shape="POLY" coords="92,87,104,72,99,69,88,74,90,82" alt="Anuncios en Alicante" href="/anuncios-escort-para-hombre/en-alicante">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Almería');" shape="POLY" coords="67,104,76,86,85,95,78,105" alt="Anuncios en Almería" href="/anuncios-escort-para-hombre/en-almeria">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Asturias');" shape="POLY" coords="29,14,31,12,45,11,50,7,45,3,24,3,25,13" alt="Anuncios en Asturias" href="/anuncios-escort-para-hombre/en-asturias">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Ávila');" shape="POLY" coords="40,53,50,50,54,46,48,39,44,39,37,50" alt="Anuncios en Ávila" href="/anuncios-escort-para-hombre/en-avila">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Badajoz');" shape="POLY" coords="38,84,19,83,20,64,48,68" alt="Anuncios en Badajoz" href="/anuncios-escort-para-hombre/en-badajoz">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Baleares');" shape="POLY" coords="107,66,132,44,136,55,112,77" alt="Anuncios en Baleares" href="/anuncios-escort-para-hombre/en-baleares">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Barcelona');" shape="POLY" coords="128,27,115,18,112,28,117,36" alt="Anuncios en Barcelona" href="/anuncios-escort-para-hombre/en-barcelona">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Burgos');" shape="POLY" coords="54,25,57,37,61,37,66,31,66,22,63,19,65,18,60,15,55,18,57,20" alt="Anuncios en Burgos" href="/anuncios-escort-para-hombre/en-burgos">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Cáceres');" shape="POLY" coords="16,64,46,68,39,49,25,49" alt="Anuncios en Cáceres" href="/anuncios-escort-para-hombre/en-caceres">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Cádiz');" shape="POLY" coords="35,116,27,101,49,96,37,108,42,110" alt="Anuncios en Cádiz" href="/anuncios-escort-para-hombre/en-cadiz">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Cantabria');" shape="POLY" coords="55,16,47,11,47,10,50,5,59,5,65,7,55,13" alt="Anuncios en Cantabria" href="/anuncios-escort-para-hombre/en-cantabria">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Castellón');" shape="POLY" coords="99,42,89,54,98,57,105,45" alt="Anuncios en Castellón" href="/anuncios-escort-para-hombre/en-castellon">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Ceuta');" shape="POLY" coords="37,118,44,112,45,122" alt="Anuncios en Ceuta" href="/anuncios-escort-para-hombre/en-ceuta">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Ciudad Real');" shape="POLY" coords="53,80,70,75,69,63,49,63,45,74" alt="Anuncios en Ciudad Real" href="/anuncios-escort-para-hombre/en-ciudad-real">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Córdoba');" shape="POLY" coords="49,95,39,83,45,75,53,79,54,95" alt="Anuncios en Córdoba" href="/anuncios-escort-para-hombre/en-cordoba">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Cuenca');" shape="POLY" coords="69,65,84,63,86,52,75,43,65,52" alt="Anuncios en Cuenca" href="/anuncios-escort-para-hombre/en-cuenca">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Girona');" shape="POLY" coords="129,28,115,16,134,14" alt="Anuncios en Girona" href="/anuncios-escort-para-hombre/en-girona">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Granada');" shape="POLY" coords="61,106,54,96,75,84,76,87,66,104" alt="Anuncios en Granada" href="/anuncios-escort-para-hombre/en-granada">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Guadalajara');" shape="POLY" coords="65,52,61,37,64,35,72,38,79,38,82,44,79,46,75,43" alt="Anuncios en Guadalajara" href="/anuncios-escort-para-hombre/en-guadalajara">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Guipúzcoa');" shape="POLY" coords="73,14,81,6,72,6,70,12" alt="Anuncios en Guipúzcoa" href="/anuncios-escort-para-hombre/en-guipuzcoa">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Huelva');" shape="POLY" coords="29,101,32,85,19,83,16,96" alt="Anuncios en Huelva" href="/anuncios-escort-para-hombre/en-huelva">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Huesca');" shape="POLY" coords="102,32,104,13,90,12,87,15,90,25,98,32" alt="Anuncios en Huesca" href="/anuncios-escort-para-hombre/en-huesca">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Jaén');" shape="POLY" coords="54,96,73,84,71,75,54,78" alt="Anuncios en Jaén" href="/anuncios-escort-para-hombre/en-jaen">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('A Coruña');" shape="POLY" coords="14,13,18,0,0,8,4,19,7,15" alt="Anuncios en La Coruña" href="/anuncios-escort-para-hombre/en-a-coruna">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('La Rioja');" shape="POLY" coords="78,26,68,24,66,26,66,17,79,22" alt="Anuncios en La Rioja" href="/anuncios-escort-para-hombre/en-la-rioja">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Las Palmas');" shape="POLY" coords="101,128,113,106,136,106,135,128" alt="Anuncios en Las Palmas" href="/anuncios-escort-para-hombre/en-las-palmas">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('León');" shape="POLY" coords="43,24,26,22,25,17,26,14,29,15,32,13,47,11" alt="Anuncios en León" href="/anuncios-escort-para-hombre/en-leon">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Lerida');" shape="POLY" coords="103,33,113,28,116,15,105,11" alt="Anuncios en Lerida" href="/anuncios-escort-para-hombre/en-lleida">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Lugo');" shape="POLY" coords="23,19,22,20,15,18,15,13,18,2,23,4,25,13" alt="Anuncios en Lugo" href="/anuncios-escort-para-hombre/en-lugo">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Madrid');" shape="POLY" coords="50,50,65,53,60,40" alt="Anuncios en Madrid" href="/anuncios-escort-para-hombre/en-madrid">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Málaga');" shape="POLY" coords="41,110,38,107,49,96,53,96,59,104" alt="Anuncios en Málaga" href="/anuncios-escort-para-hombre/en-malaga">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Melilla');" shape="POLY" coords="68,119,62,128,72,128" alt="Anuncios en Melilla" href="/anuncios-escort-para-hombre/en-melilla">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Murcia');" shape="POLY" coords="84,95,74,83,89,71,90,84,96,91" alt="Anuncios en Murcia" href="/anuncios-escort-para-hombre/en-murcia">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Navarra');" shape="POLY" coords="80,22,72,18,73,15,80,7,89,12,83,20,83,25,81,27,79,25" alt="Anuncios en Navarra" href="/anuncios-escort-para-hombre/en-navarra">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Ourense');" shape="POLY" coords="23,28,12,27,13,24,11,21,12,18,16,19,22,21,25,19,26,23,25,25" alt="Anuncios en Ourense" href="/anuncios-escort-para-hombre/en-ourense">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Palencia');" shape="POLY" coords="45,22,47,12,55,16,53,20,56,28,47,27" alt="Anuncios en Palencia" href="/anuncios-escort-para-hombre/en-palencia">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Pontevedra');" shape="POLY" coords="12,23,5,27,5,19,7,15,14,14,15,18,11,18,10,21" alt="Anuncios en Pontevedra" href="/anuncios-escort-para-hombre/en-pontevedra">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Salamanca');" shape="POLY" coords="36,49,25,49,25,38,30,36,44,38" alt="Anuncios en Salamanca" href="/anuncios-escort-para-hombre/en-salamanca">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Segovia');" shape="POLY" coords="54,44,48,37,56,32,61,32,63,34" alt="Anuncios en Segovia" href="/anuncios-escort-para-hombre/en-segovia">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Sevilla');" shape="POLY" coords="30,101,33,85,39,84,48,96" alt="Anuncios en Sevilla" href="/anuncios-escort-para-hombre/en-sevilla">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Soria');" shape="POLY" coords="77,37,64,35,62,32,69,24,78,26" alt="Anuncios en Soria" href="/anuncios-escort-para-hombre/en-soria">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Tarragona');" shape="POLY" coords="99,41,105,45,116,34,113,29,102,34" alt="Anuncios en Tarragona" href="/anuncios-escort-para-hombre/en-tarragona">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Tenerife');" shape="POLY" coords="77,128,96,128,107,109,80,109,75,115" alt="Anuncios en Tenerife" href="/anuncios-escort-para-hombre/en-tenerife">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Teruel');" shape="POLY" coords="89,53,101,38,92,35,91,37,81,39,83,45,80,47" alt="Anuncios en Teruel" href="/anuncios-escort-para-hombre/en-teruel">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Toledo');" shape="POLY" coords="68,62,43,64,39,52,50,50,65,53" alt="Anuncios en Toledo" href="/anuncios-escort-para-hombre/en-toledo">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Valencia');" shape="POLY" coords="99,70,97,58,86,54,84,63,90,72" alt="Anuncios en Valencia" href="/anuncios-escort-para-hombre/en-valencia">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Valladolid');" shape="POLY" coords="47,38,42,37,42,24,45,23,46,27,55,29,56,31" alt="Anuncios en Valladolid" href="/anuncios-escort-para-hombre/en-valladolid">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Vizcaya');" shape="POLY" coords="63,11,61,10,66,4,71,7,69,12,65,10" alt="Anuncios en Bilbao-Vizcaya" href="/anuncios-escort-para-hombre/en-vizcaya">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Zamora');" shape="POLY" coords="41,37,30,36,25,26,26,23,42,24" alt="Anuncios en Zamora" href="/anuncios-escort-para-hombre/en-zamora">
+													<area rel="nofollow" onmouseover="if (!window.__cfRLUnblockHandlers) return false; cn('Zaragoza');" shape="POLY" coords="81,39,77,38,78,25,81,27,84,24,83,20,87,15,89,25,98,33,103,33,101,37,92,34,90,37,85,37" alt="Anuncios en Zaragoza" href="/anuncios-escort-para-hombre/en-zaragoza">
+												</map>
+
+												<input class="text-under-map d-none d-md-block" type="Text" value="" disabled="" name="pr" id="pr">
+											</div>
+										</div>
+										<script type="text/javascript">
+											function ss(w) {
+												window.status = w;
+												return true;
+											}
+
+											function cs() {
+												window.status = '';
+											}
+
+											function Abrir(dir) {
+												open(dir, "", "resizable=yes,scrollbars=yes,location=yes,toolbar=yes,directories=yes,menubar=yes,status=yes");
+											}
+
+											function newAjax() {
+												var a = false;
+												try {
+													a = new ActiveXObject('Msxml2.XMLHTTP')
+												} catch (c) {
+													try {
+														a = new ActiveXObject('Microsoft.XMLHTTP')
+													} catch (b) {
+														a = false
+													}
+												}
+												if (!a && typeof XMLHttpRequest != 'undefined') {
+													a = new XMLHttpRequest()
+												}
+												return a
+											}
+
+											var ar = [];
+											var sel = 0;
+											var maxs = 0;
+											var deac = 0;
+
+											function pdic(t) {
+												return t.toLowerCase().replace(/-/g, ' ').replace(' de segunda mano', '').replace(' usados', '').replace(' de ocasion', '').replace('anuncios en ', '')
+											}
+
+											function marca(t, b) {
+												var arr = b.split(' ');
+												for (var n = 0; n < arr.length; n++) {
+													var re = new RegExp('^' + arr[n], 'gi');
+													var re2 = new RegExp(' ' + arr[n], 'gi');
+													t = t.replace(re, '<b>' + arr[n] + '</b>');
+													t = t.replace(re2, ' <b>' + arr[n] + '</b>');
+												}
+												return t;
+											}
+
+											function pre(res, b) {
+												var html = '';
+												b = b.toLowerCase();
+												maxs = res.length;
+												sel = 0;
+												for (var n = 0; n < maxs; n++) {
+													pbu = '';
+													pdi = '';
+													if (res[n][2] != '') pbu = res[n][2].toLowerCase();
+													bus = (res[n][0]).replace('<', '&lt;').replace('>', '&gt;');
+													if (pbu != '') bus = ' ' + bus;
+													if (res[n][0] != '') pbu += bus;
+													if (pbu != '') pbu = '<i>' + marca(pbu.toLowerCase(), b) + '</i>';
+													if (res[n][1] != '' && res[n][1] != 'anuncios') {
+														if (pbu == '')
+															pdi = pdic(res[n][3]);
+														else {
+															if (pdic(res[n][3]) == '')
+																pdi = ' en ' + pdic(res[n][1]);
+															else pdi = ' en ' + pdic(res[n][3]);
+														}
+													}
+													if (pdi != '')
+														pdi = marca(pdi.toLowerCase(), b);
+													html += '<div onmouseover="sele(' + (n + 1) + ')" class="pa" id=s' + (n + 1) + '><div class="le"><span class="pbu">' + pbu + '</span><span class="pdi">' + pdi + '</span></div></div>';
+												}
+												g('sug').innerHTML = html;
+												g('sug').style.display = (maxs > 0) ? 'block' : 'none';
+											}
+
+											function ocu() {
+												if (!deac) g('sug').style.display = 'none';
+											}
+
+											function mue() {
+												if (g('sug').innerHTML != '') {
+													g('sug').style.display = 'block';
+												}
+											}
+
+											function sug() {
+												di = g('q').value.toLowerCase();
+												di += '&c=1';
+												if (typeof ar[di] === 'undefined') {
+													var ajax = newAjax();
+													ajax.open("GET", 'https://web.archive.org/web/20171107082956/http://www.pasion.com/autocomplete/sug.php?q=' + di, true);
+													ajax.onreadystatechange = function() {
+														if (ajax.readyState == 4) {
+															if (ajax.status == 200) {
+																ar[di] = eval(ajax.responseText);
+																pre(ar[di], di);
+															}
+														}
+													};
+													ajax.send(null);
+												} else pre(ar[di], di);
+											}
+
+											function g(a) {
+												return !document.getElementById(a) ? false : document.getElementById(a);
+											}
+
+											var busant = '';
+											var thid = null;
+
+											function sele(o) {
+												if (sel > 0) g('s' + sel).className = 'pa';
+												g('s' + o).className = 'pb';
+												sel = o;
+											}
+
+											function mover_abajo() {
+												if (maxs > sel) {
+													g('s' + (sel + 1)).className = 'pb';
+													if (sel > 0) g('s' + sel).className = 'pa';
+													sel = sel + 1;
+												}
+											}
+
+											function mover_arriba() {
+												if (sel > 1) {
+													g('s' + (sel - 1)).className = 'pb';
+													g('s' + sel).className = 'pa';
+													sel = sel - 1;
+												}
+											}
+
+											function kdw() {
+												if (thid != null) {
+													clearTimeout(thid);
+													thid = null;
+												}
+											}
+
+											function kyp(e) {
+												if (e.keyCode == 32)
+													return false;
+												if (e.keyCode == 38 || e.keyCode == 40) {
+													if (e.keyCode == 40) mover_abajo();
+													if (e.keyCode == 38) mover_arriba();
+													return false;
+												} else if (e.keyCode != 27 && busant == g('q').value)
+													return false;
+												busant = g('q').value;
+												if (g('q').value.length < 3 || e.keyCode == 27) {
+													g('sug').innerHTML = '';
+													g('sug').style.display = 'none';
+													sel = 0;
+													return false;
+												} else if (g('q').value.length == 3) {
+													sug();
+												} else thid = setTimeout("if(busant==g('q').value){sug()}", 800);
+												return true;
+											}
+
+											function vam() {
+												var f = true;
+												var urlb;
+												//noinspection JSUnusedAssignment
+												urlb = "https://web.archive.org/web/20171107082956/http://www.pasion.com/";
+												if (sel > 0 && sel <= maxs && (busant == g('q').value)) {
+													var ad = '';
+													ad = '&c=1';
+													if (typeof(ar[busant + ad]) != 'undefined') {
+														urlb += ar[busant + ad][sel - 1][1] + '/';
+														if (ar[busant + ad][sel - 1][0] != '') urlb += (ar[busant + ad][sel - 1][0]).replace(' ', '-') + '.htm';
+														if (ar[busant + ad][sel - 1][2] != '') urlb += '?marca=' + ar[busant + ad][sel - 1][2];
+														f = false;
+													}
+												}
+												if (f) {
+													urlb += 'contactos/';
+													if (g('q').value != '') urlb += cabb(g('q').value);
+												}
+												document.location = urlb;
+											}
+
+											function cn(nombre) {
+												document.getElementById('pr').value = nombre;
+											}
+
+											// -->
+	</script>-
+	</div>
+	<div class="d-flex flex-row flex-wrap">
+		<div class="gtranslate_wrapper d-flex flex-column gap-1 justify-content-center gt_container--9uakgu">
+			<!-- GTranslate: https://gtranslate.com --><a href="#" title="Spanish" data-gt-lang="es" class="glink nturl notranslate gt-current-lang"><img loading="lazy" src="https://cdn.gtranslate.net/flags/24/es.png" width="24" height="24" alt="es"></a><a href="#" title="French" data-gt-lang="fr" class="glink nturl notranslate"><img loading="lazy" src="https://cdn.gtranslate.net/flags/24/fr.png" width="24" height="24" alt="fr"></a><a href="#" title="Portuguese" data-gt-lang="pt" class="glink nturl notranslate"><img loading="lazy" src="https://cdn.gtranslate.net/flags/24/pt.png" width="24" height="24" alt="pt"></a><a href="#" title="English" data-gt-lang="en" class="glink nturl notranslate"><img loading="lazy" src="https://cdn.gtranslate.net/flags/24/en.png" width="24" height="24" alt="en"></a>
+			<div id="google_translate_element2"></div>
+		</div>
+	</div>
+	</div>
+	</div>
+
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+</section>
+
+<!-- FOOTER -->
+<?php require Core::view('footer', 'core'); ?>

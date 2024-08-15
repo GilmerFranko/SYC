@@ -1,0 +1,8 @@
+error.log
+filestore
+.phpintel
+*.png
+*.jpg
+*.mp4
+*.zip
+includes/library/rachet
