@@ -4,7 +4,7 @@
   --red: red;
   --green: #7dd957;
   --primary: #391334;
-  --primary-200: #4c4422;
+  --primary-200: #5C395C;
   --primary-light: #5d3a56;
 
   --darkgray: #202123;
@@ -605,6 +605,20 @@ section {
     border-radius: 8px;
     text-align: center;
     padding: 0 0 10px 0;
+}
+
+input{
+  color: var(--primary) !important;
+}
+
+a
+{
+  color: var(--primary-200) !important;
+
+  &:hover
+  {
+    color: var(--primary) !important;
+  }
 }
 
 .first-section
