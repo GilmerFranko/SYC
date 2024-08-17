@@ -173,7 +173,7 @@
 	?>
 
 	<?php
-	if ($session->is_member and $sModule == 'Admin')
+	if ($session->is_member and $sModule == 'admin')
 	{
 		require Core::view('sidenav', 'core');
 	}

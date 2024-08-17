@@ -15,11 +15,6 @@
 require Core::view('head', 'core');
 ?>
 
-<!-- Header -->
-<?php require Core::view('menu', 'core'); ?>
-<!-- / Header -->
-
-
 <!-- CARGA EDITOR DE USUARIO -->
 
 <section id="userTransactions">

@@ -14,7 +14,7 @@
 // HEADER
 require Core::view('head', 'core');
 // MENU
-require Core::view('menu-guest', 'core');
+require Core::view('menu', 'core');
 ?>
 
 

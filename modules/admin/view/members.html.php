@@ -28,16 +28,17 @@ require Core::view('head', 'core');
 <!-- FIN DE CARGA EDITOR DE USUARIO -->
 <section id="adminMembers">
     <!-- BUSCADOR -->
-
-    <div class="nav-wrapper">
-        <form class="" action="<?php echo Core::model('extra', 'core')->generateUrl('admin', 'members'); ?>" method="post">
-            <div class="input-field">
-                <input id="search" name="search" type="search" placeholder="Buscar..." value="<?php echo $search; ?>">
-                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons">close</i>
-            </div>
-        </form>
-    </div>
+    <nav class="teal darken-1">
+        <div class="nav-wrapper">
+            <form class="" action="<?php echo Core::model('extra', 'core')->generateUrl('admin', 'members'); ?>" method="post">
+                <div class="input-field">
+                    <input id="search" name="search" type="search" placeholder="Buscar..." value="<?php echo $search; ?>">
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+        </div>
+    </nav>
     <!-- ./BUSCADOR -->
 
     <blockquote>Usuarios online: <?php echo $online; ?></blockquote>
