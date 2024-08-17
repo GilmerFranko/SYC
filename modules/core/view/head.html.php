@@ -13,7 +13,7 @@
 ?>
 <!DOCTYPE HTML>
 
-<html lang="es" style="height: inherit !important;">
+<html lang="es" style="overflow-x: hidden">
 
 <head>
 
@@ -35,10 +35,14 @@
 	</script>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<!--jQuery -->
 	<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/jquery-3.3.1.min.js"></script>
-	<!-- Materializecss -->
-	<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/materialize.min.js"></script>
+
+	<!-- Si esa es el modulo admin, se inyecta el JS de materialize si no se utiliza bootstrap-->
+	<script src="<?php echo $config['base_url'] . '/static/js/' . ($sModule == 'admin' ? 'materialize.min.js' : 'bootstrap.min.js'); ?>"></script>
+
 	<!-- Custom JS -->
 	<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/custom.js" />
 	</script>
@@ -51,9 +55,8 @@
 
 	<link href="<?php echo $config['base_url'] ?>/static/css/materialize-icons.css" rel="stylesheet">
 
-	<!--Import materialize.css-->
-
-	<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/materialize.min.css" media="screen,projection" />
+	<!--Import materialize.css or bootstrap-->
+	<link rel="stylesheet" href="<?php echo $config['base_url'] . '/static/css/' . ($sModule == 'admin' ? 'materialize.min.css' : 'bootstrap.min.css'); ?>">
 
 	<!--Import custom.css-->
 
