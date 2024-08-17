@@ -1,0 +1,76 @@
+/* Contiene estilos que se aplican a todos los modulos menos a Admin */
+
+:root {
+  --red: red;
+  --green: #7dd957;
+  --primary: #391334;
+  --primary-200: #5C395C;
+  --primary-light: #5d3a56;
+
+  --darkgray: #202123;
+  --darkgray2: #2f4553;
+  --gray: #b1bad3;
+  --gray2: #557086;
+  --grey-200: #b1bad3;
+  --blue: #1475e0;
+
+  --darkgreen: #2b5329;
+  --darkgreen2: #1a361c;
+  --green: #7dd957;
+  --green2: #284d2b;
+  --green-200: #8bc34a;
+}
+
+
+section {
+  background-color: #fff;
+    margin: 0 auto;
+    border: solid 2px #2C0928;
+    border-radius: 8px;
+    text-align: center;
+    padding: 0 0 10px 0;
+}
+
+a
+{
+  color: var(--primary-200) !important;
+  text-decoration-line: none;
+  &:hover
+  {
+    color: var(--primary) !important;
+  }
+}
+
+
+body {
+  background-color: #552C50;
+  text-align: center;
+  font-family: verdana, cursive;
+  color: var(--primary-light);
+  max-width:995px !important;
+}
+
+/* Colores menu dropdown */
+nav
+{
+  a{
+    color: var(--gray2) !important;
+  }  
+}
+
+nav {
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #A86AA0), color-stop(52%, #F8EEF7));
+  background: -webkit-linear-gradient(160deg, #A86AA0 6%, #F8EEF7 90%);
+  background: -o-linear-gradient(160deg, #A86AA0 6%, #F8EEF7 90%);
+  background: linear-gradient(160deg, #A86AA0 6%, #F8EEF7 90%);
+  background: -ms-linear-gradient(160deg, #A86AA0 6%, #F8EEF7 90%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#A86AA0', endColorstr='#F8EEF7',GradientType=1 );
+  border: solid 2px #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 5px #000;
+  width: auto;
+  height: 80px;
+  margin: 0 0 8px 0;
+  padding: 0;
+  position: relative;
+}
