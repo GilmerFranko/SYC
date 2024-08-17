@@ -19,8 +19,7 @@ require Core::view('head', 'core');
 <?php require Core::view('menu', 'core'); ?>
 <!-- / Header -->
 
-<!-- CSS ADICIONAL -->
-<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/admin.css" />
+
 
 <section id="adminWithdrawals">
     <div class="container">

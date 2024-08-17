@@ -58,10 +58,22 @@
 	<!--Import materialize.css or bootstrap-->
 	<link rel="stylesheet" href="<?php echo $config['base_url'] . '/static/css/' . ($sModule == 'admin' ? 'materialize.min.css' : 'bootstrap.min.css'); ?>">
 
-	<!--Import custom.css-->
-
+	<!-- Importa estilos generales -->
 	<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/custom.css?r=<?php echo time(); ?>" />
-
+	<!-- Importa estilos solo para modulo admin -->
+	<?php if ($sModule == 'admin')
+	{ ?>
+		<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/admin.css?r=<?php echo time(); ?>" />
+	<?php
+		// Importa estilo cuando no es modulo admin 
+	}
+	else
+	{
+	?>
+		<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/custom2.css?r=<?php echo time(); ?>" />
+	<?php
+	}
+	?>
 
 	<!--<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/sweetalert_dark.css" />-->
 
@@ -161,7 +173,7 @@
 	?>
 
 	<?php
-	if ($session->is_member)
+	if ($session->is_member and $sModule == 'Admin')
 	{
 		require Core::view('sidenav', 'core');
 	}

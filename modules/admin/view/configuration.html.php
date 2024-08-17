@@ -15,13 +15,6 @@
 require Core::view('head', 'core');
 ?>
 
-<!-- Header -->
-<?php require Core::view('menu', 'core'); ?>
-<!-- / Header -->
-
-<!-- CSS ADICIONAL -->
-<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/admin.css" />
-
 <section>
   <div class="sectionConfiguration">
     <blockquote class="flow-text">

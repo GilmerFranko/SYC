@@ -66,13 +66,9 @@
 /** GENERAL **/
 
 body {
-  background-color: #552C50;
   margin: 0 auto;
   padding: 0;
-  text-align: center;
   max-width:995px;
-  font-family: verdana, cursive;
-  color: var(--primary-light);
 }
 
 .new.carousel.carousel-slider .carousel-item {
@@ -598,28 +594,10 @@ blockquote {
 }
 
 
-section {
-  background-color: #fff;
-    margin: 0 auto;
-    border: solid 2px #2C0928;
-    border-radius: 8px;
-    text-align: center;
-    padding: 0 0 10px 0;
-}
-
 input{
   color: var(--primary) !important;
 }
 
-a
-{
-  color: var(--primary-200) !important;
-  text-decoration-line: none;
-  &:hover
-  {
-    color: var(--primary) !important;
-  }
-}
 
 .first-section
 {
