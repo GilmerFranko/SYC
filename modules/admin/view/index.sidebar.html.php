@@ -59,6 +59,30 @@
             </a>
           </li>
           <hr>
+          <li class="">
+            <ul class="collapsible collapsible-accordion">
+              <li <?php if ($sSection == 'contacts.view')
+                  {
+                    echo ' class="active"';
+                  } ?>>
+                <a class="collapsible-header white-text waves-effect waves-blue "><i class="material-icons white-text">description</i>Contáctos<i class="material-icons right white-text" style="margin-right:0;">arrow_drop_down</i></a>
+                <div class="collapsible-body z-depth-1">
+                  <ul>
+                    <li <?php if ($sSection == 'contacts.view')
+                        {
+                          echo ' class="active"';
+                        } ?>>
+                      <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'contacts.views'); ?>">
+                        <i class="material-icons">description</i>
+                        Contáctos
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <hr>
           <li <?php if ($sSection == 'transactions')
               {
                 echo ' class="active"';
@@ -89,24 +113,6 @@
               <?php endif ?>
 
               Depositos pendientes
-            </a>
-          </li>
-          <li <?php if ($sSection == 'wallet_all_withdrawals')
-              {
-                echo ' class="active"';
-              } ?>>
-            <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'wallet_all_withdrawals'); ?>">
-              <i class="material-icons">wallet</i>
-              Retiros
-            </a>
-          </li>
-          <li <?php if ($sSection == 'wallet_pending_withdrawals')
-              {
-                echo ' class="active"';
-              } ?>>
-            <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'wallet_pending_withdrawals'); ?>">
-              <i class="material-icons">wallet</i>
-              Retiros pendientes
             </a>
           </li>
         </ul>

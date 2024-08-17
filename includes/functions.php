@@ -167,3 +167,17 @@ function getBalance($member_id = null)
 {
     return loadClass('members/member')->getBalance($member_id);
 }
+
+/**
+ * Limpia un string
+ * @param mixed $var
+ * @return string
+ */
+function cleanString($var)
+{
+    $var = htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
+    $var = trim($var);
+    $var = escape($var);
+
+    return $var;
+}

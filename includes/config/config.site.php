@@ -31,6 +31,10 @@ $config['avatar_path']  = $config['base_path'] . 'filestore' . DS . 'uploads' . 
 $config['channels_path'] = $config['base_path'] . 'filestore' . DS . 'uploads' . DS . 'channels';
 $config['channels_url']  = $config['base_url']  . '/filestore/uploads/channels/';
 
+// Carpeta donde se alojan las imagenes subidas de las categoria contactos
+$config['contacts_path'] = $config['base_path'] . 'filestore' . DS . 'uploads' . DS . 'contacts';
+$config['contacts_url']  = $config['base_url']  . '/filestore/uploads/contacts/';
+
 // Carpeta donde se alojan los archivos con correos
 $config['bulkemails_path']   = $config['base_path'] . 'filestore' . DS . 'uploads' . DS . 'bulkemails';
 

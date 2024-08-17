@@ -687,4 +687,48 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
         {
         }
     }
+
+    /**
+     * Sube una imagen desde el PC
+     *
+     * @param array    $image
+     * @param string   $path   la ruta donde se va a subir la imagen
+     * @return string con el nombre de la imagen subida, o false si no se pudo subir
+     */
+    function uploadImage($image = array(), $path = '')
+    {
+        // Verificar si el tipo de archivo es JPEG o PNG
+        if ($image['type'] == 'image/jpeg' || $image['type'] == 'image/png')
+        {
+            // Mover la imagen original al directorio especificado con el nombre del juego
+            $image_name = generateUUID() . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
+
+            if (move_uploaded_file($image['tmp_name'], $path . DS . $image_name))
+            {
+                return $image_name;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Elimina una imagen
+     *
+     * @param string   $image_name
+     * @param string   $path   la ruta donde se encuentra la imagen
+     * @return boolean true si se elimino, false de lo contrario
+     */
+    public function deleteImage($image_name, $path = '')
+    {
+        $image_path = $path . DS . $image_name;
+
+        return unlink($image_path) ? true : false;
+    }
 }
