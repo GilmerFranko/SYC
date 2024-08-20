@@ -35,7 +35,6 @@ require Core::view('head', 'core');
       <?php
       if ($contacts['rows'] > 0)
       {
-        showlog($contacts);
         foreach ($contacts['data'] as $contact)
         { ?>
           <tr>

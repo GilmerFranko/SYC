@@ -82,4 +82,22 @@ class f_contacts extends Model
       return false;
     }
   }
+
+
+  /**
+   * Comprueba si existe un contacto en la base de datos con el nombre y el email proporcionados.
+   *
+   * @param string $name Nombre del contacto.
+   * @param string $email Email del contacto.
+   * @return boolean Devuelve true si existe el contacto, false en caso contrario.
+   */
+  public function existContact($id)
+  {
+    $contact = loadClass('core/db')->getColumns('f_contacts', array('id'), array('id', $id), 1, true);
+    if ($contact !== false)
+    {
+      return true;
+    }
+    return false;
+  }
 }

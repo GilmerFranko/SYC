@@ -124,6 +124,36 @@ function escape($string, $connect = null)
     return $connect->real_escape_string($string);
 }
 
+/**
+ * Limpia un string para evitar inseguridades como inyección SQL, XSS, y otros tipos de ataques.
+ *
+ * @param string $input El string a limpiar.
+ * @param mysqli|null $db Conexión a la base de datos (si se utiliza para inyecciones SQL).
+ * @return string El string limpio.
+ */
+function cleanInput($input, $db = null)
+{
+    // Elimina espacios al inicio y al final
+    $input = trim($input);
+
+    // Elimina caracteres no imprimibles y convierte todos los caracteres al formato UTF-8
+    $input = mb_convert_encoding($input, 'UTF-8', 'UTF-8');
+
+    // Evita inyecciones de código HTML y JavaScript (XSS)
+    $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+
+    $input = escape($input);
+
+    // Elimina etiquetas HTML y PHP
+    $input = strip_tags($input);
+
+    // Opcional: Limita la longitud del string para evitar desbordamientos
+    $input = substr($input, 0, 1000);
+
+    return $input;
+}
+
+
 /**Envia notificacion al usuario **/
 function newNotification($to_member = null, $from_member = null, $key = 'general', $item = 0, $subitem = 0, $content = '', $myself = false, $check = false, $time = 'UNIX_TIMESTAMP()')
 {
