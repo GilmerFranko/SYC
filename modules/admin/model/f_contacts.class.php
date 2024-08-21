@@ -100,4 +100,57 @@ class f_contacts extends Model
     }
     return false;
   }
+
+
+  /**
+   * Comprueba si existe un contacto en la base de datos con el id proporcionado y los datos son diferentes.
+   *
+   * @param int $id Id del contacto.
+   * @param array $data Array con los datos nuevos del contacto.
+   * @return array Devuelve true si existe el contacto, false en caso contrario.
+   */
+  public function existContactWithDifferentData($id, $data)
+  {
+    $contact = loadClass('core/db')->getColumns('f_contacts', array('id'), array('id', $id), 1, true);
+
+    if ($contact !== false)
+    {
+      if ($contact['name'] == $data['name'])
+      {
+        if ($contact['short_url'] == $data['short_url'])
+        {
+          return ['status' => true];
+        }
+        else
+        {
+          return ['status' => false, 'msg' => 'Ya existe un contacto la misma URL corta'];
+        }
+      }
+
+      return ['status' => false, 'msg' => 'Ya existe un contacto con el mismo nombre'];
+    }
+    else
+    {
+      return ['status' => false, 'msg' => 'No existe el contacto'];
+    }
+  }
+
+  /**
+   * Elimina un contacto de la base de datos.
+   *
+   * @param int $id El ID del contacto a eliminar.
+   * @return bool true si se elimino correctamente, false en caso contrario.
+   */
+  public function deleteContact($id)
+  {
+    $query = $this->db->query('DELETE FROM `f_contacts` WHERE `id`=' . $id);
+    if ($query == true)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
 }

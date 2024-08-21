@@ -8,7 +8,7 @@
  *=======================================================
  *
  * @Description Archivo que contiene varias funciones intuitivas, rápidas e imprescindibles
- *
+ * La mayoría de esas funciones ya están creadas en otros archivos pero se añadieron como enlace aquí para facilitar su uso
  *
  */
 
@@ -210,4 +210,14 @@ function cleanString($var)
     $var = escape($var);
 
     return $var;
+}
+
+/**
+ * Obtiene uno o más columnas de una fila
+ * @param string $table
+ * @param array $where
+ */
+function getColumns($table, $columns = null, $where = [], $limit = 1, $sentence = false)
+{
+    return loadClass('core/db')->getColumns($table, $columns, $where, $limit, $sentence);
 }

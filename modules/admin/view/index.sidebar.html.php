@@ -78,6 +78,17 @@
                       </a>
                     </li>
                   </ul>
+                  <ul>
+                    <li <?php if ($sSection == 'views.locations')
+                        {
+                          echo ' class="active"';
+                        } ?>>
+                      <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'views.locations'); ?>">
+                        <i class="material-icons">description</i>
+                        Ubicaciones
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </li>
             </ul>

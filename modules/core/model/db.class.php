@@ -36,6 +36,7 @@ class Db extends Model
   public function getCount($table = null, $column = null, $where = null)
   {
     $query = $this->db->query('SELECT COUNT(`' . $column . '`) FROM `' . $table . '` WHERE `' . $where[0] . '` = \'' . $this->db->real_escape_string($where[1]) . '\'');
+    error_log('SELECT COUNT(`' . $column . '`) FROM `' . $table . '` WHERE `' . $where[0] . '` = \'' . $where[1] . '\'');
     if ($query == true && $query->num_rows > 0)
     {
       $result = $query->fetch_row();
@@ -72,6 +73,37 @@ class Db extends Model
         //die('La consulta se ejecuto con exíto pero devolvió 0 filas');
         return false;
       }
+    }
+
+    return false;
+  }
+
+  /**
+   * Obtiene una o mas filas de una tabla
+   *
+   * @param string $table
+   * @param string/array $columns
+   * @param array $where
+   * @return string/int/array $input
+   */
+  public function getRows($table = null, $input = null, $where = null, $lowerLimit = 1, $upperLimit = 1, $sentence = false)
+  {
+    $columns = is_array($input) ? implode('`,`', $input) : $input;
+    $where = is_null($where) ? 'ORDER BY RAND()' : 'WHERE `' . $where[0] . '` = \'' . $this->db->real_escape_string($where[1]) . '\'';
+    $query = $this->db->query('SELECT `' . $columns . '` FROM `' . $table . '` ' . $where . ' LIMIT ' . $lowerLimit . ', ' . $upperLimit);
+    error_log('SELECT `' . $columns . '` FROM `' . $table . '` ' . $where . ' LIMIT ' . $lowerLimit . ', ' . $upperLimit);
+    if ($query == true)
+    {
+      $data['rows'] = $query->num_rows;
+
+      if ($data['rows'] > 0)
+      {
+        while ($row = $query->fetch_assoc())
+        {
+          $data['data'][] = $row;
+        }
+      }
+      return $data;
     }
 
     return false;
@@ -179,25 +211,27 @@ class Db extends Model
 
     // Construir la cláusula WHERE si se especifica una condición
     $whereClause = '';
+
+    // Preparar la consulta SQL para insertar o actualizar
     if (is_array($where) && count($where) === 2)
     {
       $whereClause = 'WHERE `' . $where[0] . '` = \'' . $this->db->real_escape_string($where[1]) . '\'';
-    }
 
-    // Verificar si el registro existe
-    $query = $this->db->query('SELECT 1 FROM `' . $table . '` ' . $whereClause);
+      // Verificar si el registro existe
+      $query = $this->db->query('SELECT 1 FROM `' . $table . '` ' . $whereClause);
 
-    // Preparar la consulta SQL para insertar o actualizar
-    if ($query && $query->num_rows > 0)
-    {
-      $setClause = '';
-      foreach ($data as $key => $value)
+      if ($query && $query->num_rows > 0)
       {
-        $setClause .= '`' . $key . '` = \'' . $this->db->real_escape_string($value) . '\', ';
-      }
-      $setClause = rtrim($setClause, ', ');
+        $setClause = '';
+        foreach ($data as $key => $value)
+        {
+          $setClause .= '`' . $key . '` = \'' . $this->db->real_escape_string($value) . '\', ';
+        }
+        $setClause = rtrim($setClause, ', ');
 
-      $sql = 'UPDATE `' . $table . '` SET ' . $setClause . ' ' . $whereClause;
+        $sql = 'UPDATE `' . $table . '` SET ' . $setClause . ' ' . $whereClause;
+        error_log('UPDATE `' . $table . '` SET ' . $setClause . ' ' . $whereClause);
+      }
     }
     else
     {
@@ -215,7 +249,7 @@ class Db extends Model
       }
       else
       {
-        return $query->num_rows;
+        return $this->db->affected_rows;
       }
     }
     else

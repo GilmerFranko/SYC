@@ -16,6 +16,29 @@ class locations extends Model
 
 
   /**
+   * @Description Obtiene todos los foros
+   * @param int $page El n mero de p gina
+   * @return array|boolean Un array con los foros
+   */
+  public function getAllLocations($page = 1, $limit = 10)
+  {
+
+    // Calcular el límite inferior y superior 
+    $lowerLimit = ($page - 1) * $limit;
+    $upperLimit = $limit;
+
+    // Obtener los resultados de la consulta
+    if ($data = loadClass('core/db')->getRows('f_locations', ['id', 'name', 'status'], null, $lowerLimit, $upperLimit))
+    {
+      // Paginador
+      $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('admin', 'views.locations', null, null), $data['rows'], $limit);
+      return $data;
+    }
+    return false;
+  }
+
+
+  /**
    * @Description Guarda un nuevo foro
    * @param int $contact_id El ID del contacto donde se va a guardar el foro
    * @param string $name El nombre del foro
@@ -37,14 +60,26 @@ class locations extends Model
     }
   }
 
-  /**
-   * @Description Elimina un foro
-   * @param int $id El ID del foro
-   * @return bool True si se elimin o, false si no
-   */
-  public function deleteForum($id)
+  public function updateLocation($locationId, $data)
   {
-    return $this->db->delete('locations', array('id' => $id));
+    if ($last_id = loadClass('core/db')->smartInsert('f_locations', $data, ['id', $locationId]))
+    {
+      return $last_id;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  /**
+   * @Description Elimina un foro (ubicacion)
+   * @param int $id El ID del foro
+   * @return bool True si se eliminó, false si no
+   */
+  public function deleteLocation($id)
+  {
+    return loadClass('core/db')->deleteRow('f_locations', $id);
   }
 
   /**
@@ -80,5 +115,29 @@ class locations extends Model
     );
 
     return $this->db->select('posts', $where);
+  }
+
+  public function getLocationById($id)
+  {
+    return getColumns('f_locations', ['id', 'name', 'description', 'status', 'contact_id'], array('id', $id), 1);
+  }
+
+  /**
+   * Comprueba si existe una ubicacion en la base de datos con el name pasado.
+   *
+   */
+  public function existsLocationByName($name)
+  {
+    return loadClass('core/db')->getCount('f_locations', 'id', array('name', $name));
+  }
+
+  /**
+   * Comprueba si existe una Ubicacion (foro) en la base de datos
+   * No se tendrá en cuenta el mismo ID pasado
+   */
+  public function existsLocation($location_id, $contact_id, $name)
+  {
+    $query = $this->db->query('SELECT `id` FROM `f_locations` WHERE `id` != ' . $location_id . ' AND `contact_id` = ' . $contact_id . ' AND  `name` = \'' . $name . '\'');
+    return $query == true && $query->num_rows > 0;
   }
 }
