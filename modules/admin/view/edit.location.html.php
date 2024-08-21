@@ -31,7 +31,13 @@ require Core::view('head', 'core');
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="description" name="description" class="materialize-textarea"><?php echo $location['description']; ?></textarea>
+                  <label for="short_url">URL Corta (ejemplo: contacto-hombres)</label>
+                  <textarea name="short_url" id="short_url" class="materialize-textarea" length="1000" required><?php echo Core::model('extra', 'core')->getInputValue('short_url', 'post'); ?><?= $location['short_url']; ?></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="description" type="text" class="validate" name="description" value="<?php echo $location['description']; ?>">
                   <label for="description">Descripción</label>
                 </div>
               </div>

@@ -32,12 +32,19 @@ if (isset($_GET['new_location']))
     $msg[] = 'No se ha seleccionado un contacto';
   }
 
+  // Comprobar si se ha sintroducido una url corta
+  if (!isset($_POST['short_url']) || empty($_POST['short_url']))
+  {
+    $msg[] = 'Debes introducir una url corta';
+  }
+
   if (empty($msg))
   {
 
     $data['name'] = cleanInput($_POST['name']);
     $data['description'] = (isset($_POST['description']) and !empty($_POST['description'])) ? cleanInput($_POST['description']) : '';
     $data['contact_id'] = cleanInput($_POST['contact_id']);
+    $data['short_url'] = cleanInput($_POST['short_url']);
     $data['topic_count'] = 0;
     $data['post_count'] = 0;
     $data['last_post_id'] = 0;
@@ -48,13 +55,29 @@ if (isset($_GET['new_location']))
     // Verifica si existe el contacto_id 
     if (loadClass('admin/f_contacts')->existContact($_POST['contact_id']))
     {
-      if (loadClass('admin/locations')->newLocation($data))
+      // Verifica si no existe una ubicación con el mismo nombre AND contact_id
+      if (loadClass('admin/locations')->existsLocation($locationId, $data1['contact_id'], $data['name']) <= 0)
       {
-        $msg[] = 'Se ha creado la sección correctamente';
+        // Verifica si no existe una sección con la misma url corta
+        if (!loadClass('admin/locations')->existsShortUrl($locationId, $data['short_url']))
+        {
+          if (loadClass('admin/locations')->newLocation($data))
+          {
+            $msg[] = 'Se ha creado la sección correctamente';
+          }
+          else
+          {
+            $msg[] = 'No se ha podido crear la sección';
+          }
+        }
+        else
+        {
+          $msg[] = 'La url corta ya existe';
+        }
       }
       else
       {
-        $msg[] = 'No se ha podido crear la sección';
+        $msg[] = 'Ya exista una sección con ese nombre en ese contacto';
       }
     }
     else

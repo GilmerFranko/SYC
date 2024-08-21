@@ -27,14 +27,20 @@ class locations extends Model
     $lowerLimit = ($page - 1) * $limit;
     $upperLimit = $limit;
 
+    $query = $this->db->query('SELECT l.*, c.name AS contact_name FROM `f_locations` AS l INNER JOIN `f_contacts` AS c ON l.`contact_id` = c.`id` ORDER BY `id` DESC LIMIT ' . $lowerLimit . ',' . $upperLimit);
+    $data['rows'] = $query->num_rows;
     // Obtener los resultados de la consulta
-    if ($data = loadClass('core/db')->getRows('f_locations', ['id', 'name', 'status'], null, $lowerLimit, $upperLimit))
+    if ($query and $data['rows'] > 0)
     {
+      while ($row = $query->fetch_assoc())
+      {
+        $data['data'][] = $row;
+      }
       // Paginador
       $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('admin', 'views.locations', null, null), $data['rows'], $limit);
       return $data;
     }
-    return false;
+    return $data;
   }
 
 
@@ -119,7 +125,7 @@ class locations extends Model
 
   public function getLocationById($id)
   {
-    return getColumns('f_locations', ['id', 'name', 'description', 'status', 'contact_id'], array('id', $id), 1);
+    return getColumns('f_locations', ['id', 'name', 'short_url', 'description', 'status', 'contact_id'], array('id', $id), 1);
   }
 
   /**
@@ -138,6 +144,13 @@ class locations extends Model
   public function existsLocation($location_id, $contact_id, $name)
   {
     $query = $this->db->query('SELECT `id` FROM `f_locations` WHERE `id` != ' . $location_id . ' AND `contact_id` = ' . $contact_id . ' AND  `name` = \'' . $name . '\'');
+    return $query == true && $query->num_rows > 0;
+  }
+
+  /* Comprueba que no exista un short_url igual registrado*/
+  public function existsShortUrl($location_id, $short_url)
+  {
+    $query = $this->db->query('SELECT `id` FROM `f_locations` WHERE `short_url` = \'' . $short_url . '\' AND `id` != ' . $location_id);
     return $query == true && $query->num_rows > 0;
   }
 }

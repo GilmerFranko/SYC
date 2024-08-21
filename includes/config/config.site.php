@@ -35,6 +35,9 @@ $config['channels_url']  = $config['base_url']  . '/filestore/uploads/channels/'
 $config['contacts_path'] = $config['base_path'] . 'filestore' . DS . 'uploads' . DS . 'contacts';
 $config['contacts_url']  = $config['base_url']  . '/filestore/uploads/contacts/';
 
+//
+$config['forum_url']  = $config['base_url']  . '/forum_url/';
+
 // Carpeta donde se alojan los archivos con correos
 $config['bulkemails_path']   = $config['base_path'] . 'filestore' . DS . 'uploads' . DS . 'bulkemails';
 

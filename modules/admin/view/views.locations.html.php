@@ -25,7 +25,9 @@ require Core::view('head', 'core');
     <thead>
       <tr>
         <th>ID</th>
+        <th>Contacto - Foro</th>
         <th>Nombre</th>
+        <th>URL corta</th>
         <th>Estado</th>
         <th>Acciones</th>
       </tr>
@@ -38,7 +40,9 @@ require Core::view('head', 'core');
         { ?>
           <tr>
             <td><?= $location['id']; ?></td>
+            <td><?= $location['contact_name']; ?></td>
             <td><?= $location['name']; ?></td>
+            <td><?= $location['short_url']; ?></td>
             <td><?= $location['status']; ?></td>
             <td>
               <a class="btn-floating btn-small waves-effect waves-light blue" href="<?= gLink('admin/edit.location', ['location_id' => $location['id']]) ?>"><i class="material-icons">edit</i></a>

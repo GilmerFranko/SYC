@@ -31,12 +31,18 @@ if (isset($_GET['edit_location']))
     $msg[] = 'No se ha seleccionado un contacto';
   }
 
+  // Comprobar si se ha sintroducido una url corta
+  if (!isset($_POST['short_url']) || empty($_POST['short_url']))
+  {
+    $msg[] = 'Debes introducir una url corta';
+  }
 
   if (empty($msg))
   {
     $locationId = cleanInput($_POST['location_id']);
     $data['name'] = cleanInput($_POST['name']);
     $data['description'] = isset($_POST['description']) ? cleanInput($_POST['description']) : '';
+    $data['short_url'] = cleanInput($_POST['short_url']);
     $data1['contact_id'] = cleanInput($_POST['contact_id']);
     $data['updated_at'] = time();
 
@@ -47,13 +53,21 @@ if (isset($_GET['edit_location']))
       // Verifica si no existe una ubicación con el mismo nombre AND contact_id
       if (loadClass('admin/locations')->existsLocation($locationId, $data1['contact_id'], $data['name']) <= 0)
       {
-        if (loadClass('admin/locations')->updateLocation($locationId, $data))
+        // Verifica si no existe una sección con la misma url corta
+        if (!loadClass('admin/locations')->existsShortUrl($locationId, $data['short_url']))
         {
-          $msg[] = 'Se ha actualizado la sección correctamente';
+          if (loadClass('admin/locations')->updateLocation($locationId, $data))
+          {
+            $msg[] = 'Se ha actualizado la sección correctamente';
+          }
+          else
+          {
+            $msg[] = 'No se ha podido actualizar la sección';
+          }
         }
         else
         {
-          $msg[] = 'No se ha podido actualizar la sección';
+          $msg[] = 'Ya existe una sección con esa url corta';
         }
       }
       else

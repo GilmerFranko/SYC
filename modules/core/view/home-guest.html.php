@@ -43,7 +43,7 @@ require Core::view('menu', 'core');
 									<?php
 									$locations = loadClass('forums/locations')->getLocationsByContactId($contact['id']);
 									foreach ($locations['data'] as $location): ?>
-										<a title="<?= $location['name'] ?>" href="<?= $config['base_url'] . DS . $contact['short_url'] . DS . $location['short_url'] ?>" class="cat2">
+										<a title="<?= $location['name'] ?>" href="<?= $config['forum_url'] . $location['short_url'] ?>" class="cat2">
 											<nobr><?= $location['name'] ?></nobr>
 										</a> &nbsp;
 									<?php endforeach; ?>

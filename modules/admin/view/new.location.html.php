@@ -30,7 +30,13 @@ require Core::view('head', 'core');
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="description" name="description" class="materialize-textarea"></textarea>
+                  <label for="short_url">URL Corta (ejemplo: contacto-hombres)</label>
+                  <input name="short_url" id="short_url" type="text" class="validate" length="64" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="description" type="text" class="validate" name="description" value="">
                   <label for="description">Descripción</label>
                 </div>
               </div>
