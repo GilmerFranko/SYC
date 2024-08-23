@@ -62,6 +62,12 @@ function setSwal($data)
 {
     loadClass('core/extra')->setSwal($data);
 }
+
+function setTI($data)
+{
+    loadClass('core/extra')->setTI($data);
+}
+
 /**
  * Escapa un string de inyeccion sql
  */

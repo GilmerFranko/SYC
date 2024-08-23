@@ -87,6 +87,12 @@ if (file_exists($sModuleFile))
 		{
 			echo Core::model('extra', 'core')->getSwal();
 		}
+
+		/*Mostrar mensaje (con swalfire) de sesion*/
+		if (isset($_SESSION['message_ti']))
+		{
+			echo Core::model('extra', 'core')->getTI();
+		}
 	}
 	else
 	{

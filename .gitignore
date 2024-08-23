@@ -6,3 +6,4 @@ filestore
 *.mp4
 *.zip
 includes/library/rachet
+vendor

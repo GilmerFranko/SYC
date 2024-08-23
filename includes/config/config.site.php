@@ -35,6 +35,10 @@ $config['channels_url']  = $config['base_url']  . '/filestore/uploads/channels/'
 $config['contacts_path'] = $config['base_path'] . 'filestore' . DS . 'uploads' . DS . 'contacts';
 $config['contacts_url']  = $config['base_url']  . '/filestore/uploads/contacts/';
 
+// Carpeta donde se alojan las imagenes subidas de los foros
+$config['threads_path'] = $config['base_path'] . 'filestore' . DS . 'uploads' . DS . 'threads';
+$config['threads_url']  = $config['base_url']  . '/filestore/uploads/threads/';
+
 //
 $config['forum_url']  = $config['base_url']  . '/forum_url/';
 

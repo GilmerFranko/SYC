@@ -71,9 +71,11 @@ require BG_MODT . 'autoload_tables_model.php';
 require BG_INC . 'functions.php';
 
 
-
 /* Configuración predeterminada */
 require BG_CONF . 'config.inc.php';
+
+// Carga de Autoload
+require BG_DIR . 'vendor/autoload.php';
 
 /* Archivo que cargará SH-MVC */
 require Core::controller('init');

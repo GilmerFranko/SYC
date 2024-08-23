@@ -106,6 +106,41 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
     }
 
 
+    /**
+     * Muestra un mensaje informativo TOASTIFY
+     */
+    public function getTI($messages = array())
+    {
+        $messages = !empty($messages) ? $messages : (isset($_SESSION['message_ti']) ? $_SESSION['message_ti'] : array());
+
+        foreach ($messages as $message)
+        {
+
+            if (!empty($message))
+            {
+                $html = '<script>window.onload = function() {';
+
+                foreach ($message as $key => $msg)
+                {
+                    if (!empty($msg[0]))
+                    {
+                        $html .= ("Toastify({text: '" . $msg[0] . "', duration: 4000}).showToast(); ");
+                    }
+                }
+                $html .= '};</script>';
+
+                error_log($html);
+
+                unset($_SESSION['message_ti']);
+
+                return $html;
+            }
+
+            return '';
+        }
+    }
+
+
     function setToast($message = array())
     {
         /* Eliminar vacios */
@@ -138,6 +173,28 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
 
             /* Establece el mensaje en la sesión */
             $_SESSION['message_s'][] = $message;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Establece un mensaje informativo TOASTIFY
+     */
+    function setTI($message = array())
+    {
+        /* Eliminar vacios */
+        $message = array_filter($message);
+
+        if (!empty($message))
+        {
+            /* Ordenar array */
+            sort($message);
+
+            /* Establece el mensaje en la sesión */
+            $_SESSION['message_ti'][] = $message;
 
             return true;
         }
@@ -697,9 +754,15 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
      */
     function uploadImage($image = array(), $path = '')
     {
-        // Verificar si el tipo de archivo es JPEG o PNG
-        if ($image['type'] == 'image/jpeg' || $image['type'] == 'image/png')
+        // Verificar si el tipo de archivo es JPEG o PNG y no pese mas de 2MB
+        if (($image['type'] == 'image/jpeg' || $image['type'] == 'image/png') && $image['size'] <= 2097152)
         {
+            // Crear el directorio si no existe
+            if (!file_exists($path))
+            {
+                mkdir($path, 0777, true);
+            }
+
             // Mover la imagen original al directorio especificado con el nombre del juego
             $image_name = generateUUID() . '.' . pathinfo($image['name'], PATHINFO_EXTENSION);
 

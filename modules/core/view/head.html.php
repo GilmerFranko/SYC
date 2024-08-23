@@ -43,6 +43,9 @@
 	<!-- Si esa es el modulo admin, se inyecta el JS de materialize si no se utiliza bootstrap-->
 	<script src="<?php echo $config['base_url'] . '/static/js/' . ($sModule == 'admin' ? 'materialize.min.js' : 'bootstrap.min.js'); ?>"></script>
 
+	<!-- Import Toastify.js -->
+	<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/toastify.js" />
+
 	<!-- Custom JS -->
 	<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/custom.js" />
 	</script>
@@ -57,6 +60,9 @@
 
 	<!--Import materialize.css or bootstrap-->
 	<link rel="stylesheet" href="<?php echo $config['base_url'] . '/static/css/' . ($sModule == 'admin' ? 'materialize.min.css' : 'bootstrap.min.css'); ?>">
+
+	<!-- Import toastify.css -->
+	<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/toastify.css" />
 
 	<!-- Importa estilos generales -->
 	<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/custom.css?r=<?php echo time(); ?>" />

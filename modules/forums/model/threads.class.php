@@ -33,27 +33,24 @@ class threads extends Model
    *
    * @return bool
    */
-  public function createThread($location_id, $member_id, $title, $content, $status, $views_count, $replies_count, $likes_count, $count_favorites, $ip_address, $is_edited, $last_edited_by, $report_count, $created_at, $updated_at)
+  public function newThread(array $data): int
   {
-    $data = [
-      'location_id' => $location_id,
-      'member_id' => $member_id,
-      'title' => $title,
-      'content' => $content,
-      'status' => $status,
-      'views_count' => $views_count,
-      'replies_count' => $replies_count,
-      'likes_count' => $likes_count,
-      'count_favorites' => $count_favorites,
-      'ip_address' => $ip_address,
-      'is_edited' => $is_edited,
-      'last_edited_by' => $last_edited_by,
-      'report_count' => $report_count,
-      'created_at' => $created_at,
-      'updated_at' => $updated_at
+    $data2 = [
+      'status' => 1,
+      'position' => time(),
+      'views_count' => 0,
+      'replies_count' => 0,
+      'likes_count' => 0,
+      'count_favorites' => 00,
+      'is_edited' => 0,
+      'last_edited_by' => 0,
+      'report_count' => 0,
+      'updated_at' => 0
     ];
 
-    if ($r = loadClass('db')->smartInsert('f_threads', $data))
+    $data = array_merge($data, $data2);
+
+    if ($r = loadClass('core/db')->smartInsert('f_threads', $data))
     {
       return $r;
     }
@@ -100,5 +97,75 @@ class threads extends Model
   public function getCountThreadsByLocationId($location_id)
   {
     return loadClass('core/db')->getCount('f_threads', 'id', ['location_id', $location_id]);
+  }
+
+  /**
+   * Sube las imagenes de los threads
+   *
+   * @return array
+   */
+  public function uploadImages(): array
+  {
+    global $config;
+    $msg = [false];
+    $image_urls = [];
+    if (isset($_FILES['images']) && is_array($_FILES['images']['name']))
+    {
+      // Verifica si se ha subido mas de 9 imagenes
+      if (count($_FILES['images']['name']) > 9)
+      {
+        return [false, 'No puedes subir mas de 9 imagenes'];
+      }
+      else
+      {
+        foreach ($_FILES['images']['name'] as $key => $value)
+        {
+          if ($_FILES['images']['size'][$key] > 0)
+          {
+            $image_url = loadClass('core/extra')->uploadImage(
+              [
+                'name' => $_FILES['images']['name'][$key],
+                'type' => $_FILES['images']['type'][$key],
+                'tmp_name' => $_FILES['images']['tmp_name'][$key],
+                'error' => $_FILES['images']['error'][$key],
+                'size' => $_FILES['images']['size'][$key]
+              ],
+              $config['threads_path']
+            );
+            // Si no ha ocurrido un error
+            if ($image_url)
+            {
+              $image_urls[] = $image_url;
+            }
+            // Si ha habido un error
+            else
+            {
+              // Borra las imagenes subidas
+              foreach ($image_urls as $img)
+              {
+                loadClass('core/extra')->deleteImage($img, $config['threads_path']);
+              }
+              $msg = [false, 'No se ha podido subir la imagen', 'error'];
+
+              return $msg;
+            }
+          }
+        }
+      }
+    }
+
+    // Carga imagen predefinida
+    if (empty($image_urls))
+    {
+      $image_urls[0] = 'foto-predefinida.png';
+    }
+
+    return [true, $image_urls];
+  }
+
+  /** Sube una imagen (el nombre) de una publicacion a la base de datos */
+  public function newThreadImage($thread_id, $image_url)
+  {
+    return loadClass('core/db')->smartInsert('f_threads_images', ['thread_id' => $thread_id, 'image_url' => $image_url, 'created_at' => time()]);
   }
 }
