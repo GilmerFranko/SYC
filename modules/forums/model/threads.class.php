@@ -57,6 +57,107 @@ class threads extends Model
     return false;
   }
 
+
+  /**
+   * @Description Obtiene todos los threads de un foro
+   * @param int $location_id
+   * @param int $page El n mero de p gina
+   * @return array|boolean Un array con los threads
+   */
+  public function getThreadsByLocationId($location_id, $page = 1, $limit = 20)
+  {
+    $where = [
+      'location_id' => $location_id
+    ];
+
+    // Calcular el límite inferior y superior 
+    $lowerLimit = ($page - 1) * $limit;
+    $upperLimit = $limit;
+
+    $query = $this->db->query(
+      'SELECT 
+        t.*,
+        m.`name` AS member_name,
+        m.`member_id` AS member_id
+      FROM 
+        `f_threads` AS t
+      INNER JOIN 
+        `members` AS m ON t.`member_id` = m.`member_id`
+      WHERE 
+        t.`location_id` = "' . $location_id . '" 
+      ORDER BY 
+        t.`created_at` DESC 
+      LIMIT ' . $lowerLimit . ',' . $upperLimit
+    );
+    error_log('SELECT * FROM `f_threads` WHERE `location_id` = "' . $location_id . '"  ORDER BY `created_at` DESC LIMIT ' . $lowerLimit . ',' . $upperLimit);
+    $data['rows'] = $query->num_rows;
+    // Obtener los resultados de la consulta
+    if ($query and $data['rows'] > 0)
+    {
+      while ($row = $query->fetch_assoc())
+      {
+        $data['data'][] = $row;
+      }
+      // Paginador
+      $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('forums', 'views.threads', $location_id, null), $data['rows'], $limit);
+      return $data;
+    }
+    return $data;
+  }
+
+  /**
+   * @Description Obtiene todos los threads de un foro
+   * @param int $location_url
+   * @param int $page El n mero de p gina
+   * @return array|boolean Un array con los threads
+   */
+  public function getThreadsByLocationUrl($location_url, $page = 1, $limit = 20)
+  {
+    if ($location = getColumns('f_locations', ['id'], ['short_url', $location_url]))
+    {
+      return $this->getThreadsByLocationId($location['id'], $page, $limit);
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+
+
+  /**
+   * Obtiene las imagenes de un thread por su ID
+   *
+   * @param int $thread_id
+   * @return array|bool
+   */
+  public function getImagesByThreadId($thread_id)
+  {
+    $query = $this->db->query(
+      'SELECT 
+        *
+      FROM 
+        `f_threads_images`
+      WHERE 
+        `thread_id` = "' . $thread_id . '" 
+    '
+    );
+
+    if ($query)
+    {
+      $data['rows'] = $query->num_rows;
+      if ($data['rows'] > 0)
+      {
+        while ($row = $query->fetch_assoc())
+        {
+          $data['data'][] = $row;
+        }
+      }
+      return $data;
+    }
+    return false;
+  }
+
   /**
    * Obtiene un thread por su ID
    *
@@ -157,7 +258,7 @@ class threads extends Model
     // Carga imagen predefinida
     if (empty($image_urls))
     {
-      $image_urls[0] = 'foto-predefinida.png';
+      $image_urls[0] = 'null';
     }
 
     return [true, $image_urls];
@@ -166,6 +267,13 @@ class threads extends Model
   /** Sube una imagen (el nombre) de una publicacion a la base de datos */
   public function newThreadImage($thread_id, $image_url)
   {
-    return loadClass('core/db')->smartInsert('f_threads_images', ['thread_id' => $thread_id, 'image_url' => $image_url, 'created_at' => time()]);
+    if ($image_url == 'null')
+    {
+      return loadClass('core/db')->smartInsert('f_threads_images', ['thread_id' => $thread_id, 'created_at' => time()]);
+    }
+    else
+    {
+      return loadClass('core/db')->smartInsert('f_threads_images', ['thread_id' => $thread_id, 'image_url' => $image_url, 'created_at' => time()]);
+    }
   }
 }

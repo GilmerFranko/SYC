@@ -81,8 +81,7 @@
 	}
 	?>
 
-	<!--<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/sweetalert_dark.css" />-->
-
+	<link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
 
 	<!--Import night.css-->
 

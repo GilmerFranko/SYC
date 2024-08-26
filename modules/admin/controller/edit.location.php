@@ -104,7 +104,7 @@ if (isset($_GET['delete_location']))
       $msg = ['status' => 'error', 'msg' => 'No se ha podido eliminar la sección'];
     }
   }
-  // La sección (foro) tiene hilos
+  // La sección (foro) tiene hilos anuncios()
   else
   {
     $msg = ['status' => 'error', 'msg' => 'La sección no puede ser eliminada porque tiene hilos'];

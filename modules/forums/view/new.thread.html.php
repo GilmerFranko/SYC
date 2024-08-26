@@ -94,7 +94,7 @@ require Core::view('head', 'core');
 
       <div class="mb-3">
         <label for="content" class="form-label">Contenido (Soporte para BBCode)</label>
-        <textarea class="form-control" id="content" name="content" rows="5" required>[b]Texto en negrita[/b], [i]Texto en cursiva[/i], [url]http://example.com[/url]</textarea>
+        <textarea class="form-control" id="content" name="content" rows="5" maxlength="10000" required>[b]Texto en negrita[/b], [i]Texto en cursiva[/i], [url]http://example.com[/url]</textarea>
       </div>
 
       <div class="mb-3">
@@ -255,8 +255,8 @@ require Core::view('head', 'core');
         errors.push('Debes introducir una tarifa numérica');
       }
 
-      if (!content || content.length > 1500) {
-        errors.push('El contenido no debe tener más de 1500 caracteres');
+      if (!content || content.length > 10000) {
+        errors.push('El contenido no debe tener más de 10000 caracteres');
       }
 
       if (errors.length) {

@@ -7,7 +7,7 @@
           <div class="row" style="width:525px;">
             <div class="col-3 d-flex text-center justify-content-center align-items-center">
               <img src="https://nuevapasion.com/images/ico-public-advertisements.png" class="index-icon" alt="Publicar anuncio">
-              <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="/client-panel/anuncio/nuevo">&nbsp;PUBLICAR<br>&nbsp;ANUNCIOS
+              <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="<?= gLink('forums/new.thread') ?>">&nbsp;PUBLICAR<br>&nbsp;ANUNCIOS
               </a>
             </div>
             <div class="col-3 d-flex text-center justify-content-center align-items-center">

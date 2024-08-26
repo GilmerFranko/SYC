@@ -227,3 +227,39 @@ function getColumns($table, $columns = null, $where = [], $limit = 1, $sentence 
 {
     return loadClass('core/db')->getColumns($table, $columns, $where, $limit, $sentence);
 }
+
+
+/**
+ * Corta un string x caracteres
+ * @param string $string
+ * @param int $length
+ * @return string
+ */
+function cutText($string, $length = 128)
+{
+    $string = substr($string, 0, $length);
+    $string = rtrim($string, "!,.-");
+    $string = $string . '...';
+
+    return $string;
+}
+
+/**
+ * Obtiene el texto plano de un string que puede contener BBCode
+ * @param string $string
+ * @return string
+ */
+function getPlainText($string)
+{
+    global $parser;
+
+    $string = strip_tags($string);
+    // Parsear el BBCode
+    $parser->parse($string);
+    // Obtener el texto sin las etiquetas BBCode
+    $string = $parser->getAsText();
+    // Quitar etiquetas sobrantes
+    $string = preg_replace('/\[(\/?)(size|font|color)[^\]]*\]/i', '', $string);
+
+    return $string;
+}

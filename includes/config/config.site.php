@@ -39,8 +39,10 @@ $config['contacts_url']  = $config['base_url']  . '/filestore/uploads/contacts/'
 $config['threads_path'] = $config['base_path'] . 'filestore' . DS . 'uploads' . DS . 'threads';
 $config['threads_url']  = $config['base_url']  . '/filestore/uploads/threads/';
 
-//
-$config['forum_url']  = $config['base_url']  . '/forum_url/';
+// URL del foro
+$config['forum_url']  = $config['base_url']  . '/f/';
+// URL de los hilos
+$config['thread_url'] = $config['base_url']  . '/t/';
 
 // Carpeta donde se alojan los archivos con correos
 $config['bulkemails_path']   = $config['base_path'] . 'filestore' . DS . 'uploads' . DS . 'bulkemails';
@@ -51,3 +53,6 @@ $config['referi_id'] = 1;
 // Foto predefinida para usuarios registrados
 $config['default_male_profile_photo']   = 'default-male-avatar-profile.png';
 $config['default_female_profile_photo'] = 'default-female-avatar-profile.png';
+
+// Foto predifinida para hilos
+$config['default_thread_photo'] = $config['images_url'] . '/default-thread-photo.png';

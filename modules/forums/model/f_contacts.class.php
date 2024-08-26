@@ -37,4 +37,15 @@ class f_contacts extends Model
       return false;
     }
   }
+
+  /**
+   * Devuelve un contacto por su id.
+   *
+   * @param int $id El id del contacto a obtener.
+   * @return array|boolean El contacto con el id especificado, o false si no existe.
+   */
+  public function getContactById($id)
+  {
+    return getColumns('f_contacts', ['id', 'name', 'short_url', 'status', 'priority', 'visibility'], array('id', $id), 1);
+  }
 }

@@ -37,12 +37,14 @@ Options -Indexes
 
 RewriteEngine On
 
-# Redirecciona al index con una url amigable
+# Redirecciona URLs para "f" antes de reglas más generales
+RewriteRule ^f/([^/]+)$ index.php?app=forums&section=view.threads&location_url=$1 [NC,L,QSA]
+
+# Reglas generales de reescritura
 RewriteRule ^(/)$ index.php?app=$1&section=null0 [NC,QSA,L]
-
 RewriteRule ^([^/]+)$ index.php?app=$1&section=null0 [NC,L,QSA]
-
 RewriteRule ^([^/]+)/([^/]+)$ index.php?app=$1&section=$2 [NC,L,QSA]
+
 
 # Pagina no encontrada
 ErrorDocument 404 /index.php/nofound

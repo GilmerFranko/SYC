@@ -4,6 +4,7 @@
   --red: red;
   --green: #7dd957;
   --primary: #391334;
+  --primary-dark: #3a003a;
   --primary-200: #5C395C;
   --primary-light: #5d3a56;
 
@@ -27,7 +28,6 @@ section {
     margin: 0 auto;
     border: solid 2px #2C0928;
     border-radius: 8px;
-    text-align: center;
     padding: 0 0 10px 0;
 }
 
@@ -44,8 +44,7 @@ a
 
 body {
   background-color: #552C50;
-  text-align: center;
-  font-family: verdana, cursive;
+  font-family: Verdana, Helvetica, sans-serif;
   color: var(--primary-light);
   max-width:995px !important;
 }
@@ -74,3 +73,199 @@ nav {
   padding: 0;
   position: relative;
 }
+
+/** Colores botones */
+.btn-primary {
+  background: none;
+  border: 1px solid var(--primary-light) !important;
+  color: var(--primary-light) !important;
+  span {
+    color: var(--primary-light) !important;
+  }
+
+  &:hover {
+    background: none;
+    border: 1px solid var(--primary) !important;
+    span {
+      color: var(--primary) !important;
+    }
+  }
+}
+
+.btn-secondary {
+  background-color: unset !important;
+  /* Opción 1 */
+  /* background-color: #7dd957; /* Opción 2 */
+  color: var(--primary-dark) !important;
+  border: 1px solid var(--primary) !important;
+
+  /* Opción 1 */
+  /* color: #202123; /* Opción 2 */
+}
+
+.btn-tertiary {
+  background-color: #b1bad3;
+  /* Opción 1 */
+  /* background-color: #f5f5f5; /* Opción 2 */
+  color: #2f4553;
+
+  /* Opción 1 */
+  /* color: #4c4422; /* Opción 2 */
+  span {
+    color: #2f4553;
+    /* Opción 1 */
+    /* color: #4c4422; /* Opción 2 */
+  }
+}
+
+.btn-red {
+  background-color: #6A041D !important;
+}
+
+.btn-grey {
+  background-color: var(--darkgray2);
+}
+
+.btn-grey:hover {
+  background-color: var(--darkgray2);
+}
+
+.btn-dark {
+  background-color: var(--darkgray);
+}
+
+.btn-dark:hover {
+  background-color: var(--darkgray);
+}
+
+.btn-grey2 {
+  background-color: var(--gray2);
+}
+
+.btn-grey2:hover {
+  background-color: var(--gray2);
+}
+
+.btn-blue {
+  background-color: var(--blue);
+}
+
+.btn-blue:hover {
+  background-color: var(--blue);
+}
+
+/* Fin colores botones */
+
+/* Threads HILOS */
+.thread-card {
+  margin-bottom: 1.5rem;
+}
+
+.thread-card .card-header {
+  background: #F4E8F2;
+  border: 2px solid #E6D9E4;
+  border-radius: 5px;
+  padding: 0 2px 0 0;
+  display: flex;
+  justify-content: space-between;
+  color: var(--primary-light);
+}
+
+.thread-card .card-header>div:first-child {
+  margin-left: 2px;
+  margin-top: 3px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.thread-card .card-header>div:nth-child(1) {
+  width: 405px;
+  text-align: left;
+  overflow: hidden;
+  font-size: 13px;
+  margin-left: 10px;
+}
+
+.thread-card .subheader {
+  font-size: 14px;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+
+
+.btn-autorenueva{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: 40px;
+  a{
+    color: #ee0000 !important;
+    font-weight: 600;
+    font-size: 10px;
+  }
+}
+
+
+.thread-card .card-body>p {
+  margin: 0;
+}
+
+.card-footer {
+  display: flex;
+}
+
+.thread-card .card-footer .chip {
+  min-width: 34px;
+  padding: 0px 2px;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: #7F627F;
+}
+
+.chip
+{
+  display: flex; /* O flexbox, grid, o block si es necesario */
+  align-items: center; /* Centra los elementos verticalmente */
+  margin-right: 10px;
+  i{
+    margin-right: 5px;
+  }
+}
+
+/**.thread-card .card-footer>div:last-child>div:last-child>div {
+  cursor: pointer;
+  font-weight: 900;
+  min-width: 34px;
+  padding: 0px 2px;
+  vertical-align: top;
+  text-align: center;
+  display: inline;
+  font-size: 10px;
+  border: 1px solid #C985E9;
+  border-radius: 4px;
+  height: 24px;
+  margin-right: 3px;
+  color: #983C7E;
+  background: #F6ECFD;
+  line-height: 1;
+}*/
+
+.thread-title {
+  color: var(--primary-dark);
+  font-size: 14px;
+}
+
+.thread-content {
+  color: var(--bs-gray-800);
+  font-size: 13px;
+}
+.thread-card .card-body
+{
+  padding: 6px !important;
+}
+/* Fin Threads HILOS */
+
