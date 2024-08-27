@@ -258,4 +258,36 @@ class Date
 		}
 	}*/
 	/** FIN CLASE **/
+
+	public function getFormattedDate($timestamp)
+	{
+		$now = time();
+		$diff = $now - $timestamp;
+
+		if ($diff < 60)
+		{
+			return "Hace unos segundos";
+		}
+		elseif ($diff < 3600)
+		{ // menos de 1 hora
+			$minutes = floor($diff / 60);
+			return "Hace $minutes minuto" . ($minutes > 1 ? 's' : '');
+		}
+		elseif ($diff < 86400)
+		{ // mismo día
+			return "Hoy a las " . date('H:i', $timestamp);
+		}
+		elseif ($diff < 172800)
+		{ // hace 1 día
+			return "Ayer a las " . date('H:i', $timestamp);
+		}
+		elseif (date('Y', $timestamp) == date('Y'))
+		{ // mismo año
+			return date('d M', $timestamp);
+		}
+		else
+		{ // diferente año
+			return date('d M Y', $timestamp);
+		}
+	}
 }

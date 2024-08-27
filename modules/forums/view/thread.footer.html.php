@@ -15,7 +15,7 @@
 <?php if ($session->is_member)
 { ?>
   <!-- Botón para contactar al usuario -->
-  <div class="chip selectable" onclick="window.location.href='<?= gLink('members/view.messages', ['member_id' => $thread['member_id']]) ?>';">
+  <div class="chip selectable" onclick="window.location.href='<?= gLink('members/new.message', ['member_id' => $thread['member_id']]) ?>';">
     <i class="em em-email" aria-role="presentation" aria-label="ARIES"></i>
     <strong>Contactar</strong>
   </div>

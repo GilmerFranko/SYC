@@ -1,0 +1,41 @@
+<?php defined('SYC') || exit;
+
+/**
+ *=======================================================
+ *  SYC Project
+ *-------------------------------------------------------
+ * @author Gilmer Franco <gil2017.com@gmail.com>
+ *=======================================================
+ *
+ * @Description Controlador de vista de los mensajes
+ *
+ *
+ */
+
+$msg = [];
+
+if (!isset($_GET['receiver_id']) or empty($_GET['receiver_id']))
+{
+  $msg[] = 'No se ha enviado el ID del usuario receptor.';
+}
+
+$receiverId = intval($_GET['receiver_id']);
+
+// Obtener los datos del usuario receptor (para mostrar la conversación)
+if (!$memberReceiver = loadClass('members/member')->getMemberFromID($receiverId))
+{
+  $msg[] = 'El usuario receptor no existe.';
+}
+
+if (!empty($msg))
+{
+  setTI([$msg]);
+  redirect('core/home-guest');
+  exit;
+}
+
+// Obtener los mensajes entre el usuario actual y el receptor
+$messages = loadClass('members/messages')->getMessagesBetween($m_id, $receiverId);
+
+$page['name'] = 'Mensajes con ' . $memberReceiver['name'];
+$page['code'] = 'membersRegister';
