@@ -129,7 +129,7 @@
         </div>
 
         <!-- Botón Buscar -->
-        <div class="col col-sm-2 col-md-2 center-align">
+        <div class="col col-sm-2 col-md-4" style="display:flex;justify-content: flex-end;">
           <a href="javascript:void(0)"><img src="<?= $config['images_url'] . '/button-search.png' ?>" class="" alt="Buscar" /></a>
         </div>
       </div>

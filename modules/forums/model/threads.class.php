@@ -164,8 +164,48 @@ class threads extends Model
    * @param int $id
    * @return array
    */
-  public function getThreadById($id)
+  public function getThreadByIdBasic($id)
   {
+    $data = getColumns('f_threads', ['id', 'location_id', 'member_id', 'title', 'content', 'status', 'views_count', 'replies_count', 'likes_count', 'count_favorites', 'ip_address', 'is_edited', 'last_edited_by', 'report_count', 'created_at', 'updated_at'], ['id', $id]);
+    $data['member'] = getColumns('members', ['member_id', 'name', 'pp_thumb_photo'], ['member_id', $data['member_id']]);
+    return $data;
+  }
+
+
+  /**
+   * Obtiene un thread por su ID
+   *
+   * @param int $id
+   * @return array
+   */
+  public function getThreadById($id, $member_id)
+  {
+
+    $query = $this->db->query(
+      'SELECT 
+        t.*,
+        m.`member_id` AS member_id,
+        m.`name` AS member_name,
+        m.`pp_thumb_photo` AS member_pp,
+        COUNT(f.`thread_id`) AS member_favorites
+      FROM 
+        `f_threads` AS t
+      INNER JOIN 
+        `members` AS m ON t.`member_id` = m.`member_id`
+      LEFT JOIN 
+        `members_favorites` AS f ON t.`id` = f.`thread_id` AND f.`member_id` = ' . $member_id . '
+      WHERE 
+        t.`id` = "' . $id . '" 
+      GROUP BY 
+        t.`id`'
+    );
+
+    if ($query)
+    {
+      $data = $query->fetch_assoc();
+      return $data;
+    }
+    return false;
   }
 
   /**

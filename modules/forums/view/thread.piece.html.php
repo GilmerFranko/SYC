@@ -34,7 +34,7 @@ $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
             <?php echo cutText(getPlainText($thread['content']), 512); ?>
           </p>
           <div style="margin: 5px 0;">
-            <div><a href="<?php echo $config['thread_url']; ?><?php echo $thread['location_id']; ?>" class="btn btn-sm btn-primary">Ver Fotos</a></div>
+            <div><a href="<?= gLink('forums/view.thread', ['thread_id' => $thread['id']]) ?>" class="btn btn-sm btn-primary">Ver Fotos</a></div>
           </div>
         </div>
         <div class="col col-3">

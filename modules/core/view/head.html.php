@@ -183,3 +183,32 @@
 		require Core::view('sidenav', 'core');
 	}
 	?>
+
+
+	<!-- Modal de Bootstrap -->
+	<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="imageModalLabel">Vista previa de la imagen</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<img src="" id="modalImage" alt="Descripción ampliada" class="img-fluid">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			// Escucha el evento de clic en las imágenes con el atributo data-bs-toggle="modal"
+			$('img[data-bs-toggle="modal"]').on('click', function() {
+				// Obtiene el src de la imagen que fue clickeada
+				var imageSrc = $(this).attr('src');
+
+				// Cambia el src de la imagen dentro del modal
+				$('#modalImage').attr('src', imageSrc);
+			});
+		});
+	</script>

@@ -21,21 +21,24 @@ $extra = Core::model('extra', 'core');
 $db = Core::model('db', 'core');
 /* ID del usuario */
 $m_id = $session->memberData['member_id'];
+
 // Comprueba bbcode
 $parser = new JBBCode\Parser();
+
 // Cargar los tags predeterminados (b, i, u, url, img, etc.)
 $parser->addCodeDefinitionSet(new JBBCode\DefaultCodeDefinitionSet());
+
 // Definir el BBCode para `color`
 $colorCode = new JBBCode\CodeDefinitionBuilder('color', '<span style="color:{option}">{param}</span>');
 $parser->addCodeDefinition($colorCode->build());
 
 // Definir el BBCode para `size`
-$sizeCode = new JBBCode\CodeDefinitionBuilder('size', '<span style="font-size:{option}">{param}</span>');
-$parser->addCodeDefinition($sizeCode->build());
+$parser->addCodeDefinition(\JBBCode\CodeDefinition::construct('size', '<span style="font-size:{option}px">{param}</span>', true));
 
 // Definir el BBCode para `font`
-$fontCode = new JBBCode\CodeDefinitionBuilder('font', '<span style="font-family:{option}">{param}</span>');
-$parser->addCodeDefinition($fontCode->build());
+$parser->addCodeDefinition(\JBBCode\CodeDefinition::construct("font", '<span style="font-family:{option}">{param}</span>', true));
+
+
 
 // ESTABLECE ZONA HORARIA EN LA QUE SE BASAN LAS PUBLICACIONES
 //date_default_timezone_set($session->memberData['pp_timezone']);
