@@ -76,3 +76,6 @@ require Core::view('head', 'core');
     adjustTextLength();
   });
 </script>
+
+<!-- FOOTER -->
+<?php require Core::view('footer', 'core'); ?>

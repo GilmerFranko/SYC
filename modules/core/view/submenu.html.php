@@ -12,15 +12,11 @@
             </div>
             <div class="col-3 d-flex text-center justify-content-center align-items-center">
               <img src="https://nuevapasion.com/images/edit-advertisements.png" class="index-icon" alt="Publicar anuncio">
-              <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="/client-panel/anuncios">&nbsp;MODIFICAR<br>&nbsp; ANUNCIOS</a>
-            </div>
-            <div class="col-3 d-flex text-center justify-content-center align-items-center">
-              <img src="https://nuevapasion.com/images/add-user.png" class="index-icon" alt="Mis anuncios favoritos">
-              <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="/registrarse?publicist=true">&nbsp;REGISTRO<br>&nbsp;PUBLICISTAS</a>
+              <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="<?= gLink('mi-panel/anuncios') ?>">&nbsp;MODIFICAR<br>&nbsp; ANUNCIOS</a>
             </div>
             <div class="col-3 d-flex text-center justify-content-center align-items-center">
               <img src="https://nuevapasion.com/images/fav-advertisements.png" class="index-icon" alt="Mis anuncios favoritos">
-              <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="/anuncios/favoritos">&nbsp; ANUNCIOS<br>&nbsp;FAVORITOS</a>
+              <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="<?= gLink('anuncios/favoritos') ?>">&nbsp; ANUNCIOS<br>&nbsp;FAVORITOS</a>
             </div>
           </div>
         </div>

@@ -86,9 +86,19 @@ body {
 }
 
 
+footer
+{
+  font-size: 10px;
+}
 
-footer {
-  background-color: #232323 !important;
+.footer-copyright  a
+{
+  color: white !important;
+  &:hover
+  {
+    color: white !important;
+    text-decoration: underline;
+  }
 }
 
 nav .brand-logo.playstore {

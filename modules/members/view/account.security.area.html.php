@@ -9,40 +9,41 @@
  *
  * @Description Vista del área "Contraseña" de la sección "Contraseña" en la cuenta
  *
- *
  */
 ?>
 
-<article id="memberAccountSecurity">
-    <div class="content">
-        <div class="row">
-            <div class="row">
-                <div class="input-field col s12">
-                    <input name="email" id="email" type="email" class="validate" value="<?php echo $session->memberData['email']; ?>" disabled>
-                    <label for="email">Tu Email</label>
-                </div>
+<article id="memberAccountSecurity" class="py-4">
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-12">
+                <label for="email" class="form-label">Tu Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo $session->memberData['email']; ?>" disabled>
             </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <input name="currentPassword" id="currentPassword" type="password" class="validate" autocomplete="new-password">
-                    <label for="currentPassword">Contrase&ntilde;a actual</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    <input name="newPassword" id="newPassword" type="password" class="validate">
-                    <label for="newPassword">Nueva contrase&ntilde;a</label>
-                </div>
-                <div class="input-field col s6">
-                    <input name="confirmPassword" id=confirmPassword type="password" class="validate">
-                    <label for="confirmPassword">Confirme contrase&ntilde;a</label>
-                </div>
-            </div>
-            <!--<div class="row">
-                <p class="flow-text red-text" id="msgDelete"></p>
-                <a class="waves-effect waves-light btn red darken-4 w100" href="javascript:deleteAccount();" id="deleteAccount">Eliminar Cuenta</a>
-            </div>-->
         </div>
+        <div class="row mb-3">
+            <div class="col-12">
+                <label for="currentPassword" class="form-label">Contraseña actual</label>
+                <input type="password" class="form-control" id="currentPassword" name="currentPassword" autocomplete="new-password">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="newPassword" class="form-label">Nueva contraseña</label>
+                <input type="password" class="form-control" id="newPassword" name="newPassword">
+            </div>
+            <div class="col-md-6">
+                <label for="confirmPassword" class="form-label">Confirme contraseña</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+            </div>
+        </div>
+        <!-- Descomentar esta sección si se desea agregar la opción de eliminar cuenta
+    <div class="row">
+      <div class="col-12">
+        <p class="text-danger" id="msgDelete"></p>
+        <button class="btn btn-danger w-100" onclick="deleteAccount();" id="deleteAccount">Eliminar Cuenta</button>
+      </div>
+    </div>
+    -->
     </div>
 </article>
 

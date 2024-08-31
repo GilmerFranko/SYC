@@ -15,7 +15,7 @@
 <?php if ($session->is_member)
 { ?>
   <!-- Botón para contactar al usuario -->
-  <div class="chip selectable" onclick="window.location.href='<?= gLink('members/new.message', ['member_id' => $thread['member_id']]) ?>';">
+  <div class="chip selectable" onclick="window.location.href='<?= gLink('mensajescon/' . $thread['member_id']) ?>';">
     <i class="em em-email" aria-role="presentation" aria-label="ARIES"></i>
     <strong>Contactar</strong>
   </div>
@@ -45,13 +45,13 @@ else
 
 <?php if (!$isFavorite)
 { ?>
-  <div id="favoriteBtn" class="chip selectable" data-bs-toggle="tooltip" data-bs-placement="top" title="Favorito">
+  <div id="favoriteBtn-<?= $thread['id'] ?>" class="favoriteBtn chip selectable" data-thread-id="<?= $thread['id'] ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Favorito">
     <i class="em em-star2" aria-role="presentation" aria-label="GLOWING STAR"></i>Favorito
   </div>
 <?php }
 else
 { ?>
-  <div id="favoriteBtn" class="chip selectable isFavorite" data-bs-toggle="tooltip" data-bs-placement="top" title="Favorito">
+  <div id="favoriteBtn-<?= $thread['id'] ?>" class="favoriteBtn chip selectable isFavorite" data-thread-id="<?= $thread['id'] ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Favorito">
     <i class="em em-heart" aria-role="presentation" aria-label="STAR"></i>Favorito
   </div>
 <?php } ?>
@@ -68,6 +68,16 @@ else
   Denunciar
 </div>
 
+<?php if ($session->is_member && $thread['member_id'] == $m_id)
+{ ?>
+  <div class="chip selectable" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
+    <a href="<?= gLink('forums/edit.thread', ['thread_id' => $thread['id']]) ?>">
+      <i class="em em-wrench" aria-role="presentation" aria-label="WRENCH"></i>
+      Editar
+    </a>
+  </div>
+<?php } ?>
+
 <style>
   .selectable {
     cursor: pointer;
@@ -77,61 +87,3 @@ else
     color: red !important;
   }
 </style>
-
-<script>
-  $(document).ready(function() {
-    $('#favoriteBtn').on('click', function() {
-      // Obtener el ID del hilo
-      var threadId = <?= $thread['id']; ?>;
-
-      // Obtener el elemento HTML del botón
-      var $this = $(this);
-
-      // Realizar la solicitud AJAX para marcar como favorito
-      $.ajax({
-        url: '<?= gLink('forums/threads.actions'); ?>', // URL del controlador que maneja la solicitud
-        type: 'POST',
-        data: {
-          ajax: true,
-          do: 'addFavorite',
-          thread_id: threadId
-        },
-        dataType: 'json',
-        success: function(response) {
-          // Verificar si la solicitud fue exitosa
-          if (response.status) {
-            // Comprobar si el hilo ya es favorito
-            if ($this.hasClass('isFavorite')) {
-              // Cambiar el ícono a otro cuando se guarde como favorito
-              $this.html('<i class="em em-star2" aria-role="presentation" aria-label="GLOWING STAR"></i>Favorito');
-              // Agregar tooltip para indicar que ya es favorito
-              $this.attr('title', 'Ya es favorito');
-              // Agregar clase para indicar que es favorito
-              $this.removeClass('isFavorite');
-            } else {
-              // Cambiar el ícono a otro cuando se quita como favorito
-              $this.html('<i class="em em-heart" aria-role="presentation" aria-label="STAR"></i> Favorito');
-              // Agregar tooltip para indicar que no es favorito
-              $this.attr('title', 'Pulsa para agregar a favoritos');
-
-              // Quitar clase para indicar que no es favorito
-              $this.addClass('isFavorite');
-            }
-
-            Toastify({
-              text: response.message,
-              backgroundColor: "linear-gradient(120deg, #7dd957, #7dd957)",
-              className: "info",
-              close: true
-            }).showToast();
-          } else {
-            alert('No se pudo agregar a favoritos. Inténtalo de nuevo.');
-          }
-        },
-        error: function() {
-          alert('Hubo un error al procesar la solicitud.');
-        }
-      });
-    });
-  });
-</script>

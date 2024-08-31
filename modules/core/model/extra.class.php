@@ -707,41 +707,47 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
     }
 
     /**
-     * Establece el modulo y seccion desde la friendly url
+     * Establece el módulo y la sección desde la friendly URL.
      *
-     * @param string $sModule el nombre del módulo
-     * @param string $sSection la sección a la que se va a acceder
+     * @param string $module El nombre del módulo.
+     * @param string $section La sección a la que se va a acceder.
      */
-    public function setUrl($sModule, $sSection)
+    public function setUrl($module, $section)
     {
         global $sModule, $sSection;
-        if ($sModule == 'login')
-        {
-            if ($sSection == 'null0')
-            {
-                $sModule = 'members';
-                $sSection = 'login';
-            }
-        }
-        elseif ($sModule == 'home-guest')
-        {
-            if ($sSection == 'null0')
-            {
-                $sModule = 'core';
-                $sSection = 'home-guest';
-            }
-        }
-        elseif ($sModule == 'core')
-        {
-            if ($sSection == 'null0')
-            {
-                $sModule = 'core';
-                $sSection = 'home-guest';
-            }
-        }
 
-        elseif ($sModule == 'syc')
+        // Definir un mapeo de módulos con sus secciones y cambios correspondientes.
+        $defaultSections = [
+            'login' => [
+                'null0' => ['members', 'login']
+            ],
+            'home-guest' => [
+                'null0' => ['core', 'home-guest']
+            ],
+            'core' => [
+                'null0' => ['core', 'home-guest'],
+                'nul2' => ['core', 'home-gduest']
+            ],
+            'mi-panel' => [
+                'anuncios' => ['forums', 'my.threads'],
+                'editar' => ['forums', 'edit.thread']
+            ],
+            'mensajes' =>
+            [
+                'todos' => ['members', 'messages']
+            ],
+            'anuncios' =>
+            [
+                'favoritos' => ['forums', 'my.favorites'],
+            ]
+
+
+        ];
+
+        // Verificar si el módulo y la sección tienen un mapeo definido.
+        if (isset($defaultSections[$module]) && isset($defaultSections[$module][$section]))
         {
+            list($sModule, $sSection) = $defaultSections[$module][$section];
         }
     }
 
@@ -793,5 +799,19 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
         $image_path = $path . DS . $image_name;
 
         return unlink($image_path) ? true : false;
+    }
+
+    static function generateSlug(string $title): string
+    {
+        // Convertir a minúsculas
+        $slug = strtolower($title);
+
+        // Reemplazar caracteres especiales y espacios con guiones
+        $slug = preg_replace('/[^a-z0-9]+/i', '-', $slug);
+
+        // Eliminar guiones al principio y al final
+        $slug = trim($slug, '-');
+
+        return $slug;
     }
 }

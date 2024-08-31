@@ -258,11 +258,15 @@ class Date
 		}
 	}*/
 	/** FIN CLASE **/
-
 	public function getFormattedDate($timestamp)
 	{
+		// Obtén el tiempo actual y la diferencia en segundos
 		$now = time();
 		$diff = $now - $timestamp;
+
+		// Obtén la fecha de hoy y la de ayer sin horas ni minutos
+		$today = strtotime('today');
+		$yesterday = strtotime('yesterday');
 
 		if ($diff < 60)
 		{
@@ -273,20 +277,20 @@ class Date
 			$minutes = floor($diff / 60);
 			return "Hace $minutes minuto" . ($minutes > 1 ? 's' : '');
 		}
-		elseif ($diff < 86400)
-		{ // mismo día
+		elseif ($timestamp >= $today)
+		{ // el mismo día
 			return "Hoy a las " . date('H:i', $timestamp);
 		}
-		elseif ($diff < 172800)
-		{ // hace 1 día
+		elseif ($timestamp >= $yesterday)
+		{ // el día anterior
 			return "Ayer a las " . date('H:i', $timestamp);
 		}
 		elseif (date('Y', $timestamp) == date('Y'))
-		{ // mismo año
-			return date('d M', $timestamp);
+		{ // el mismo año
+			return date('d M H:i', $timestamp);
 		}
 		else
-		{ // diferente año
+		{ // años anteriores
 			return date('d M Y', $timestamp);
 		}
 	}

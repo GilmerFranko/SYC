@@ -14,7 +14,7 @@ require Core::view('head', 'core');
 
 // Optiene imagenes del hilo
 $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
-showlog($images);
+
 ?>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
@@ -31,7 +31,7 @@ showlog($images);
         <div class="card thread-card">
 
           <div class="card-header" style="background: #e2f0e0; font-size: 14px">
-            <div style="width: 100px;"> Ref: <?php echo $thread['id']; ?></div>
+            <div style="width: 100px;"> Ref: <?php echo $thread['slug']; ?></div>
             <div><?php echo $contact['name']; ?></div>
             <div class=" subheader">
               <div class="subheader"><?php echo date('d/m/Y H:i', $thread['created_at']); ?></div>
@@ -52,9 +52,6 @@ showlog($images);
                     echo $parser->getAsHTML();
                     ?>
                   </p>
-                  <div style="margin: 5px 0;">
-                    <div><a href="<?= gLink('forums/view.thread', ['thread_id' => $thread['id']]) ?>" class="btn btn-sm btn-primary">Ver Fotos</a></div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -65,7 +62,7 @@ showlog($images);
           </div>
         </div>
 
-        <div class="" style="width: 200px;">
+        <div class="" style="width: 200px; display: flex;">
           <?php if ($images['rows'] > 0) : ?>
             <?php foreach ($images['data'] as $image) : ?>
               <div class="">
@@ -77,7 +74,6 @@ showlog($images);
                 <?php endif; ?>
 
               </div>
-              <?php break ?>
             <?php endforeach; ?>
           <?php endif; ?>
         </div>

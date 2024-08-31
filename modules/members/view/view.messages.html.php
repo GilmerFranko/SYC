@@ -155,7 +155,8 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
   }
 
   .message-sent {
-    background-color: #DCF8C6;
+    background-color: var(--primary-200);
+    color: white;
     text-align: right;
   }
 

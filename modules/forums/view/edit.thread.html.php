@@ -12,38 +12,49 @@
  */
 
 require Core::view('head', 'core');
+
+foreach ($locations['data'] as $location)
+{
+  if ($location['id'] == $thread['location_id'])
+  {
+    $locationSelected['id'] = $location['id'];
+    $locationSelected['name'] = $location['name'];
+    $locationSelected['contact_id'] = $location['contact_id'];
+  }
+}
 ?>
 
 <!-- Header -->
 <?php require Core::view('menu', 'core'); ?>
 <!-- / Header -->
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
-
 <section>
   <div class="container mt-5">
-    <h2 class="mb-4">Crear Nuevo Hilo</h2>
-    <form id="new_thread_form" action="<?= gLink('forums/new.thread', ['new_thread' => '1']) ?>" method="POST" enctype="multipart/form-data">
+    <h2 class="mb-4">Modificar Hilo</h2>
+    <form id="edit_thread_form" action="<?= gLink('forums/edit.thread', ['edit_thread' => true, 'thread_id' => $thread['id']]) ?>" method="POST" enctype="multipart/form-data">
 
       <!-- Título (columna completa) -->
       <div class="mb-3">
         <label for="title" class="form-label">Título</label>
-        <input type="text" class="form-control" id="title" name="title" value="Título de prueba" required>
+        <input type="text" class="form-control" id="title" name="title" value="<?= htmlspecialchars($thread['title']) ?>" required>
       </div>
 
       <div class="row">
         <div class="col-md-6">
           <div class="mb-3">
             <label for="email" class="form-label">Correo Electrónico</label>
-            <input type="email" class="form-control" id="email" name="email" value="example@example.com" required>
+            <input type="email" class="form-control" id="email" name="email" value="<?= $thread['email'] ?>" required>
           </div>
         </div>
         <div class="col-md-6">
           <div class="mb-3">
             <label for="phone" class="form-label">Teléfono</label>
             <small class="form-text text-muted">No introduzca el prefijo +34</small>
-            <input type="tel" class="form-control" id="phone" name="phone" value="666 666 666" required>
+            <input type="tel" class="form-control" id="phone" name="phone" value="<?= $thread['phone'] ?>" required>
           </div>
         </div>
       </div>
@@ -52,10 +63,12 @@ require Core::view('head', 'core');
         <div class="col-md-6">
           <div class="mb-3">
             <label for="contact_id" class="form-label">Categorías</label>
-            <select class="form-select" id="contact_id" name="contact_id" required>
-              <option selected disabled>Selecciona una categoría</option>
+            <small>No puedes modificar la cargoria</small>
+            <select class="form-select" id="contact_id" name="contact_id" disabled>
               <?php foreach ($contacts['data'] as $contact) : ?>
-                <option value="<?= $contact['id'] ?>"><?= $contact['name'] ?></option>
+                <?php if ($contact['id'] == $locationSelected['contact_id']): ?>
+                  <option value="<?= $contact['id'] ?>"><?= $contact['name'] ?></option>
+                <?php endif; ?>
               <?php endforeach; ?>
             </select>
           </div>
@@ -63,9 +76,9 @@ require Core::view('head', 'core');
         <div class="col-md-6">
           <div class="mb-3">
             <label for="location_id" class="form-label">Provincias y Ciudades</label>
-            <select class="form-select" id="location_id" name="location_id" required>
-              <option selected disabled>Selecciona una provincia/ciudad</option>
-              <option disabled>Primero debes seleccionar una categoria</option>
+            <small>No puedes modificar la ubicación</small>
+            <select class="form-select" id="location_id" name="location_id" disabled>
+              <option value="<?= $locationSelected['id'] ?>" selected><?= $locationSelected['name'] ?></option>
             </select>
           </div>
         </div>
@@ -75,13 +88,13 @@ require Core::view('head', 'core');
         <div class="col-md-4">
           <div class="mb-3">
             <label for="age" class="form-label">Edad</label>
-            <input type="number" class="form-control" id="age" name="age" value="25" required>
+            <input type="number" class="form-control" id="age" name="age" value="<?= $thread['age'] ?>" required>
           </div>
         </div>
         <div class="col-md-4">
           <div class="mb-3">
             <label for="fee" class="form-label">Tarifa €</label>
-            <input type="number" class="form-control" id="fee" name="fee" value="10" required>
+            <input type="number" class="form-control" id="fee" name="fee" value="<?= $thread['fee'] ?>" required>
           </div>
         </div>
         <div class="col-md-4">
@@ -94,29 +107,34 @@ require Core::view('head', 'core');
 
       <div class="mb-3">
         <label for="content" class="form-label">Contenido (Soporte para BBCode)</label>
-        <textarea class="form-control" id="content" name="content" rows="5" maxlength="10000" required>[b]Texto en negrita[/b], [i]Texto en cursiva[/i], [url]http://example.com[/url]</textarea>
+        <textarea class="form-control" id="content" name="content" rows="5" maxlength="10000" required><?= $thread['content'] ?></textarea>
       </div>
 
+      <!-- Si el hilo ya tiene imágenes, debería mostrarlas aquí para permitir su eliminación o modificación -->
       <div class="mb-3">
+        <!-- Imágenes  Eliminadas-->
+        <input type="hidden" id="deleted_images" name="deleted_images" value="">
+        <!-- Fin -->
         <label for="images" class="form-label">Imágenes</label>
-        <input type="file" class="form-control" id="images" name="images[]" multiple accept="image/jpg, image/jpeg, image/png">
-        <div id="image-preview" class="mt-3 d-flex flex-wrap"></div>
-        <small class="form-text text-muted">
-          Puedes subir un máximo de 9 imágenes, siendo el tamaño ideal 800 píxeles de ancho por 800 píxeles de alto.<br>
-          Los anuncios no se publicarán si presentan las siguientes situaciones:<br>
-          - No incluyen imágenes. Cualquier anuncio sin fotos será eliminado de inmediato.<br>
-          - Contienen imágenes explícitas de genitales.<br>
-          - Alguna de las imágenes está rota o invertida.<br>
-          - Las fotos no son coherentes con el contenido del anuncio.<br>
-          - Si deseas publicar un anuncio con fotos de rostro visible, es necesario enviar una selfie haciendo ✌️ con dos dedos. Esta foto no será publicada, pero servirá para que los usuarios sepan que el anuncio está verificado.<br>
-          - Las imágenes que aparezcan en gris están bloqueadas y no se mostrarán.
-        </small>
+        <input type="file" class="form-control" id="images" name="images[]" multiple accept="image/*">
+        <div id="image-preview" class="mt-3 d-flex flex-wrap">
+          <?php foreach ($images['data'] as $image): ?>
+            <div class="position-relative m-2">
+              <?php if ($image['image_url'] == null): ?>
+                <img src="<?= $config['default_thread_photo'] ?>" class="img-thumbnail" style="width: 100px; height: 100px;">
+              <?php else: ?>
+                <img src="<?= $config['threads_url'] . '/' . $image['image_url'] ?>" class="img-thumbnail" style="width: 100px; height: 100px;">
+              <?php endif; ?>
+              <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 remove-existing-image" data-remove-image="<?= $image['id'] ?>">&times;</button>
+            </div>
+          <?php endforeach; ?>
+        </div>
       </div>
 
       <div class="mb-3">
         <div class="g-recaptcha" data-sitekey="tu_site_key"></div>
       </div>
-      <button type="submit" class="btn btn-primary">Crear Hilo</button>
+      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
     </form>
   </div>
 </section>
@@ -124,10 +142,27 @@ require Core::view('head', 'core');
 <script>
   const preview = document.getElementById('image-preview');
   let archivosSeleccionados = []; // Array para almacenar los archivos seleccionados
+  let deletedImages = []; // Array para almacenar los IDs de imágenes eliminadas
 
   const contacts = <?= json_encode($contacts) ?>;
   const locations = <?= json_encode($locations) ?>;
 
+  // Manejar la eliminación de imágenes existentes
+  preview.addEventListener('click', function(event) {
+    if (event.target.classList.contains('remove-existing-image')) {
+      const imageId = event.target.getAttribute('data-remove-image');
+      // Añade el ID de la imagen al array de eliminadas
+      deletedImages.push(imageId);
+      // Actualiza el campo oculto con los IDs eliminados
+      document.getElementById('deleted_images').value = deletedImages.join(',');
+
+      // Elimina la imagen del DOM
+      const imgWrapper = event.target.parentElement;
+      imgWrapper.remove();
+    }
+  });
+
+  // Manejar la adición de nuevas imágenes
   document.getElementById('images').addEventListener('change', function(event) {
     Array.from(event.target.files).forEach((file) => {
       archivosSeleccionados.push(file); // Agrega el archivo al array
@@ -146,7 +181,7 @@ require Core::view('head', 'core');
     });
   });
 
-  // Agrega una imagen al preview y crea un botón para eliminar
+  // Función para previsualizar nuevas imágenes y permitir su eliminación
   function newPreview(img, file) {
     const imgWrapper = document.createElement('div');
     imgWrapper.classList.add('position-relative', 'm-2');

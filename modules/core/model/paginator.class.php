@@ -25,7 +25,7 @@ class Paginator
 		//
 		$pages['total'] = ceil($total / $limit);
 		// PAGINA
-		$page = isset($_GET['page']) && ctype_digit($_GET['page']) && strpos(Core::$sSection, $section) !== false ? $_GET['page'] : 1;
+		$page = isset($_GET['page']) && ctype_digit($_GET['page']) ? $_GET['page'] : 1;
 		// PAGINA ACTUAL
 		$pages['current'] = (float)$page;
 		// NÚMERO DE PÁGINAS

@@ -12,6 +12,22 @@
  */
 // Optiene imagenes del hilo
 $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
+
+// Verifica si el usuario tiene el thread en favoritos
+$query = $extra->db->query(
+  'SELECT * FROM members_favorites WHERE member_id = ' . $m_id . ' AND thread_id = ' . $thread['id']
+);
+
+if ($query and $query->num_rows > 0)
+{
+  $isFavorite = true;
+}
+else
+{
+  $isFavorite = false;
+}
+
+
 ?>
 
 <div class="card thread-card">
@@ -34,7 +50,7 @@ $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
             <?php echo cutText(getPlainText($thread['content']), 512); ?>
           </p>
           <div style="margin: 5px 0;">
-            <div><a href="<?= gLink('forums/view.thread', ['thread_id' => $thread['id']]) ?>" class="btn btn-sm btn-primary">Ver Fotos</a></div>
+            <div><a href="<?= loadClass('forums/threads')->getThreadUrl($thread['id']) ?>" class="btn btn-sm btn-primary">Ver Fotos</a></div>
           </div>
         </div>
         <div class="col col-3">
@@ -57,12 +73,7 @@ $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
     </div>
   </div>
   <div class="card-footer">
-    <div class="chip"><i class="em em-email" aria-role="presentation" aria-label="ARIES"></i> <strong>Contactar</strong></div>
-    <!-- Colocar telefono de existir -->
-
-    <div class="chip"><i class="em em-repeat" aria-role="presentation" aria-label="CLOCKWISE RIGHTWARDS AND LEFTWARDS OPEN CIRCLE ARROWS"></i> Compartir</div>
-    <div class="chip"><i class="em em-star2" aria-role="presentation" aria-label="GLOWING STAR"></i> Favorito</div>
-    <div class="chip"><i class="em em-bar_chart" aria-role="presentation" aria-label="BAR CHART"></i></i> Estadisticas</div>
-    <div class="chip"><i class="em em-warning" aria-role="presentation" aria-label="WARNING SIGN"></i></i> Denunciar</div>
+    <!-- Botones del footer -->
+    <?php require Core::view('thread.footer', 'forums'); ?>
   </div>
 </div>

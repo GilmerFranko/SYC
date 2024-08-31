@@ -40,6 +40,16 @@ RewriteEngine On
 # Redirecciona URLs para "f" antes de reglas más generales
 RewriteRule ^f/([^/]+)$ index.php?app=forums&section=view.threads&location_url=$1 [NC,L,QSA]
 
+# Redirecciona URLs para "anuncio" antes de reglas más generales
+RewriteRule ^anuncio/([^/]+)$ index.php?app=forums&section=view.thread&thread_id=$1 [NC,L,QSA]
+
+# Redirecciona URLs para "mensajes" antes de reglas más generales
+RewriteRule ^mensajescon/([^/]+)$ index.php?app=members&section=view.messages&r_id=$1 [NC,L,QSA]
+
+# Redirecciona URLs para "mensajes" antes de reglas más generales
+RewriteRule ^mensajes/todos$ index.php?app=members&section=messages [NC,L,QSA]
+RewriteRule ^mensajes/todos/$ index.php?app=members&section=messages [NC,L,QSA]
+
 # Reglas generales de reescritura
 RewriteRule ^(/)$ index.php?app=$1&section=null0 [NC,QSA,L]
 RewriteRule ^([^/]+)$ index.php?app=$1&section=null0 [NC,L,QSA]

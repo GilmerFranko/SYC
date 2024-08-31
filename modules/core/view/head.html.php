@@ -44,11 +44,19 @@
 	<script src="<?php echo $config['base_url'] . '/static/js/' . ($sModule == 'admin' ? 'materialize.min.js' : 'bootstrap.min.js'); ?>"></script>
 
 	<!-- Import Toastify.js -->
-	<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/toastify.js" />
+	<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/toastify.js"></script>
+	<!--Custom JS-->
+	<!-- Importa estilos solo para modulo admin -->
+	<?php if ($sModule == 'admin')
+	{ ?>
+		<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/custom.js">
+		</script>
+	<?php } ?>
 
-	<!-- Custom JS -->
-	<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/custom.js" />
+	<!-- JS Para los foros -->
+	<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/forums.js">
 	</script>
+
 	<!-- SweetAlert -->
 	<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/sweetalert.min.js" />
 	</script>

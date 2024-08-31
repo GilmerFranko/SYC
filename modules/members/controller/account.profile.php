@@ -22,7 +22,7 @@ if (Core::model('account', 'members')->saveProfile($profile, $session->memberDat
     if (empty($message))
     {
         $message[] = array(
-            'Informaci&oacute;n actualizada',
+            'Información actualizada',
             'success'
         );
     }

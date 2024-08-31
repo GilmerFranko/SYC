@@ -37,7 +37,7 @@ else
 }
 
 // ESTABLECER MENSAJE EN LA SESION
-$extra->setToast($message);
+$extra->setTI($message);
 
 // REDIRECCIONAR AL PERFIL
 Core::model('extra', 'core')->redirectTo(Core::model('extra', 'core')->generateUrl('members', 'account', NULL, array('user' => $session->memberData['member_id'])) . '&save=' . $message[0][1]);

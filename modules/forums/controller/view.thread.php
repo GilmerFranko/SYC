@@ -18,9 +18,16 @@ if (!isset($_GET['thread_id']) or empty($_GET['thread_id']))
 
 $thread_id = escape($_GET['thread_id']);
 
-if (!$thread = loadClass('forums/threads')->getThreadById($thread_id, $m_id))
+if (!$thread = loadClass('forums/threads')->getThread($thread_id, $m_id, true))
 {
   $msg[] = 'No existe el anuncio';
+}
+
+if (!empty($msg))
+{
+  setTI([$msg]);
+  redirect('core/home-guest');
+  exit;
 }
 
 // Optener ubicacion y contacto
@@ -29,12 +36,6 @@ $contact = loadClass('forums/f_contacts')->getContactById($location['contact_id'
 
 $isFavorite = $thread['member_favorites'] > 0 ? true : false;
 
-if (!empty($msg))
-{
-  setTI([$msg]);
-  redirect('core/home-guest');
-  exit;
-}
 
 $page['name'] = $thread['title'];
 $page['code'] = 'viewThread';

@@ -9,44 +9,38 @@
  *
  * @Description Vista del área "Perfil" de la cuenta
  *
- *
  */
 ?>
-<style type="text/css">
-  .card-content.grey.lighten-4 input {
-    color: black !important;
-  }
-</style>
-<article id="memberAccountProfile">
-  <div class="content">
-    <div class="row">
-      <div class="input-field col s6">
-        <input name="name" placeholder="Placeholder" id="name" type="text" class="validate" value="<?php echo $session->memberData['name']; ?>" disabled>
-        <label for="name">Nombre de usuario</label>
+<article id="memberAccountProfile" class="py-4">
+  <div class="container">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="name" class="form-label">Nombre de usuario</label>
+        <input type="text" class="form-control" id="name" name="name" value="<?php echo $session->memberData['name']; ?>" disabled>
       </div>
-      <div class="input-field col s6">
-        <input name="full_name" id="full_name" type="text" class="validate" value="<?php echo $session->memberData['pp_full_name']; ?>" required style="background: white; color: black !important">
-        <label for="full_name">Nombre completo</label>
+      <div class="col-md-6">
+        <label for="full_name" class="form-label">Nombre completo</label>
+        <input type="text" class="form-control" id="full_name" name="full_name" value="<?php echo $session->memberData['pp_full_name']; ?>" required>
       </div>
     </div>
-    <div class="row">
-      <div class="input-field col s12">
+    <div class="row mb-3">
+      <div class="col-12">
+        <label for="timezone" class="form-label">Zona horaria</label>
         <?php echo Core::model('account', 'members')->getTimezones($session->memberData['pp_timezone']); ?>
-        <label for="timezone" class="active">Zona horaria</label>
       </div>
     </div>
-    <!-- Traducciones GTranslate -->
-    <div class="row">
-      <div class="input-field col s12">
-        <select class="browser-default" onchange="doGTranslate(this);">
+    <!--<div class="row">
+      <div class="col-12">
+        <label for="language" class="form-label">Seleccionar idioma</label>
+        <select id="language" class="form-select" onchange="doGTranslate(this);">
           <option value="">Seleccionar idioma</option>
           <option value="en|en">English</option>
           <option value="en|fr">French</option>
           <option value="en|it">Italian</option>
           <option value="en|pt">Portuguese</option>
-          <option value="en|es">Espa&ntilde;ol</option>
+          <option value="en|es">Español</option>
         </select>
       </div>
-    </div>
+    </div>-->
   </div>
 </article>

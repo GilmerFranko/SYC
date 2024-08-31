@@ -59,14 +59,14 @@ if (isset($_POST['currentPassword']) && !empty($_POST['currentPassword']))
           if (Core::model('account', 'members')->setMemberInput(password_hash($_POST['newPassword'], PASSWORD_DEFAULT), 'password', $session->memberData['member_id']) === true)
           {
             $message[] = array(
-              'Contrase&ntilde;a actualizada',
+              'Contraseña actualizada',
               'success'
             );
           }
           else
           {
             $message[] = array(
-              'No se ha podido guardar la contra&ntilde;a',
+              'No se ha podido guardar la contraseña',
               'error'
             );
           }
@@ -74,7 +74,7 @@ if (isset($_POST['currentPassword']) && !empty($_POST['currentPassword']))
         else
         {
           $message[] = array(
-            'La contrase&ntilde;a actual introducida es incorrecta',
+            'La contraseña actual introducida es incorrecta',
             'error'
           );
         }
@@ -82,7 +82,7 @@ if (isset($_POST['currentPassword']) && !empty($_POST['currentPassword']))
       else
       {
         $message[] = array(
-          'La nueva contrase&ntilde;a no coincide',
+          'La nueva contraseña no coincide',
           'error'
         );
       }
@@ -90,7 +90,7 @@ if (isset($_POST['currentPassword']) && !empty($_POST['currentPassword']))
     else
     {
       $message[] = array(
-        'La nueva contrase&ntilde;a debe tener al menos 6 caracteres',
+        'La nueva contraseña debe tener al menos 6 caracteres',
         'error'
       );
     }
@@ -98,7 +98,7 @@ if (isset($_POST['currentPassword']) && !empty($_POST['currentPassword']))
   else
   {
     $message[] = array(
-      'Para actualizar la contrase&ntilde;a debe rellenar todos los campos',
+      'Para actualizar la contraseña debe rellenar todos los campos',
       'error'
     );
   }

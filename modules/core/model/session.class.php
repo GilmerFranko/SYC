@@ -79,8 +79,8 @@ class Session extends Model
         $this->is_admod = $this->getLevel();
         // ZONA HORARIA PREDETERMINADA
         $this->memberData['pp_timezone'] = empty($this->memberData['pp_timezone']) ? 'America/Los_Angeles' : $this->memberData['pp_timezone'];
-        // CANTIDAD DE NOTIFICACIONES DE FOTOS
-        $this->memberData['notifications_photos'] = $this->memberData['notifications'];
+        // Mensajes sin leer
+        $this->memberData['unread_messages'] = $this->getUnreadMessagesCount($this->memberData['member_id']);
         // CANTIDAD DE NOTIFICACIONES TOTALES
         $this->memberData['notifications'] = $this->getNotificationsCount($this->memberData['member_id']);
         // CANTIDAD DE DÍAS REGISTRADO
@@ -143,5 +143,24 @@ class Session extends Model
     }
     //
     return false;
+  }
+
+  /**
+   * Devuelve la cantidad de mensajes sin leer de un usuario.
+   *
+   * @param int $member_id ID del usuario.
+   * @return int La cantidad de mensajes sin leer del usuario.
+   */
+  public function getUnreadMessagesCount($member_id)
+  {
+    $query = $this->db->query('SELECT COUNT(`id`) FROM `members_messages` WHERE `to_member_id` = \'' . $member_id . '\' && `is_read` = 0');
+
+    if ($query == true && $query->num_rows > 0)
+    {
+      $nots = $query->fetch_row();
+      return $nots[0];
+    }
+
+    return 0;
   }
 }

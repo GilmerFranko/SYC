@@ -61,3 +61,4 @@ require Core::view('menu', 'core');
 </section>
 
 <!-- FOOTER -->
+<?php require Core::view('footer', 'core'); ?>
