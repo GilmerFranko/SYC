@@ -38,6 +38,9 @@ $parser->addCodeDefinition(\JBBCode\CodeDefinition::construct('size', '<span sty
 // Definir el BBCode para `font`
 $parser->addCodeDefinition(\JBBCode\CodeDefinition::construct("font", '<span style="font-family:{option}">{param}</span>', true));
 
+// Definir el BBCode para `code` con estilos Bootstrap
+$codeBuilder = new JBBCode\CodeDefinitionBuilder('code', '<pre><code class="bg-dark text-light p-2 rounded">{param}</code></pre>');
+$parser->addCodeDefinition($codeBuilder->build());
 
 
 // ESTABLECE ZONA HORARIA EN LA QUE SE BASAN LAS PUBLICACIONES

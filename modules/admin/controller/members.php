@@ -115,6 +115,7 @@ if (isset($_POST['ajax']))
                 $member['pp_gender'] = empty($memberData['pp_gender']) ? '0' : '1';
                 $member['group_id'] = ctype_digit($memberData['group_id']) ? $memberData['group_id'] : $config['reg_group'];
                 $member['banned'] = empty($memberData['banned']) ? 0 : time();
+                $member['banned_reason'] = $member['banned'] != 0 ? 'Incumplimiento con nuestras normas' : null;
 
 
                 if (!empty($memberData['password']))

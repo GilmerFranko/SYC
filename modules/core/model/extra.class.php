@@ -124,7 +124,7 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
                 {
                     if (!empty($msg[0]))
                     {
-                        $html .= ("Toastify({text: '" . $msg[0] . "', duration: 4000}).showToast(); ");
+                        $html .= ("Toastify({text: '" . $msg[0] . "', duration: 6000, backgroundColor: '#19191a'}).showToast(); ");
                     }
                 }
                 $html .= '};</script>';

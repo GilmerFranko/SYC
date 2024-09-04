@@ -81,7 +81,7 @@ class Member extends Session
    */
   function  getMemberData($user = null)
   {
-    $query = $this->db->query('SELECT `member_id`, `name`, `email`, `password`, `group_id`, `banned`, `session` FROM `members` WHERE LOWER(email) = \'' . $this->db->real_escape_string($user) . '\' LIMIT 1');
+    $query = $this->db->query('SELECT `member_id`, `name`, `email`, `password`, `group_id`, `banned`, `banned_reason`, `session` FROM `members` WHERE LOWER(email) = \'' . $this->db->real_escape_string($user) . '\' LIMIT 1');
 
     /* */
     if ($query == true && $query->num_rows > 0)

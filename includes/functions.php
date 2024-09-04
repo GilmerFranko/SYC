@@ -154,7 +154,7 @@ function cleanInput($input, $db = null)
     $input = strip_tags($input);
 
     // Opcional: Limita la longitud del string para evitar desbordamientos
-    $input = substr($input, 0, 1000);
+    $input = substr($input, 0, 10000);
 
     return $input;
 }
@@ -262,4 +262,14 @@ function getPlainText($string)
     $string = preg_replace('/\[(\/?)(size|font|color)[^\]]*\]/i', '', $string);
 
     return $string;
+}
+
+
+/**
+ * 
+ */
+function tobr($string)
+{
+    $string = str_replace(htmlentities('[br]'), "<br>", $string);
+    return nl2br($string);
 }

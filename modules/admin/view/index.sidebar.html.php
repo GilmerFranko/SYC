@@ -58,6 +58,15 @@
               Contactos
             </a>
           </li>
+          <li <?php if ($sSection == 'reports')
+              {
+                echo ' class="active"';
+              } ?>>
+            <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'reports'); ?>">
+              <i class="material-icons">warning</i>
+              Reportes
+            </a>
+          </li>
           <hr>
           <li class="">
             <ul class="collapsible collapsible-accordion">
@@ -65,7 +74,7 @@
                   {
                     echo ' class="active"';
                   } ?>>
-                <a class="collapsible-header white-text waves-effect waves-blue "><i class="material-icons white-text">description</i>Contáctos<i class="material-icons right white-text" style="margin-right:0;">arrow_drop_down</i></a>
+                <a class="collapsible-header white-text waves-effect waves-blue "><i class="material-icons white-text">description</i>Secciones<i class="material-icons right white-text" style="margin-right:0;">arrow_drop_down</i></a>
                 <div class="collapsible-body z-depth-1">
                   <ul>
                     <li <?php if ($sSection == 'contacts.view')

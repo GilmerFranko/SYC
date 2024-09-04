@@ -45,5 +45,45 @@ if (isset($_POST['do']))
     }
   }
 
+  // Reportar
+  if ($_POST['do'] == 'report')
+  {
+    if (!isset($_POST['thread_id']) or empty($_POST['thread_id']))
+    {
+      $msg = array('status' => false, 'message' => 'Error');
+    }
+
+    if (!isset($_POST['reason']) or empty($_POST['reason']))
+    {
+      $msg = array('status' => false, 'message' => 'Er2ror');
+    }
+
+    if (isset($_POST['customReason']) and !empty($_POST['customReason']) and $_POST['customReason'] != '')
+    {
+      $_POST['reason'] = $_POST['customReason'];
+    }
+
+    if (empty($msg))
+    {
+      $thread_id = escape($_POST['thread_id']);
+      $reason = escape($_POST['reason']);
+
+      $data = [
+        'thread_id' => $thread_id,
+        'reported_by_member_id' => $m_id,
+        'reason' => $reason
+      ];
+
+      if (loadClass('forums/threads')->reportThread($data) !== false)
+      {
+        $message = array('status' => true, 'message' => 'Anuncio reportado');
+      }
+      else
+      {
+        $message = array('status' => false, 'message' => 'Error al reportar');
+      }
+    }
+  }
+
   echo json_encode($message);
 }

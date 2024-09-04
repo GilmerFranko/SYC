@@ -41,7 +41,7 @@ $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
           <div class="card-body">
             <div class="container">
               <div class="row">
-                <div class="col col-9">
+                <div class="col col-12">
                   <strong class="thread-title">
                     <?= strtoupper($thread['title']); ?>
                   </strong>
@@ -49,10 +49,26 @@ $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
                   <p class="thread-content">
                     <?php
                     $parser->parse($thread['content']);
-                    echo $parser->getAsHTML();
+                    echo tobr($parser->getAsHTML());
                     ?>
                   </p>
                 </div>
+                <div class="" style="width: 200px; display: flex; padding: 0px 13px 15px;">
+                  <?php if ($images['rows'] > 0) : ?>
+                    <?php foreach ($images['data'] as $image) : ?>
+                      <div class="">
+
+                        <?php if ($image['image_url'] == null): ?>
+                          <img src="<?= $config['default_thread_photo'] ?>" class="rounded" data-bs-toggle=" modal" data-bs-target="#imageModal" style="cursor: pointer;" width="100" height="100">
+                        <?php else: ?>
+                          <img src="<?= $config['threads_url'] ?>/<?= $image['image_url'] ?>" class="rounded-1" data-bs-toggle="modal" data-bs-target="#imageModal" style="cursor: pointer;" width="100">
+                        <?php endif; ?>
+
+                      </div>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+                </div>
+
               </div>
             </div>
           </div>
@@ -60,22 +76,6 @@ $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
             <!-- Botones del footer -->
             <?php require Core::view('thread.footer', 'forums'); ?>
           </div>
-        </div>
-
-        <div class="" style="width: 200px; display: flex;">
-          <?php if ($images['rows'] > 0) : ?>
-            <?php foreach ($images['data'] as $image) : ?>
-              <div class="">
-
-                <?php if ($image['image_url'] == null): ?>
-                  <img src="<?= $config['default_thread_photo'] ?>" data-bs-toggle="modal" data-bs-target="#imageModal" style="cursor: pointer;" width="100" height="100">
-                <?php else: ?>
-                  <img src="<?= $config['threads_url'] ?>/<?= $image['image_url'] ?>" data-bs-toggle="modal" data-bs-target="#imageModal" style="cursor: pointer;" width="100">
-                <?php endif; ?>
-
-              </div>
-            <?php endforeach; ?>
-          <?php endif; ?>
         </div>
 
         <div class="col hidden-xs hidden-sm col-md-3">
@@ -91,3 +91,9 @@ $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
       </div>
     </div>
 </section>
+
+<!-- Modal denunciar -->
+<?php require Core::view('report.modal', 'forums'); ?>
+
+<!-- FOOTER -->
+<?php require Core::view('footer', 'core'); ?>

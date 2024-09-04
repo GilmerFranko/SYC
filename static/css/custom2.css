@@ -6,6 +6,7 @@
   --primary: #391334;
   --primary-dark: #3a003a;
   --primary-200: #5C395C;
+  --primary-300: #85427e;
   --primary-light: #5d3a56;
 
   --darkgray: #202123;
@@ -44,7 +45,8 @@ a
 
 body {
   background-color: #552C50;
-  font-family: Verdana, Helvetica, sans-serif;
+  /*font-family: Verdana, Helvetica, sans-serif;*/
+  font-family: Arial, 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
   color: var(--primary-light);
   max-width:995px !important;
 }
@@ -73,6 +75,21 @@ nav {
   padding: 0;
   position: relative;
 }
+
+/* Colores check */
+.form-check-input:checked {
+  background-color: var(--primary-300);
+  border-color: var(--primary-300);
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 .25rem rgba(175, 35, 180, 0.308);
+}
+
+.form-check-input {
+  border: var(--bs-border-width) solid #6d4e7c;
+}
+/* Fin Colores check */
 
 /** Colores botones */
 .btn-primary {
@@ -160,6 +177,10 @@ nav {
 
 .text-primary {
   color: var(--primary-light) !important;
+}
+
+.text-primary-dark {
+  color: var(--primary-dark) !important;
 }
 
 /* Fin colores de textos */

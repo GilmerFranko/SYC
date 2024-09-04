@@ -37,13 +37,20 @@
               } ?>
             </a>
             <!-- Mensajes -->
-            <a class="btn btn-sm text-primary d-flex justify-content-center" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'messages'); ?>">
-              <i class="material-icons">mail</i>
-              <?php if ($session->memberData['unread_messages'] > 0)
-              {
-                echo "($session->memberData['unread_messages'])";
-              } ?>
-            </a>
+            <?php if (!isset($session->memberData['unread_messages']) or $session->memberData['unread_messages']  <= 0)
+            { ?>
+              <a class="btn btn-sm text-primary d-flex justify-content-center" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'messages'); ?>">
+                <i class="material-icons">mail</i>
+              </a>
+            <?php }
+            // Si hay mensajes sin leer
+            else
+            { ?>
+              <a class="btn btn-sm d-flex justify-content-center text-primary-dark" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'messages'); ?>">
+                <i class="material-icons">mail</i>
+                <?php echo $session->memberData['unread_messages']; ?>
+              </a>
+            <?php } ?>
             <!-- Cuenta -->
             <div class="dropdown btn">
               <a class="text-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

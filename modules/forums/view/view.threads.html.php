@@ -53,6 +53,9 @@ require Core::view('head', 'core');
     </div>
 </section>
 
+<!-- Modal denunciar -->
+<?php require Core::view('report.modal', 'forums'); ?>
+
 <script>
   function adjustTextLength() {
     $('.thread-content').each(function() {

@@ -124,4 +124,23 @@ class Members extends Model
         //
         return 0;
     }
+
+
+    /**
+     * Banear un usuario
+     * 
+     * @param int $member_id
+     * @param int $time
+     * @return boolean
+     */
+    function banMember($member_id, $reason = 1)
+    {
+        $reason = $reason != 1 ? $reason : 'Incumplimiento con nuestras normas';
+
+        return loadClass('core/db')->smartInsert(
+            'members',
+            ['banned' => time(), 'banned_reason' => $reason],
+            ['member_id', $member_id]
+        );
+    }
 }

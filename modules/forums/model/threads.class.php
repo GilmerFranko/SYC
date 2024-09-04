@@ -251,6 +251,28 @@ class threads extends Model
    */
   public function getThread($identifier, $member_id, $isSlug = false)
   {
+
+    // Configuración de la base de datos
+    $host = 'localhost';      // Cambia esto si tu base de datos está en otro host
+    $username = 'root';    // Tu nombre de usuario de la base de datos
+    $password = ''; // Tu contraseña de la base de datos
+    $dbname = 'sexoycontacto'; // El nombre de tu base de datos
+
+    // Crear una nueva conexión
+    $mysqli = new mysqli($host, $username, $password, $dbname);
+
+    // Verificar la conexión
+    if ($mysqli->connect_error)
+    {
+      die("Error de conexión: " . $mysqli->connect_error);
+    }
+
+    // Configurar el conjunto de caracteres de la conexión para usar utf8mb4
+    if (!$mysqli->set_charset("utf8mb4"))
+    {
+      die("Error al configurar el conjunto de caracteres: " . $mysqli->error);
+    }
+
     // Determinar la columna a buscar
     $column = $isSlug ? 't.`slug`' : 't.`id`';
 
@@ -336,11 +358,35 @@ class threads extends Model
   /**
    * Elimina un thread por su ID
    *
-   * @param int $id
-   * @return bool
+   * @param int $thread_id El ID del thread a eliminar
+   * @return array
    */
-  public function deleteThread($id)
+  public function deleteThread($thread_id)
   {
+    // Eliminar imágenes relacionadas
+    $images = $this->getImagesByThreadId($thread_id);
+    if ($images && $images['rows'] > 0)
+    {
+      foreach ($images['data'] as $image)
+      {
+        if (!loadClass('forums/threads')->deleteImageById($image['id'], $thread_id))
+        {
+          return ['status' => false, 'msg' => 'Error al eliminar imágenes asociadas'];
+        }
+      }
+    }
+
+    // Eliminar el thread de la base de datos
+    $query = $this->db->query('DELETE FROM `f_threads` WHERE `id` = "' . $this->db->real_escape_string($thread_id) . '" LIMIT 1');
+
+    if ($query)
+    {
+      return ['status' => true, 'msg' => 'Anuncio eliminado con éxito!'];
+    }
+    else
+    {
+      return ['status' => false, 'msg' => 'Error al eliminar el anuncio'];
+    }
   }
 
   /**
@@ -569,14 +615,24 @@ class threads extends Model
             (`image_url` = "" OR `image_url` IS NULL)
           LIMIT 1'
     );
+  }
 
-    error_log('DELETE
-          FROM
-            `f_threads_images`
-          WHERE
-            `thread_id` = "' . $thread_id . '"
-            AND
-            (`image_url` = "" OR `image_url` IS NULL)
-          LIMIT 1');
+
+
+  /**
+   * Registra una denuncia de un hilo
+   * 
+   * @param array $data Los datos de la denuncia
+   * 
+   * @return bool
+   */
+  public function reportThread($data)
+  {
+    $data['reported_at'] = time();
+
+    // Elimina cualquier reporte de este usuario a este hilo
+    //$this->db->query('DELETE FROM `f_threads_reports` WHERE `thread_id` = ' . $data['thread_id'] . ' AND `reported_by_member_id` = ' . $data['reported_by_member_id']);
+
+    return loadClass('core/db')->smartInsert('f_threads_reports', $data);
   }
 }

@@ -54,6 +54,8 @@ class Model
       $_SESSION['debug_mode'] = $this->config['debug_mode'];
     }
 
+    $dbconnect->query("SET NAMES 'utf8mb4'");
+
 
     /* Se obtiene y se establece la sesión */
   }

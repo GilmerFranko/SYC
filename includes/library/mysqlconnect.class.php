@@ -18,8 +18,12 @@ require BG_DIR . 'config.db.php';
 /* Creamos la conexión */
 $dbconnect = new MySQLi($db['hostname'], $db['username'], $db['userpass'], $db['database']);
 
+
 /* Si hay algún error, lo mostramos */
 if ($dbconnect->connect_errno)
 {
   die('Error al conectar: ' . $dbconnect->connect_error);
 }
+
+/*  */
+$dbconnect->set_charset("utf8mb4");

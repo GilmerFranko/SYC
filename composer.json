@@ -1,5 +1,6 @@
 {
     "require": {
-        "jbbcode/jbbcode": "^1.4"
+        "jbbcode/jbbcode": "^1.4",
+        "phpmailer/phpmailer": "^6.9"
     }
 }

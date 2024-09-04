@@ -51,8 +51,13 @@ RewriteRule ^mensajes/todos$ index.php?app=members&section=messages [NC,L,QSA]
 RewriteRule ^mensajes/todos/$ index.php?app=members&section=messages [NC,L,QSA]
 
 # Reglas generales de reescritura
+# redirige a la sección principal de cada app si no se especifica sección
 RewriteRule ^(/)$ index.php?app=$1&section=null0 [NC,QSA,L]
+# redirige a la sección principal de cada app si no se especifica sección con barra al final
+RewriteRule ^([^/]+)/$ index.php?app=$1&section=null0 [NC,L,QSA]
+# redirige a la sección principal de cada app si no se especifica sección sin barra al final
 RewriteRule ^([^/]+)$ index.php?app=$1&section=null0 [NC,L,QSA]
+# redirige a la sección principal de cada app si no se especifica sección
 RewriteRule ^([^/]+)/([^/]+)$ index.php?app=$1&section=$2 [NC,L,QSA]
 
 

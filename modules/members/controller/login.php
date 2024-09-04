@@ -70,6 +70,7 @@ if (isset($_POST['login']) || isset($_POST['recoverBtn']))
       }
       else
       {
+        $message[] = array('Razón: ' . $memberData['banned_reason']);
         $message[] = array('Cuenta suspendida, pongase en contacto con el administrador', 'error');
       }
     }
@@ -155,5 +156,5 @@ if (isset($_POST['login']) || isset($_POST['recoverBtn']))
   }
 
   // ESTABLECER MENSAJE EN LA SESION
-  Core::model('extra', 'core')->setToast($message);
+  setTI($message);
 }
