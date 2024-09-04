@@ -29,7 +29,7 @@ section {
     margin: 0 auto;
     border: solid 2px #2C0928;
     border-radius: 8px;
-    padding: 0 0 10px 0;
+    padding-bottom: 60px;
 }
 
 a
@@ -348,4 +348,17 @@ nav {
 
 .pagination li.waves-effect a:hover i.material-icons {
   color: white; /* Color del ícono en hover */
+}
+
+
+.vertical-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.image-text {
+  font-weight: bold;
+  font-size: 1.2rem;
 }

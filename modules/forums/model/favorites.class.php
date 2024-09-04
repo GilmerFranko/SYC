@@ -103,4 +103,17 @@ class favorites extends Model
   {
     return (bool) $this->db->query("SELECT `thread_id` FROM `members_favorites` WHERE `member_id` = '$member_id' AND `thread_id` = '$thread_id'")->num_rows;
   }
+
+
+
+  /**
+   * Elimina todos los favoritos de un thread.
+   *
+   * @param int $thread_id El ID del hilo cuyos favoritos se quieren eliminar.
+   * @return boolean true si se eliminaron correctamente, false si ocurrió un error.
+   */
+  public function removeAllFavoritesByThreadId($thread_id)
+  {
+    return (bool) $this->db->query("DELETE FROM `members_favorites` WHERE `thread_id` = '$thread_id'");
+  }
 }

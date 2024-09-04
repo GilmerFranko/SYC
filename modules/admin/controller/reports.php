@@ -17,6 +17,7 @@ $page['code'] = 'reports';
 
 if (isset($_POST['ajax']) && isset($_POST['token']) && $session->checkToken($_POST['token']) === true)
 {
+  // Verifica si se ha pulsado el boton de suspender
   if (isset($_POST['suspend']) and !empty($_POST['suspend']))
   {
     $ban_member = escape($_POST['suspend']);
@@ -43,6 +44,43 @@ if (isset($_POST['ajax']) && isset($_POST['token']) && $session->checkToken($_PO
       }
     }
 
+    echo json_encode($message);
+  }
+
+  // Verifica si se ha pulsado el boton de eliminar anuncio (thread)
+  elseif (isset($_GET['deleteThread']))
+  {
+    if (isset($_POST['thread_id']) and !empty($_POST['thread_id']))
+    {
+      $thread_id = escape($_POST['thread_id']);
+
+      $password = isset($_POST['password']) ? escape($_POST['password']) : '';
+
+
+      // VERIFICAR CONTRASEÑA
+      if (password_verify($password, $session->memberData['password']) === true)
+      {
+        $response = loadClass('forums/threads')->deleteThread($thread_id);
+
+        if ($response['status'] === true)
+        {
+          $message = array('success' => true, 'msg' => $response['msg']);
+          setToast([[$response['msg']]]);
+        }
+        else
+        {
+          $message = array('success' => false, 'msg' => $response['msg']);
+        }
+      }
+      else
+      {
+        $message = array('success' => false, 'msg' => 'Contraseña incorrecta');
+      }
+    }
+    else
+    {
+      $message = array('success' => false, 'msg' => 'No se ha podido eliminar el anuncio');
+    }
     echo json_encode($message);
   }
 }

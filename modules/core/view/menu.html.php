@@ -59,12 +59,24 @@
 
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li><a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'account'); ?>">Mi cuenta</a></li>
-                <li><a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('admin', 'configuration'); ?>">Configuraci&oacuten</a></li>
+                <?php if (loadClass('admin/members')->isAdmod($m_id) == 1): ?>
+                  <li><a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('admin', 'configuration'); ?>">Configuraci&oacuten</a></li>
+                <?php endif; ?>
                 <li><a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'logout', null, ['token' => $session->token]); ?>">Salir</a></li>
               </ul>
             </div>
           </div>
-        <?php } ?>
+        <?php }
+        else
+        { ?>
+          <!-- Menu para miembros -->
+          <div class="col s3" style="display: flex;justify-content: flex-end;align-items: center; margin-right: 10px;">
+            <a class="btn btn-sm btn-secondary ms-2" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'login'); ?>">Iniciar</a>
+            <a class="btn btn-sm btn-primary ms-2" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'register'); ?>">Registrarse</a>
+          </div>
+
+
+        <?php  } ?>
 
       </div>
       <!-- FIN DERECHA -->

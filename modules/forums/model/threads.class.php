@@ -111,6 +111,103 @@ class threads extends Model
     return $data;
   }
 
+  public function searchThreads($params, $page = 1, $limit = 20)
+  {
+    $where = [];
+    $bindings = [];
+
+    // Filtrar por categoría (contact_id)
+    if (!empty($params['contact_id']))
+    {
+      $where[] = 'l.`contact_id` = "' . $this->db->real_escape_string($params['contact_id']) . '"';
+    }
+
+    // Filtrar por ubicación (location_id)
+    if (!empty($params['location_id']))
+    {
+      $where[] = 't.`location_id` = "' . $this->db->real_escape_string($params['location_id']) . '"';
+    }
+
+    // Filtrar por palabras clave (en el título o contenido)
+    if (!empty($params['words']))
+    {
+      $words = $this->db->real_escape_string($params['words']);
+      $where[] = '(t.`title` LIKE "%' . $words . '%" OR t.`content` LIKE "%' . $words . '%")';
+    }
+
+    // Filtrar por rango de edad
+    if (!empty($params['age_from']))
+    {
+      $where[] = 't.`age` >= ' . (int) $params['age_from'];
+    }
+    if (!empty($params['age_to']))
+    {
+      $where[] = 't.`age` <= ' . (int) $params['age_to'];
+    }
+
+    // Ordenar por fecha (ascendente o descendente)
+    $order_by = !empty($params['order_by']) && in_array($params['order_by'], ['asc', 'desc'])
+      ? $params['order_by']
+      : 'desc';
+
+    // Construir la cláusula WHERE
+    $where_clause = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+
+    // Calcular el límite inferior y superior
+    $lowerLimit = ($page - 1) * $limit;
+    $upperLimit = $limit;
+
+    // Consulta para obtener el total de resultados (sin límite de paginación)
+    $total_query = $this->db->query(
+      'SELECT COUNT(*) 
+        FROM `f_threads` AS t
+        INNER JOIN `members` AS m ON t.`member_id` = m.`member_id`
+        INNER JOIN `f_locations` AS l ON t.`location_id` = l.`id`
+        INNER JOIN `f_contacts` AS c ON l.`contact_id` = c.`id`
+        ' . $where_clause
+    );
+
+    list($data['total']) = $total_query->fetch_row();
+
+    // Paginador
+    $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('forums', 'view.searches', null, $params), $data['total'], $limit);
+
+    // Construir la consulta SQL final con paginación
+    $query = $this->db->query(
+      'SELECT 
+            t.*,
+            c.`id` AS contact_id,
+            m.`name` AS member_name,
+            m.`member_id` AS member_id
+        FROM 
+            `f_threads` AS t
+        INNER JOIN 
+            `members` AS m ON t.`member_id` = m.`member_id`
+        INNER JOIN 
+            `f_locations` AS l ON t.`location_id` = l.`id`
+        INNER JOIN 
+            `f_contacts` AS c ON l.`contact_id` = c.`id`
+        ' . $where_clause . '
+        ORDER BY 
+            t.`created_at` ' . $order_by . ' 
+        LIMIT ' . $data['pages']['limit']
+    );
+
+    $data['rows'] = $query->num_rows;
+
+    // Obtener los resultados de la consulta
+    if ($query && $data['rows'] > 0)
+    {
+      while ($row = $query->fetch_assoc())
+      {
+        $data['data'][] = $row;
+      }
+    }
+
+    return $data;
+  }
+
+
   /**
    * @Description Obtiene todos los threads guardados en favoritos por un usuario
    * @param int $location_id
@@ -162,7 +259,7 @@ class threads extends Model
 
     $data['rows'] = $query->num_rows;
     // Paginador
-    $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('anuncios', 'favoritos', null, ['member_id' => $member_id]), $total, $limit);
+    //$data['pages'] = Core::model('paginator', 'core')->pageIndex(array('anuncios', 'favoritos', null, ['member_id' => $member_id]), $total, $limit);
 
     // Obtener los resultados de la consulta
     if ($query and $data['rows'] > 0)
@@ -336,7 +433,7 @@ class threads extends Model
         foreach ($deleted_images as $image_id)
         {
           // Eliminar la imagen de la base de datos y del servidor
-          if (!loadClass('forums/threads')->deleteImageById($image_id, $thread_id))
+          if (!$this->deleteImageById($image_id, $thread_id))
           {
             $error = true;
           }
@@ -363,20 +460,42 @@ class threads extends Model
    */
   public function deleteThread($thread_id)
   {
+    error_log(1);
     // Eliminar imágenes relacionadas
     $images = $this->getImagesByThreadId($thread_id);
     if ($images && $images['rows'] > 0)
     {
       foreach ($images['data'] as $image)
       {
-        if (!loadClass('forums/threads')->deleteImageById($image['id'], $thread_id))
+        if (!$this->deleteImageById($image['id'], $thread_id))
         {
           return ['status' => false, 'msg' => 'Error al eliminar imágenes asociadas'];
         }
       }
     }
 
-    // Eliminar el thread de la base de datos
+    // Elimina los favoritos relacionados
+    if (!loadClass('forums/favorites')->removeAllFavoritesByThreadId($thread_id))
+    {
+      return ['status' => false, 'msg' => 'Error al eliminar los favoritos asociados'];
+    }
+
+    // Elimina los reportes relacionados
+    if (!$this->deleteAllReportsOfThread($thread_id))
+    {
+      return ['status' => false, 'msg' => 'Error al eliminar los reportes asociados'];
+    }
+
+    // Registra actividad
+
+    /**
+     * Si se llega a registrar a utilizar los contadores
+     * de los temas topic_count y post_count se debe
+     * actualizar el valor
+     **/
+
+
+    // Si se llega a este punto, se puede eliminar el thread de la base de datos
     $query = $this->db->query('DELETE FROM `f_threads` WHERE `id` = "' . $this->db->real_escape_string($thread_id) . '" LIMIT 1');
 
     if ($query)
@@ -634,5 +753,19 @@ class threads extends Model
     //$this->db->query('DELETE FROM `f_threads_reports` WHERE `thread_id` = ' . $data['thread_id'] . ' AND `reported_by_member_id` = ' . $data['reported_by_member_id']);
 
     return loadClass('core/db')->smartInsert('f_threads_reports', $data);
+  }
+
+
+
+  /**
+   * Elimina todos los reportes de un thread
+   * 
+   * @param int $thread_id ID del thread
+   * 
+   * @return bool
+   */
+  public function deleteAllReportsOfThread($thread_id)
+  {
+    return $this->db->query('DELETE FROM `f_threads_reports` WHERE `thread_id` = "' . $thread_id . '"');
   }
 }

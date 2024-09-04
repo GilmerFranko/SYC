@@ -91,7 +91,7 @@ if (isset($page['level']) && Core::model('extra', 'core')->setLevel($page['level
 
 	if ($page['url'] == '/')
 	{
-		$page['url'] = $extra->generateUrl('site', 'index');
+		$page['url'] = $extra->generateUrl('core', 'home-guest');
 	}
 	$extra->redirectTo($page['url']);
 	require BG_TEMPLATES . 'error' . DS . '401.php';
