@@ -24,7 +24,7 @@ require Core::view('head', 'core');
   <div class="container">
     <div class="row">
 
-      <div class="col col-sm-12 col-md-10">
+      <div class="col col-sm-12 col-md-9 col-lg-10">
         <!-- Menu de busqueda -->
         <?php require Core::view('menu.search', 'core'); ?>
 
@@ -46,9 +46,9 @@ require Core::view('head', 'core');
           </div>
         <?php endif ?>
       </div>
-      <div class="col hidden-xs hidden-sm col-md-3">
-        <?php //require Core::view('forums.sidebar', 'forums'); 
-        ?>
+      <div class="menu-sidebar1 col d-none d-sm-none d-md-flex col-md-3 col-lg-2">
+        <!-- SIDEBAR Solo para escritorio -->
+        <?php require Core::view('sidebar', 'forums'); ?>
       </div>
     </div>
 </section>

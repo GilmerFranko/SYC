@@ -7,7 +7,8 @@
  * @author Gilmer Franco <gil2017.com@gmail.com>
  *=======================================================
  *
- * @Description Este modelo se encarga de gestionar lo relacionado a los favoritos de los miembros
+ * @Description Este modelo se encarga de gestionar lo relacionado a los favoritos de los threads
+ * Esta clase está separada porque se pensaba manejar tambien los favoritos de los miembros
  *
  */
 class favorites extends Model
@@ -73,7 +74,11 @@ class favorites extends Model
   public function addFavorite($member_id, $thread_id)
   {
     $date = time();
+    // Inserta el favorito
     $query = $this->db->query("INSERT INTO `members_favorites` (`member_id`, `thread_id`, `created_at`) VALUES ('$member_id', '$thread_id', '$date')");
+    // Incrementa el contador de favoritos
+    $this->db->query("UPDATE `f_threads` SET `count_favorites` = `count_favorites` + 1 WHERE `id` = '$thread_id'");
+    //
     return ($query == true) ? true : false;
   }
 
@@ -86,8 +91,13 @@ class favorites extends Model
    */
   public function removeFavorite($member_id, $thread_id)
   {
+    // Elimina el favorito
     $stmt = $this->db->prepare("DELETE FROM `members_favorites` WHERE `member_id` = ? AND `thread_id` = ?");
     $stmt->bind_param('ii', $member_id, $thread_id);
+
+    // Decrementa el contador de favoritos
+    $this->db->query("UPDATE `f_threads` SET `count_favorites` = `count_favorites` - 1 WHERE `id` = '$thread_id'");
+
     return $stmt->execute();
   }
 

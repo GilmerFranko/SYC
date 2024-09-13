@@ -23,47 +23,69 @@ require Core::view('head', 'core');
   <!-- / Header -->
   <div class="container">
     <div class="row">
-
-      <div class="col col-sm-12 col-md-10">
-        <!-- Menu de busqueda -->
-        <?php require Core::view('menu.search', 'core'); ?>
-
-        <div style="font-size: 12px; text-align: center; margin: 0 0 10px 0px">
-          Encontrados <strong><?= $search_results['pages']['results'] ?></strong> anuncios
-        </div>
-        <!--paginador-->
-        <?php echo $search_results['pages']['paginator']; ?>
-        <!--fin_paginador-->
-        <?php if ($search_results['rows'] > 0): ?>
-          <?php foreach ($search_results['data'] as $thread)
-          {
-            // Carga el contácto correspondiente
-            $contact = loadClass('forums/f_contacts')->getContactById($thread['contact_id']);
-
-            // Carga el foro correspondiente
-            $location = loadClass('forums/locations')->getLocationById($thread['location_id']);
-
-            require Core::view('thread.piece', 'forums');
-          } ?>
-        <?php else: ?>
-          <div class="card">
-            <div class="card-content">
-              <span class="card-title">
-                No hay anuncios
-              </span>
+      <!-- Solo para movil -->
+      <div class="col d-sm-block d-md-none col-sm-12" style="padding: 10px; text-align: center;">
+        <div class="container overflow-auto" style="">
+          <div class="row" style="">
+            <div class="col-4 d-flex text-center justify-content-center align-items-center">
+              <img src="https://nuevapasion.com/images/ico-public-advertisements.png" class="index-icon" alt="Publicar anuncio">
+              <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="<?= gLink('forums/new.thread') ?>">&nbsp;PUBLICAR<br>&nbsp;ANUNCIOS
+              </a>
+            </div>
+            <div class="col-4 d-flex text-center justify-content-center align-items-center">
+              <img src="https://nuevapasion.com/images/edit-advertisements.png" class="index-icon" alt="Publicar anuncio">
+              <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="<?= gLink('mi-panel/anuncios') ?>">&nbsp;MODIFICAR<br>&nbsp; ANUNCIOS</a>
+            </div>
+            <div class="col-4 d-flex text-center justify-content-center align-items-center">
+              <img src="https://nuevapasion.com/images/fav-advertisements.png" class="index-icon" alt="Mis anuncios favoritos">
+              <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="<?= gLink('anuncios/favoritos') ?>">&nbsp; ANUNCIOS<br>&nbsp;FAVORITOS</a>
             </div>
           </div>
-        <?php endif ?>
-        <!--paginador-->
-        <?php echo $search_results['pages']['paginator']; ?>
-        <!--fin_paginador-->
+        </div>
       </div>
-      <div class="col hidden-xs hidden-sm col-md-3">
-        <?php //require Core::view('forums.sidebar', 'forums'); 
-        ?>
+      <div class="container">
+        <div class="row">
+
+          <div class="col col-sm-12 col-md-9 col-lg-10">
+            <!-- Menu de busqueda -->
+            <?php require Core::view('menu.search', 'core'); ?>
+
+            <div style="font-size: 12px; text-align: center; margin: 0 0 10px 0px">
+              Encontrados <strong><?= $search_results['pages']['results'] ?></strong> anuncios
+            </div>
+            <!--paginador-->
+            <?php echo $search_results['pages']['paginator']; ?>
+            <!--fin_paginador-->
+            <?php if ($search_results['rows'] > 0): ?>
+              <?php foreach ($search_results['data'] as $thread)
+              {
+                // Carga el contácto correspondiente
+                $contact = loadClass('forums/f_contacts')->getContactById($thread['contact_id']);
+
+                // Carga el foro correspondiente
+                $location = loadClass('forums/locations')->getLocationById($thread['location_id']);
+
+                require Core::view('thread.piece', 'forums');
+              } ?>
+            <?php else: ?>
+              <div class="card">
+                <div class="card-content">
+                  <span class="card-title">
+                    No hay anuncios
+                  </span>
+                </div>
+              </div>
+            <?php endif ?>
+            <!--paginador-->
+            <?php echo $search_results['pages']['paginator']; ?>
+            <!--fin_paginador-->
+          </div>
+          <div class="menu-sidebar1 col d-none d-sm-none d-md-flex col-md-3 col-lg-2">
+            <!-- SIDEBAR Solo para escritorio -->
+            <?php require Core::view('sidebar', 'forums'); ?>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 </section>
 
 <!-- Modal denunciar -->

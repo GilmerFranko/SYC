@@ -27,6 +27,9 @@ else
   $isFavorite = false;
 }
 
+// Registra a la visita del hilo (solo si no se ha visitado el mismo dia) (Primero se está cargando el hilo y luego se registra la visitta por lo que esta no estará reflejada en el momento)
+loadClass('forums/threads')->registerVisit($thread['id'], $m_id, $session->memberData['ip_address']);
+
 
 ?>
 
@@ -42,9 +45,11 @@ else
     <div class="container">
       <div class="row">
         <div class="col col-9">
-          <strong class="thread-title">
-            <?= strtoupper($thread['title']); ?>
-          </strong>
+          <a href="<?= loadClass('forums/threads')->getThreadUrl($thread['id']) ?>" class="materialboxed">
+            <strong class="thread-title">
+              <?= strtoupper($thread['title']); ?>
+            </strong>
+          </a>
           <br>
           <p class="thread-content">
             <?php echo cutText(getPlainText($thread['content']), 512); ?>

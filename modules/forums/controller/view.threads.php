@@ -44,5 +44,11 @@ if (!empty($msg))
   exit;
 }
 
+loadClass('forums/locations')->registerVisit($location['id'], $m_id, $session->memberData['ip_address']);
+
+/* Se definen estas variables para el modulo search */
+$_GET['location_id'] = $location['id'];
+$_GET['contact_id'] = $contact['id'];
+
 $page['name'] = $contact['name'];
 $page['code'] = 'newThread';

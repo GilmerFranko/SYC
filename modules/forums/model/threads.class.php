@@ -460,7 +460,6 @@ class threads extends Model
    */
   public function deleteThread($thread_id)
   {
-    error_log(1);
     // Eliminar imágenes relacionadas
     $images = $this->getImagesByThreadId($thread_id);
     if ($images && $images['rows'] > 0)
@@ -767,5 +766,133 @@ class threads extends Model
   public function deleteAllReportsOfThread($thread_id)
   {
     return $this->db->query('DELETE FROM `f_threads_reports` WHERE `thread_id` = "' . $thread_id . '"');
+  }
+
+
+  /**
+   * Aumenta en uno el conteo de visitas de un thread
+   * 
+   * @param int $thread_id ID del thread
+   * 
+   * @return bool
+   */
+  public function addVisit($thread_id)
+  {
+    return $this->db->query('UPDATE `f_threads` SET `views_count` = `views_count` + 1 WHERE `id` = "' . $thread_id . '"');
+  }
+
+
+  /**
+   * @Description Verifica si un miembro ya visitó un hilo en una fecha específica.
+   * @param int $thread_id
+   * @param int $member_id
+   * @return bool True si ya visitó, False si no.
+   */
+  public function checkVisit($thread_id, $member_id)
+  {
+    $query = $this->db->query("
+      SELECT id 
+      FROM f_threads_visits 
+      WHERE thread_id = " . (int)$thread_id . " 
+      AND member_id = " . (int)$member_id . "
+      AND DATE(visit_date) = CURDATE()
+    ");
+
+    return $query and $query->num_rows > 0;
+  }
+
+  /**
+   * @Description Registra la visita de un miembro a un hilo (thread).
+   * @param int $thread_id
+   * @param int $member_id
+   * @param string $ipaddress Dirección IP del visitante
+   * @return bool True si la visita fue registrada correctamente
+   */
+  public function registerVisit($thread_id, $member_id, $ipaddress)
+  {
+    // Verificar si ya visitó hoy
+    if ($this->checkVisit($thread_id, $member_id))
+    {
+      return false; // Ya visitó hoy, no registrar de nuevo
+    }
+
+    // Registrar la visita
+    $query = $this->db->query("
+      INSERT INTO f_threads_visits (thread_id, member_id, ipaddress, visit_date) 
+      VALUES (" . (int)$thread_id . ", " . (int)$member_id . ", '" . $this->db->real_escape_string($ipaddress) . "', NOW())
+    ");
+
+    $this->addVisit($thread_id);
+
+    return $query;
+  }
+
+  /**
+   * @Description Obtiene los hilos más visitados.
+   * @param int $limit El número de hilos a devolver
+   * @return array|boolean Un array con los hilos más visitados
+   */
+  public function getMostVisitedThreads($limit = 10)
+  {
+    $query = $this->db->query(
+      "
+      SELECT 
+        t.id, 
+        t.title, 
+        t.content, 
+        t.created_at, 
+        COUNT(v.id) AS visit_count
+      FROM 
+        f_threads AS t
+      LEFT JOIN 
+        f_threads_visits AS v ON t.id = v.thread_id
+      GROUP BY 
+        t.id
+      ORDER BY 
+        visit_count DESC
+      LIMIT " . (int)$limit
+    );
+
+    $data = [];
+    if ($query && $query->num_rows > 0)
+    {
+      while ($row = $query->fetch_assoc())
+      {
+        $data['data'][] = $row;
+      }
+    }
+
+    return $data;
+  }
+
+  public function getThreadVisitsLast10Days($thread_id)
+  {
+    $query = $this->db->query(
+      "SELECT 
+        DATE(visit_date) AS visit_day, 
+        COUNT(id) AS visits_count
+      FROM 
+        f_threads_visits
+      WHERE 
+        thread_id = " . (int)$thread_id . "
+      GROUP BY 
+        visit_day
+      ORDER BY 
+        visit_day DESC
+      LIMIT 10"
+    );
+
+    $data = [];
+    if ($query && $query->num_rows > 0)
+    {
+      while ($row = $query->fetch_assoc())
+      {
+        // Formatear la fecha en 'd-M' (por ejemplo, '1-Dic')
+        $formatted_date = date('j-M', strtotime($row['visit_day']));
+        $data[] = [$formatted_date, (int)$row['visits_count']];
+      }
+    }
+
+    return $data;
   }
 }

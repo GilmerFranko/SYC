@@ -12,29 +12,57 @@
 
 require Core::view('head', 'core');
 
-// Optiene imagenes del hilo
+// Optiene imagenes del hilo 
 $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
 
+// Registra a la visita del hilo (solo si no se ha visitado el mismo dia) (Primero se está cargando el hilo y luego se registra la visitta por lo que esta no estará reflejada en el momento)
+loadClass('forums/threads')->registerVisit($thread['id'], $m_id, $session->memberData['ip_address']);
+
+// Optiene las visitas detalladas del hilo
+$visits = loadClass('forums/threads')->getThreadVisitsLast10Days($thread['id']);
+
 ?>
+
+<style>
+  .pagAnuStatsAnuBox {
+    padding-bottom: 10px;
+    padding: 8px;
+    border: 2px solid #E6F1E6;
+    border-radius: 5px;
+    background-color: #f8fff8;
+    width: 176px;
+  }
+
+  .pagAnuStatsAnu {
+    margin: 5px;
+    font-size: 11px;
+  }
+
+  .pagAnuStatsAnu .stats {
+    color: #538053;
+    text-shadow: 2px 2px 2px #99dd99;
+    margin-right: 10px;
+  }
+</style>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
-
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <section>
   <!-- Header -->
   <?php require Core::view('menu', 'core'); ?>
   <!-- / Header -->
   <div class="container">
     <div class="row">
-      <div class="col col-sm-12 col-md-10">
+      <div class="col col-sm-12 col-md-9 col-lg-9">
         <div class="card thread-card">
 
           <div class="card-header" style="background: #e2f0e0; font-size: 14px">
-            <div style="width: 100px;"> Ref: <?php echo $thread['slug']; ?></div>
+            <div style="width: auto;"> Ref: <?php echo obtenerExtension($thread['slug']); ?></div>
             <div><?php echo $contact['name']; ?></div>
             <div class=" subheader">
-              <div class="subheader"><?php echo date('d/m/Y H:i', $thread['created_at']); ?></div>
+              <div class="subheader"><?php echo date('d-m-Y', $thread['created_at']); ?></div>
             </div>
           </div>
 
@@ -53,7 +81,7 @@ $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
                     ?>
                   </p>
                 </div>
-                <div class="" style="width: 200px; display: flex; padding: 0px 13px 15px;">
+                <div class="" style="display: flex; padding: 0px 13px 15px; flex-wrap: wrap; flex-direction: row;">
                   <?php if ($images['rows'] > 0) : ?>
                     <?php foreach ($images['data'] as $image) : ?>
                       <div class="">
@@ -78,9 +106,27 @@ $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
           </div>
         </div>
 
-        <div class="col hidden-xs hidden-sm col-md-3">
-          <?php //require Core::view('forums.sidebar', 'forums'); 
-          ?>
+      </div>
+      <!-- Estadísticas de visitas -->
+      <div class="col col-md-3 col-lg-3" style="">
+        <div class="pagAnuStatsAnuBox" bis_skin_checked="1">
+          <div class="pagAnuStatsAnu" bis_skin_checked="1">
+            <div class="stats" bis_skin_checked="1">
+              Estadísticas
+            </div>
+            <div class="dato" bis_skin_checked="1"><strong><?= $thread['views_count'] ?></strong>
+              veces listado
+              <a href="javascript:alert('Veces listado es el número de veces que se ha mostrado el anuncio a los usuarios, bien sea en el listado de resultados como en la página propia del anuncio.');"><b>?</b></a>
+            </div>
+            <div class="dato" bis_skin_checked="1"><strong><?= $thread['count_favorites'] ?></strong> añadido a favoritos
+              <a href="javascript:alert('Añadido a favoritos es el número de usuarios que han añadido este anuncio a su lista de \'Mi selección de anuncios\'.');"><b>?</b></a>
+            </div>
+            <div class="dato" bis_skin_checked="1"><strong>149</strong> <a href="/web/20171209172108/http://www.pasion.com/creditos/auto-renueva.php">auto·renovados</a></div>
+          </div>
+
+          <div class="pagAnuGraph" bis_skin_checked="1">
+            <div id="chart_div"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -91,6 +137,59 @@ $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
       </div>
     </div>
 </section>
+
+<script type="text/javascript">
+  google.charts.load('current', {
+    packages: ['corechart']
+  });
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Fecha', 'Veces listado'],
+      ['1-Dic', 56],
+      <?php foreach ($visits as $visit)
+      {
+        echo "[\"$visit[0]\"," . $visit[1] . "],";
+      } ?>
+    ]);
+
+    var options = {
+      title: 'Veces listado por día',
+      hAxis: {
+        title: 'Ultimos 10',
+        titleTextStyle: {
+          color: '#333'
+        },
+        textPosition: 'none'
+      },
+      vAxis: {
+        minValue: 0,
+        gridlines: {
+          count: 5 // Controla cuántas líneas de grilla quieres
+        }
+
+      },
+      height: 170,
+      width: 150,
+      backgroundColor: '#f8fff8',
+      colors: ['068306'],
+      legend: ('none'),
+      chartArea: {
+        left: '40',
+        width: '150',
+        top: '15'
+      },
+
+    };
+
+    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+
+  }
+</script>
+
+
 
 <!-- Modal denunciar -->
 <?php require Core::view('report.modal', 'forums'); ?>

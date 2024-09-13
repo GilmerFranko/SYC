@@ -121,3 +121,5 @@
         document.getElementById('pr').value = nombre;
       }
     </script>
+  </div>
+</div>

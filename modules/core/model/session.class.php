@@ -45,6 +45,7 @@ class Session extends Model
       'permissions' => array(),
       'newbie' => true,
       'pp_timezone' => 'America/Los_Angeles',
+      'ip_address' => $this->getIp(),
     );
 
     //
@@ -162,5 +163,10 @@ class Session extends Model
     }
 
     return 0;
+  }
+
+  function getIp()
+  {
+    return isset($_SERVER['X_FORWARDED_FOR']) ? $_SERVER['X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
   }
 }

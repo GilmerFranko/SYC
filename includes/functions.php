@@ -19,11 +19,11 @@
  */
 function loadClass(String $route)
 {
-    if ($route = explode('/', $route))
-    {
-        return Core::model($route[1], $route[0]);
-    }
-    return false;
+  if ($route = explode('/', $route))
+  {
+    return Core::model($route[1], $route[0]);
+  }
+  return false;
 }
 
 /**
@@ -33,7 +33,7 @@ function loadClass(String $route)
  */
 function db(String $table)
 {
-    return LoadTable::model($table . 'DB');
+  return LoadTable::model($table . 'DB');
 }
 
 /**
@@ -42,30 +42,30 @@ function db(String $table)
  */
 function showlog($string = '', $var_export = true)
 {
-    if ($var_export)
-    {
-        $string = var_export($string, 1);
-    }
+  if ($var_export)
+  {
+    $string = var_export($string, 1);
+  }
 
-    echo '<script>console.log(\'' . str_replace(array("'", '"'), array("\\'", '\"'), $string) . '\')</script>';
-    setToast([$string]);
-    error_log($string);
+  echo '<script>console.log(\'' . str_replace(array("'", '"'), array("\\'", '\"'), $string) . '\')</script>';
+  setToast([$string]);
+  error_log($string);
 }
 
 
 function setToast($data)
 {
-    loadClass('core/extra')->setToast($data);
+  loadClass('core/extra')->setToast($data);
 }
 
 function setSwal($data)
 {
-    loadClass('core/extra')->setSwal($data);
+  loadClass('core/extra')->setSwal($data);
 }
 
 function setTI($data)
 {
-    loadClass('core/extra')->setTI($data);
+  loadClass('core/extra')->setTI($data);
 }
 
 /**
@@ -73,7 +73,7 @@ function setTI($data)
  */
 function esc($string)
 {
-    return db()->real_escape_string($string);
+  return db()->real_escape_string($string);
 }
 
 /**
@@ -82,14 +82,14 @@ function esc($string)
  */
 function gLink($route = null, $params = null, $redirect = false)
 {
-    if ($route = explode('/', $route))
+  if ($route = explode('/', $route))
+  {
+    if (!isset($route[1]) or empty($route[1]))
     {
-        if (!isset($route[1]) or empty($route[1]))
-        {
-            $route[1] = '';
-        }
-        return loadClass('core/extra')->generateUrl($route[0], $route[1], null, $params, $redirect);
+      $route[1] = '';
     }
+    return loadClass('core/extra')->generateUrl($route[0], $route[1], null, $params, $redirect);
+  }
 }
 
 /**
@@ -98,21 +98,21 @@ function gLink($route = null, $params = null, $redirect = false)
  */
 function redirect($route = null, $params = null)
 {
-    if ($route = explode('/', $route))
-    {
-        return loadClass('core/extra')->generateUrl($route[0], $route[1], null, $params, true);
-    }
+  if ($route = explode('/', $route))
+  {
+    return loadClass('core/extra')->generateUrl($route[0], $route[1], null, $params, true);
+  }
 }
 
 function gourl($route, $params = null)
 {
-    if ($route = explode('/', $route))
-    {
-        $url = loadClass('core/extra')->generateUrl($route[0], $route[1], null, $params);
+  if ($route = explode('/', $route))
+  {
+    $url = loadClass('core/extra')->generateUrl($route[0], $route[1], null, $params);
 
-        echo '<meta http-equiv="refresh" content="0; url=' . $url . '">';
-        exit;
-    }
+    echo '<meta http-equiv="refresh" content="0; url=' . $url . '">';
+    exit;
+  }
 }
 
 
@@ -122,12 +122,12 @@ function gourl($route, $params = null)
  */
 function escape($string, $connect = null)
 {
-    global $extra;
-    if ($connect == null)
-    {
-        $connect = $extra->db;
-    }
-    return $connect->real_escape_string($string);
+  global $extra;
+  if ($connect == null)
+  {
+    $connect = $extra->db;
+  }
+  return $connect->real_escape_string($string);
 }
 
 /**
@@ -139,51 +139,51 @@ function escape($string, $connect = null)
  */
 function cleanInput($input, $db = null)
 {
-    // Elimina espacios al inicio y al final
-    $input = trim($input);
+  // Elimina espacios al inicio y al final
+  $input = trim($input);
 
-    // Elimina caracteres no imprimibles y convierte todos los caracteres al formato UTF-8
-    $input = mb_convert_encoding($input, 'UTF-8', 'UTF-8');
+  // Elimina caracteres no imprimibles y convierte todos los caracteres al formato UTF-8
+  $input = mb_convert_encoding($input, 'UTF-8', 'UTF-8');
 
-    // Evita inyecciones de código HTML y JavaScript (XSS)
-    $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+  // Evita inyecciones de código HTML y JavaScript (XSS)
+  $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
 
-    $input = escape($input);
+  $input = escape($input);
 
-    // Elimina etiquetas HTML y PHP
-    $input = strip_tags($input);
+  // Elimina etiquetas HTML y PHP
+  $input = strip_tags($input);
 
-    // Opcional: Limita la longitud del string para evitar desbordamientos
-    $input = substr($input, 0, 10000);
+  // Opcional: Limita la longitud del string para evitar desbordamientos
+  $input = substr($input, 0, 10000);
 
-    return $input;
+  return $input;
 }
 
 
 /**Envia notificacion al usuario **/
 function newNotification($to_member = null, $from_member = null, $key = 'general', $item = 0, $subitem = 0, $content = '', $myself = false, $check = false, $time = 'UNIX_TIMESTAMP()')
 {
-    return loadClass('members/notifications')->newNotification($to_member, $from_member, $key, $item, $subitem, $content, $myself, $check, $time);
+  return loadClass('members/notifications')->newNotification($to_member, $from_member, $key, $item, $subitem, $content, $myself, $check, $time);
 }
 
 /* Establecer mensaje de debug */
 function debug($string)
 {
-    $_SESSION['debug'][] = $string;
-    error_log($string);
+  $_SESSION['debug'][] = $string;
+  error_log($string);
 }
 
 /* Devuelve mensajes de debug en HTML con colores */
 function debugHTML()
 {
-    if (isset($_SESSION['debug']))
+  if (isset($_SESSION['debug']))
+  {
+    foreach ($_SESSION['debug'] as $string)
     {
-        foreach ($_SESSION['debug'] as $string)
-        {
-            echo '<span class="blue-text">' . $string . '</span><br>';
-        }
+      echo '<span class="blue-text">' . $string . '</span><br>';
     }
-    unset($_SESSION['debug']);
+  }
+  unset($_SESSION['debug']);
 }
 
 /**
@@ -191,9 +191,9 @@ function debugHTML()
  */
 function generateUUID($length = 28)
 {
-    $key = substr(md5(uniqid(true) . microtime()), 0, $length);
-    //
-    return $key;
+  $key = substr(md5(uniqid(true) . microtime()), 0, $length);
+  //
+  return $key;
 }
 
 /**
@@ -201,7 +201,7 @@ function generateUUID($length = 28)
  */
 function getBalance($member_id = null)
 {
-    return loadClass('members/member')->getBalance($member_id);
+  return loadClass('members/member')->getBalance($member_id);
 }
 
 /**
@@ -211,11 +211,11 @@ function getBalance($member_id = null)
  */
 function cleanString($var)
 {
-    $var = htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
-    $var = trim($var);
-    $var = escape($var);
+  $var = htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
+  $var = trim($var);
+  $var = escape($var);
 
-    return $var;
+  return $var;
 }
 
 /**
@@ -225,7 +225,7 @@ function cleanString($var)
  */
 function getColumns($table, $columns = null, $where = [], $limit = 1, $sentence = false)
 {
-    return loadClass('core/db')->getColumns($table, $columns, $where, $limit, $sentence);
+  return loadClass('core/db')->getColumns($table, $columns, $where, $limit, $sentence);
 }
 
 
@@ -237,11 +237,11 @@ function getColumns($table, $columns = null, $where = [], $limit = 1, $sentence 
  */
 function cutText($string, $length = 128)
 {
-    $string = substr($string, 0, $length);
-    $string = rtrim($string, "!,.-");
-    $string = $string . '...';
+  $string = substr($string, 0, $length);
+  $string = rtrim($string, "!,.-");
+  $string = $string . '...';
 
-    return $string;
+  return $string;
 }
 
 /**
@@ -251,17 +251,17 @@ function cutText($string, $length = 128)
  */
 function getPlainText($string)
 {
-    global $parser;
+  global $parser;
 
-    $string = strip_tags($string);
-    // Parsear el BBCode
-    $parser->parse($string);
-    // Obtener el texto sin las etiquetas BBCode
-    $string = $parser->getAsText();
-    // Quitar etiquetas sobrantes
-    $string = preg_replace('/\[(\/?)(size|font|color)[^\]]*\]/i', '', $string);
+  $string = strip_tags($string);
+  // Parsear el BBCode
+  $parser->parse($string);
+  // Obtener el texto sin las etiquetas BBCode
+  $string = $parser->getAsText();
+  // Quitar etiquetas sobrantes
+  $string = preg_replace('/\[(\/?)(size|font|color)[^\]]*\]/i', '', $string);
 
-    return $string;
+  return $string;
 }
 
 
@@ -270,6 +270,37 @@ function getPlainText($string)
  */
 function tobr($string)
 {
-    $string = str_replace(htmlentities('[br]'), "<br>", $string);
-    return nl2br($string);
+  $string = str_replace(htmlentities('[br]'), "<br>", $string);
+  return nl2br($string);
+}
+
+/**
+ * Gets the URL of an image
+ *
+ * @param string $image
+ * @param string $path
+ * @return string
+ */
+function gImage(string $image = '', string $path = null, bool $echo = true): string
+{
+  global $config;
+
+  $urls = [
+    'avatar' => $config['avatar_url'],
+    'threads' => $config['threads_url'],
+  ];
+
+  return isset($urls[$path]) ? $urls[$path] . '/' . $image : $config['images_url'] . '/' . $image;
+}
+
+/**
+ * Obtiene la extension de un archivo o cadena pasada como par ametro
+ *
+ * @param string $cadena El nombre del archivo o cadena a analizar
+ * @return string La extension del archivo o cadena
+ */
+function obtenerExtension($cadena)
+{
+  $partes = explode('.', $cadena);
+  return end($partes);
 }

@@ -18,11 +18,21 @@
     <div class="">
       <div class="row">
 
-        <div class="col s3">
+        <div class="col col-sm-2">
           <!-- Logo -->
           <a href="<?php echo $config['base_url'] ?>" style="font-weight: 600;">
             <img class="hide-on-small-only" src="<?php echo $config['images_url'] . '/pasion.gif' ?>" alt="" style="padding: 5px; width: 140px;">
           </a>
+        </div>
+        <div class="col d-none d-md-flex col-md-5 offset-md-1 align-items-center">
+          <?php if ($sSection == 'home-guest'): ?>
+            SEXOYCONTACTO.es - lider en anuncios de contactos
+          <?php elseif ($sSection == 'view.thread'): ?>
+            <div class="beacrumb" style="">
+              <span class="">SEXOYCONTACTO.es - LIDER EN ANUNCIOS DE CONTACTOS</span>
+
+            </div>
+          <?php endif; ?>
         </div>
         <?php if ($session->is_member)
         { ?>
