@@ -85,6 +85,8 @@ class AutoRenuevaCron
       //Envia notificacion al usuario 
       newNotification($member_id, 0, 'renewalFail', $thread_id);
       // No tiene suficiente saldo, detener la renovación
+      $this->disableAutoRenew($thread_id);
+
       $this->log('El usuario ' . $member_id . ' no tiene suficiente saldo en la billetera para renovar el hilo ' . $thread_id);
       return false;
     }
@@ -187,6 +189,7 @@ class AutoRenuevaCron
    */
   private function log($message)
   {
+    echo $message . '<br>';
     $log_file = __DIR__ . '/auto_renueva.log';
     if (!file_exists($log_file))
     {
