@@ -43,8 +43,8 @@ require Core::view('head', 'core');
             <td><?= $contact['status']; ?></td>
             <td><?= $contact['visibility']; ?></td>
             <td>
-              <a class="btn-floating btn-small waves-effect waves-light blue" href="<?= gLink('admin/new.contact') ?>"><i class="material-icons">edit</i></a>
-              <a class="btn-floating btn-small waves-effect waves-light red" href="#"><i class="material-icons">delete</i></a>
+              <a class="btn-floating btn-small waves-effect waves-light blue" href="<?= gLink('admin/edit.contact', ['contact_id' => $contact['id']]) ?>"><i class="material-icons">edit</i></a>
+              <a class="btn-floating btn-small waves-effect waves-light red" href=""><i class="material-icons">delete</i></a>
             </td>
           </tr>
       <?php }

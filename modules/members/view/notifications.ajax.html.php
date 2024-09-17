@@ -1,37 +1,51 @@
 <?php defined('SYC') || exit;
+/**
+ * 
+ * REALIZADO POR CHATGPT - NO PROBADO
+ */
 
 ?>1:<div id="viewNotificationsAjax">
-  <ul class="collection">
-    <a class="btn waves-effect waves-light btn-large w100 grey darken-4" onclick="getNotifications('close');">Cerrar</a>
+  <ul class="list-group list-group-flush">
+    <button class="btn btn-dark btn-lg w-100 mb-3" onclick="getNotifications('close');">Cerrar</button>
     <?php
     if (!empty($photos))
     {
       foreach ($photos as $photo)
       {
-        echo '<li class="collection-item avatar deep-orange lighten-5" style="border-bottom: 2px dotted #6f6f6f">
-      <a href="' . Core::model('extra', 'core')->generateUrl('members', 'profile', null, array('user' => $photo['author'])) . '">
-        <img src="' . Core::model('member', 'members')->getAvatar($photo['author']) . '" alt="Avatar" class="circle">
-        </a>
-        <span class="title">' . $photo['content'] . '</span>
-    </li>';
+        echo '<li class="list-group-item d-flex align-items-start p-3 bg-warning">
+                <div class="me-3">
+                  <a href="' . Core::model('extra', 'core')->generateUrl('members', 'profile', null, array('user' => $photo['author'])) . '">
+                    <img src="' . Core::model('member', 'members')->getAvatar($photo['author']) . '" alt="Avatar" class="rounded-circle" style="width: 48px; height: 48px;">
+                  </a>
+                </div>
+                <div class="flex-grow-1">
+                  <p class="mb-1">' . $photo['content'] . '</p>
+                </div>
+              </li>';
       }
     }
+
     if (!empty($notifications))
     {
       foreach ($notifications as $notification)
       {
-        echo '<li class="collection-item avatar ' . ($notification['read_time'] > 0 ? '' : 'blue') . '" id="not' . $notification['id'] . '">
-      <a href="' . Core::model('extra', 'core')->generateUrl('members', 'profile', null, array('user' => $notification['from_member'])) . '">
-        <img src="' . Core::model('member', 'members')->getAvatar($notification['from_member']) . '" alt="Avatar" class="circle">
-        </a>
-        <span class="title">' . (empty($notification['content']) ? Core::model('notifications', 'members')->generateNotification($notification['to_member'], $notification['from_member'], $notification['not_key'], $notification['item_id'], $notification['subitem_id']) : $notification['content']) . '</span>
-      <!--<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>-->
-    </li>';
+        echo '<li class="list-group-item d-flex align-items-start p-3 ' . ($notification['read_time'] > 0 ? 'bg-light' : 'bg-primary text-white') . '" id="not' . $notification['id'] . '">
+                <div class="me-3">
+                  <a href="' . Core::model('extra', 'core')->generateUrl('members', 'profile', null, array('user' => $notification['from_member'])) . '">
+                    <img src="' . Core::model('member', 'members')->getAvatar($notification['from_member']) . '" alt="Avatar" class="rounded-circle" style="width: 48px; height: 48px;">
+                  </a>
+                </div>
+                <div class="flex-grow-1">
+                  <p class="mb-1">
+                    ' . (empty($notification['content']) ? Core::model('notifications', 'members')->generateNotification($notification['to_member'], $notification['from_member'], $notification['not_key'], $notification['item_id'], $notification['subitem_id']) : $notification['content']) . '
+                  </p>
+                </div>
+              </li>';
       }
     }
     else
     {
-      echo '<blockquote class="flow-text">No hay notificaciones</blockquote>';
+      echo '<div class="alert alert-info text-center">No hay notificaciones</div>';
     }
     ?>
   </ul>

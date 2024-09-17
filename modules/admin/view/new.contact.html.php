@@ -40,14 +40,14 @@ require Core::view('head', 'core');
           <label for="status">Estado</label>
         </div>
 
-        <div class="input-field">
+        <!--<div class="input-field">
           <select name="visibility" id="visibility" required>
             <option value="" disabled selected>Elige uno</option>
             <option value="1">Publico</option>
             <option value="0">Privado</option>
           </select>
           <label for="visibility">Visibilidad</label>
-        </div>
+        </div>-->
 
         <div class="">
           <input id="image" type="file" name="image" required>

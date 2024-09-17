@@ -37,7 +37,7 @@ if (isset($_GET['do']))
         'name' => cleanString($_POST['name']),
         'short_url' => cleanString($_POST['short_url']),
         'status' => (isset($_POST['status']) and !is_int($_POST['status'])) ? cleanString($_POST['status']) : 1,
-        'visibility' => (isset($_POST['visibility']) and !is_int($_POST['visibility'])) ? cleanString($_POST['visibility']) : 1,
+        'visibility' => 1, //(isset($_POST['visibility']) and !is_int($_POST['visibility'])) ? cleanString($_POST['visibility']) : 1,
         'created_at' => time()
       ];
 

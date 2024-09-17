@@ -5,6 +5,7 @@ filestore
 *.jpg
 *.mp4
 *.zip
-.log
+*.webp
+*.log
 includes/library/rachet
 vendor

@@ -42,11 +42,15 @@ require Core::view('menu', 'core');
 									<!-- Ubicaciones -->
 									<?php
 									$locations = loadClass('forums/locations')->getLocationsByContactId($contact['id']);
-									foreach ($locations['data'] as $location): ?>
-										<a title="<?= $location['name'] ?>" href="<?= $config['forum_url'] . $location['short_url'] ?>" class="cat2">
-											<nobr><?= $location['name'] ?></nobr>
-										</a> &nbsp;
-									<?php endforeach; ?>
+									if ($locations['rows'] > 0)
+									{
+										foreach ($locations['data'] as $location): ?>
+											<a title="<?= $location['name'] ?>" href="<?= $config['forum_url'] . $location['short_url'] ?>" class="cat2">
+												<nobr><?= $location['name'] ?></nobr>
+											</a> &nbsp;
+									<?php endforeach;
+									} ?>
+
 									<!-- /Ubicaciones -->
 								</div>
 							</div>
