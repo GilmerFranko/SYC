@@ -21,6 +21,11 @@ loadClass('forums/threads')->registerVisit($thread['id'], $m_id, $session->membe
 // Optiene las visitas detalladas del hilo
 $visits = loadClass('forums/threads')->getThreadVisitsLast10Days($thread['id']);
 
+// Verifica si el hilo tiene activado el auto-renueva
+$isAutoRenewEnabled = loadClass('forums/autorenueva')->isAutoRenewEnabled($thread['id']);
+
+// Optiene la cantidad de veces que se ha renovado el hilo
+$count_autorenew = $thread['count_renewals'];
 ?>
 
 <style>
@@ -121,7 +126,7 @@ $visits = loadClass('forums/threads')->getThreadVisitsLast10Days($thread['id']);
             <div class="dato" bis_skin_checked="1"><strong><?= $thread['count_favorites'] ?></strong> añadido a favoritos
               <a href="javascript:alert('Añadido a favoritos es el número de usuarios que han añadido este anuncio a su lista de \'Mi selección de anuncios\'.');"><b>?</b></a>
             </div>
-            <div class="dato" bis_skin_checked="1"><strong>149</strong> <a href="/web/20171209172108/http://www.pasion.com/creditos/auto-renueva.php">auto·renovados</a></div>
+            <div class="dato" bis_skin_checked="1"><strong><?= $count_autorenew ?></strong> <a href="/web/20171209172108/http://www.pasion.com/creditos/auto-renueva.php">auto·renovados</a></div>
           </div>
 
           <div class="pagAnuGraph" bis_skin_checked="1">
@@ -193,6 +198,9 @@ $visits = loadClass('forums/threads')->getThreadVisitsLast10Days($thread['id']);
 
 <!-- Modal denunciar -->
 <?php require Core::view('report.modal', 'forums'); ?>
+
+<!-- Modal Renovar -->
+<?php require Core::view('renovar.modal', 'forums'); ?>
 
 <!-- FOOTER -->
 <?php require Core::view('footer', 'core'); ?>

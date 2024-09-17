@@ -20,16 +20,24 @@
 
 <?php if ($session->is_member)
 { ?>
-  <!-- Botón para contactar al usuario -->
-  <div class="chip selectable" onclick="window.location.href='<?= gLink('mensajescon/' . $thread['member_id']) ?>';">
-    <i class="em em-email" aria-role="presentation" aria-label="ARIES"></i>
-    <strong class="d-none d-sm-inline small-in-movil">Contactar</strong>
-  </div>
+  <?php if ($thread['member_id'] == $m_id): ?>
+    <!-- Botón para renovar -->
+    <div id="renewBtnModal" class="chip selectable" data-bs-toggle="modal" data-bs-target="<?= $isAutoRenewEnabled ? '#unRenewModal' : '#renewModal' ?>" data-thread-id="<?= $thread['id'] ?>">
+      <i class="em em-recycle" aria-role="presentation" aria-label="BLACK UNIVERSAL RECYCLING SYMBOL"></i>
+      <strong class="d-none d-sm-inline small-in-movil">Renovar</strong>
+    </div>
+  <?php else: ?>
+    <!-- Botón para contactar al usuario -->
+    <div class="chip selectable" onclick="window.location.href='<?= gLink('mensajescon/' . $thread['member_id']) ?>';">
+      <i class="em em-email" aria-role="presentation" aria-label="ARIES"></i>
+      <strong class="d-none d-sm-inline small-in-movil">Contactar</strong>
+    </div>
+  <?php endif; ?>
 <?php }
 else
 { ?>
   <!-- Tooltip para contactar al usuario cuando no se está logueado -->
-  <div class="chip selectable" data-bs-toggle="tooltip" data-bs-placement="top" title="Debes estar logueado para contactar con <?= $thread['user']['username'] ?>">
+  <div class="chip selectable" data-bs-toggle="tooltip" data-bs-placement="top" title="Debes estar logueado para contactar con <?= $thread['member']['name'] ?>">
     <i class="em em-email" aria-role="presentation" aria-label="ARIES"></i>
     <span class="d-none d-sm-inline small-in-movil">Contactar</span>
   </div>

@@ -25,4 +25,5 @@ $reasonAr = [
     'addForAdmin'   => 'Anadido por el administrador',
     'removeForAdmin' => 'Removido por el administrador',
     'withdrawalUser' => 'Retiro de saldo',
+    'recharguePaypal' => 'Recarga mediante PayPal'
 ];

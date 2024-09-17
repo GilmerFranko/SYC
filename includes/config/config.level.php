@@ -47,7 +47,8 @@ $section['members']['coins.webhook'] = array('level' => 0, 'message' => 'Identif
 
 // Foro
 $section['forums'] = array('level' => 2, 'message' => 'Identif&iacute;cate para continuar', 'url' => gLink('members/login'));
-
+$section['forums']['view.threads'] = array('level' => 0, 'message' => 'Identif&iacute;cate para continuar', 'url' => gLink('members/login'));
+$section['forums']['view.thread'] = array('level' => 0, 'message' => 'Identif&iacute;cate para continuar', 'url' => gLink('members/login'));
 
 // SITIO
 $section['site']['button'] = array('level' => 2, 'message' => 'Debes identificarte para recibir cr&eacute;ditos', 'url' => '/');

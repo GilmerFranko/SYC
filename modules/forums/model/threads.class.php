@@ -92,10 +92,10 @@ class threads extends Model
       WHERE 
         t.`location_id` = "' . $location_id . '" 
       ORDER BY 
-        t.`created_at` DESC 
+        t.`position` DESC 
       LIMIT ' . $lowerLimit . ',' . $upperLimit
     );
-    error_log('SELECT * FROM `f_threads` WHERE `location_id` = "' . $location_id . '"  ORDER BY `created_at` DESC LIMIT ' . $lowerLimit . ',' . $upperLimit);
+
     $data['rows'] = $query->num_rows;
     // Obtener los resultados de la consulta
     if ($query and $data['rows'] > 0)
@@ -894,5 +894,28 @@ class threads extends Model
     }
 
     return $data;
+  }
+
+
+  /**
+   * Verifica si un usuario es el propietario de un hilo
+   * @param int $thread_id
+   * @param int $member_id
+   * @return bool
+   */
+  public function isThreadOwner($thread_id, $member_id)
+  {
+    $query = $this->db->query(
+      'SELECT 
+        COUNT(*) AS count
+      FROM 
+        f_threads
+      WHERE 
+        id = "' . (int)$thread_id . '" 
+      AND 
+        member_id = "' . (int)$member_id . '"'
+    );
+
+    return $query->fetch_assoc()['count'] > 0;
   }
 }

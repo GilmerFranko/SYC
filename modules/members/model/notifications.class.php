@@ -181,7 +181,6 @@ class Notifications extends Session
         $url['photos'] = Core::model('extra', 'core')->generateUrl('site', 'photo', null, array('id' => '%1$s'));
         $url['deposit'] = Core::model('extra', 'core')->generateUrl('wallet', 'view_deposit', null, array('deposit_id' => '%1$s'));
         $url['withdrawal'] = Core::model('extra', 'core')->generateUrl('wallet', 'view_withdrawals', null, array('withdrawal_id' => '%1$s'));
-
         $msg = 'Contenido desconocido';
         switch ($key)
         {
@@ -193,6 +192,12 @@ class Notifications extends Session
                 // NUEVA COMPRA
             case 'newBuy':
                 $msg = 'Has comprado %1$s cr&eacute;ditos';
+                break;
+
+                // Pago rechazado al intentar renovar hilo, fondo insuficiente
+            case 'renewalFail':
+                $url['thread'] = loadClass('forums/threads')->getThreadUrl($item);
+                $msg = 'No se ha podido renovar tu <a href="' . $url['thread'] . '">anuncio</a>. Fondos insuficientes';
                 break;
         }
         $msg = sprintf($msg, $item, $subitem);

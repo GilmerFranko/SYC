@@ -56,6 +56,9 @@ require Core::view('head', 'core');
 <!-- Modal denunciar -->
 <?php require Core::view('report.modal', 'forums'); ?>
 
+<!-- Modal Renovar -->
+<?php require Core::view('renovar.modal', 'forums'); ?>
+
 <script>
   function adjustTextLength() {
     $('.thread-content').each(function() {

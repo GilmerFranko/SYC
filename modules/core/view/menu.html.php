@@ -38,12 +38,17 @@
         { ?>
           <!-- Menu para miembros -->
           <div class="col s3" style="display: flex;justify-content: flex-end;align-items: center; margin-right: 10px;">
+
+            <a class="btn btn-sm text-primary d-flex justify-content-center " href="">
+              <?php echo getBalance(); ?>€
+            </a>
+
             <!-- Notificaciones -->
             <a class="btn btn-sm text-primary d-flex justify-content-center" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'notifications'); ?>">
               <i class="material-icons">notifications</i>
               <?php if ($session->memberData['notifications'] > 0)
               {
-                echo "($session->memberData['notifications'])";
+                echo "(" . $session->memberData['notifications'] . ")";
               } ?>
             </a>
             <!-- Mensajes -->

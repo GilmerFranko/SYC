@@ -91,6 +91,15 @@ nav {
 }
 /* Fin Colores check */
 
+.btn
+{
+  color: white !important;
+  &:hover
+  {
+    color: white !important;
+  }
+}
+
 /** Colores botones */
 .btn-primary {
   background: none;
@@ -103,6 +112,7 @@ nav {
   &:hover {
     background: none;
     border: 1px solid var(--primary) !important;
+    color: var(--primary) !important;
     span {
       color: var(--primary) !important;
     }
@@ -118,6 +128,9 @@ nav {
 
   /* Opción 1 */
   /* color: #202123; /* Opción 2 */
+  &:hover {
+    color: var(--primary-dark) !important;
+  }
 }
 
 .btn-tertiary {
