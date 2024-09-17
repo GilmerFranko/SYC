@@ -17,4 +17,4 @@ $page['name'] = 'Mensajes';
 $page['code'] = 'messagesView';
 
 
-$messages = loadClass('members/messages')->getConversations($m_id);
+$messages = loadClass('members/messages')->getConversations($m_id, 5);

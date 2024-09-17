@@ -162,10 +162,27 @@ class messages extends Model
    * Devuelve las conversaciones del usuario, ordenadas por la fecha del último mensaje.
    *
    * @param int $member_id ID del usuario.
+   * @param int $page Número de página (opcional, por defecto 1)
+   * @param int $limit Cantidad de conversaciones por página (opcional, por defecto 20)
    * @return array Las conversaciones del usuario, o false si no hay.
    */
-  public function getConversations($member_id)
+  public function getConversations($member_id, $limit = 20)
   {
+
+    // Consulta para obtener el total de resultados (sin límite de paginación)
+    $total_query = $this->db->query(
+      "SELECT COUNT(*) as id FROM ( SELECT id FROM members_messages WHERE from_member_id = $member_id OR to_member_id = $member_id GROUP BY IF(from_member_id = $member_id, to_member_id, from_member_id) ) as conversations;
+"
+    );
+
+    list($data['total']) = $total_query->fetch_row();
+
+    error_log('Conversaciones: ' . $data['total']);
+
+    // Paginador
+    $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('members', 'messages'), $data['total'], $limit);
+
+
     // Ejecuta una consulta SQL para obtener el último mensaje de cada conversación en la que el usuario está involucrado
     $query = $this->db->query("SELECT m1.*, m3.member_id AS opposite_member_id, m3.name AS opposite_member_name, m3.pp_main_photo AS opposite_member_photo
         FROM members_messages m1
@@ -196,52 +213,22 @@ class messages extends Model
         ON m2.other_user_id = m3.member_id
         
         ORDER BY sent_at DESC
-        ");
-
-    error_log("SELECT m1.*, m3.member_id AS opposite_member_id, m3.name AS opposite_member_name, m3.pp_main_photo AS opposite_member_photo
-        FROM members_messages m1
-        -- Une con la subconsulta que obtiene el último mensaje por chat
-        INNER JOIN (
-            -- Subconsulta para obtener el último mensaje de cada conversación
-            SELECT 
-                -- Identifica el chat usando el menor ID para asegurar consistencia en el par de usuarios
-                LEAST(from_member_id, to_member_id) AS member1,
-                -- Identifica el otro usuario en la conversación usando el mayor ID
-                GREATEST(from_member_id, to_member_id) AS member2,
-                -- Optiene el usuario que no soy yo
-                IF(from_member_id = 2, to_member_id, from_member_id) AS other_user_id,
-                -- Obtiene la fecha y hora del último mensaje en la conversación
-                MAX(sent_at) AS last_sent_at
-            FROM members_messages
-            -- Filtra las conversaciones en las que el usuario está involucrado
-            WHERE from_member_id = 2 OR to_member_id = 2
-            -- Agrupa por el chat y el otro usuario para encontrar el último mensaje en cada conversación
-            GROUP BY member1, member2
-        ) m2
-        -- Une la tabla original con la subconsulta basada en los identificadores del chat y la fecha del último mensaje
-        ON LEAST(m1.from_member_id, m1.to_member_id) = m2.member1
-        AND GREATEST(m1.from_member_id, m1.to_member_id) = m2.member2
-        AND m1.sent_at = m2.last_sent_at
-        -- Une con la tabla members para obtener la información del otro usuario
-        INNER JOIN members m3
-        ON m2.other_user_id = m3.member_id;
-        
-        ORDER BY sent_at DESC
+        LIMIT " . $data['pages']['limit'] . "
         ");
 
 
 
     if ($query)
     {
-      $conversations['rows'] = $query->num_rows;
-      if ($query && $conversations['rows'] > 0)
+      $data['rows'] = $query->num_rows;
+      if ($query && $data['rows'] > 0)
       {
 
         while ($row = $query->fetch_assoc())
         {
-          $conversations['data'][] = $row;
+          $data['data'][] = $row;
         }
-        return $conversations;
+        return $data;
       }
       else
       {
