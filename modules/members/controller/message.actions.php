@@ -63,8 +63,8 @@ if (isset($_POST['do']))
 
     if ($msg = loadClass('members/messages')->getNewMessages($data))
     {
-      // Marca todos los mensajes como leídos
-      loadClass('members/messages')->markAllAsRead($data['to_member_id']);
+      // Marca todos los mensajes del usuario actual con el usuario receptor como leídos
+      loadClass('members/messages')->markAllAsRead($m_id, $data['to_member_id']);
       $msg = ['status' => true, 'msg' => 'Se han cargado los mensajes', 'data' => $msg];
     }
     else

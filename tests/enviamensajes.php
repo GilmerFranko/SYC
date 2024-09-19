@@ -18,7 +18,7 @@ if ($mysqli->connect_error)
 $members = $mysqli->query("SELECT member_id FROM members")->fetch_all(MYSQLI_ASSOC);
 
 // Cantidad de mensajes a generar
-$cantidadMensajes = 50; // Puedes cambiar esta cantidad
+$cantidadMensajes = 5000; // Puedes cambiar esta cantidad
 
 // Array de frases aleatorias para los mensajes
 $mensajesAleatorios = [

@@ -147,13 +147,14 @@ class messages extends Model
   }
 
   /**
-   * Marca todos los mensajes de un usuario como leídos
+   * Marca todos los mensajes enviados para un usuario como leídos
+   * Ejemplo, marca como leidos todos los mensajes que juan me envio a mi 
    * @param int $to_member_id ID del usuario que los recibió
    * @return boolean True si se actualizaron correctamente, false en caso contrario
    */
-  public function markAllAsRead($to_member_id)
+  public function markAllAsRead($from_member_id, $to_member_id)
   {
-    return $this->db->query("UPDATE members_messages SET is_read = 1 WHERE to_member_id = $to_member_id");
+    return $this->db->query("UPDATE members_messages SET is_read = 1 WHERE to_member_id = $from_member_id AND from_member_id = $to_member_id");
   }
 
 

@@ -47,7 +47,7 @@ if (!empty($msg))
 $messages = loadClass('members/messages')->getMessagesBetween($m_id, $receiverId);
 
 // Marcar mensajes como leido
-loadClass('members/messages')->markAllAsRead($m_id);
+loadClass('members/messages')->markAllAsRead($m_id, $receiverId);
 
 
 $page['name'] = 'Mensajes con ' . $memberReceiver['name'];
