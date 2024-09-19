@@ -27,13 +27,13 @@ class locations extends Model
   }
 
   /**
-   * @Description Obtiene todos los foros
+   * @Description Obtiene todos los foros activos
    * @param int $page El n mero de p gina
    * @return array|boolean Un array con los foros
    */
   public function getAllLocations()
   {
-    $query = $this->db->query('SELECT l.*, c.name AS contact_name FROM `f_locations` AS l INNER JOIN `f_contacts` AS c ON l.`contact_id` = c.`id` ORDER BY `id` DESC ');
+    $query = $this->db->query('SELECT l.*, c.name AS contact_name FROM `f_locations` AS l INNER JOIN `f_contacts` AS c ON l.`contact_id` = c.`id` WHERE l.`status` = 1 ORDER BY `id` DESC');
 
     $data['rows'] = $query->num_rows;
     // Obtener los resultados de la consulta
@@ -135,5 +135,10 @@ class locations extends Model
     }
 
     return $data;
+  }
+
+  public function isActive($forum_id)
+  {
+    return $this->db->query("SELECT id FROM f_locations WHERE id = " . $forum_id . " AND status = 1")->num_rows > 0;
   }
 }

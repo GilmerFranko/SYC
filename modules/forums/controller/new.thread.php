@@ -96,48 +96,57 @@ if (isset($_GET['new_thread']))
 
     $thread['content'] = cleanString($bbcode);
 
-    // Verifica que exista la ubicacion y pertenezca al contacto (foro)
+    // Verifica que exista la ubicacion
+    // Que esté activa
+    // Y pertenezca al contacto (foro)
     if ($location = loadClass('forums/locations')->getLocationById($thread['location_id']))
     {
-      if ($location['contact_id'] == $contact_id)
+      if (loadClass('forums/locations')->isActive($location['id']))
       {
-        if ($thread_id = loadClass('forums/threads')->newThread($thread))
+        if ($location['contact_id'] == $contact_id)
         {
-
-          // Sube las imagenes al servidor
-          $imagens = loadClass('forums/threads')->uploadImages();
-
-          foreach ($imagens[1] as $image_url)
+          if ($thread_id = loadClass('forums/threads')->newThread($thread))
           {
-            // Sube las imagenes a la base de datos
-            loadClass('forums/threads')->newThreadImage($thread_id, $image_url);
-          }
 
-          // Verifica si se subieron las imagenes correctamente
-          if ($imagens[0] === true)
-          {
-            $msg[] = 'Se ha creado la publicación correctamente';
-            setTI([$msg]);
-            redirect('forums/new.thread');
-            exit;
+            // Sube las imagenes al servidor
+            $imagens = loadClass('forums/threads')->uploadImages();
+
+            foreach ($imagens[1] as $image_url)
+            {
+              // Sube las imagenes a la base de datos
+              loadClass('forums/threads')->newThreadImage($thread_id, $image_url);
+            }
+
+            // Verifica si se subieron las imagenes correctamente
+            if ($imagens[0] === true)
+            {
+              $msg[] = 'Se ha creado la publicación correctamente';
+              setTI([$msg]);
+              redirect('forums/new.thread');
+              exit;
+            }
+            else
+            {
+              $msg[] = 'Se ha creado la publicación pero no se ha podido subir las imagenes';
+              $msg[] = $imagens[1];
+              setTI([$msg]);
+              redirect('forums/new.thread');
+              exit;
+            }
           }
           else
           {
-            $msg[] = 'Se ha creado la publicación pero no se ha podido subir las imagenes';
-            $msg[] = $imagens[1];
-            setTI([$msg]);
-            redirect('forums/new.thread');
-            exit;
+            $msg[] = 'No se ha podido crear la publicación';
           }
         }
         else
         {
-          $msg[] = 'No se ha podido crear la publicación';
+          $msg[] = 'La ubicación no pertenece al contacto (foro)';
         }
       }
       else
       {
-        $msg[] = 'La ubicación no pertenece al contacto (foro)';
+        $msg[] = 'La ubicación no está activa';
       }
     }
     else
