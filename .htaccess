@@ -37,6 +37,9 @@ Options -Indexes
 
 RewriteEngine On
 
+# Redirecciona URL cron.php a cron.php
+RewriteRule ^cron.php$ cron.php [NC,L,QSA]
+
 # Redirecciona URLs para "f" antes de reglas más generales
 RewriteRule ^f/([^/]+)$ index.php?app=forums&section=view.threads&location_url=$1 [NC,L,QSA]
 
