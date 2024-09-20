@@ -199,6 +199,10 @@ class Notifications extends Session
                 $url['thread'] = loadClass('forums/threads')->getThreadUrl($item);
                 $msg = 'No se ha podido renovar tu <a href="' . $url['thread'] . '">anuncio</a>. Fondos insuficientes';
                 break;
+            case 'renewalSuccess':
+                $url['thread'] = loadClass('forums/threads')->getThreadUrl($item);
+                $msg = 'Tu <a href="' . $url['thread'] . '">anuncio</a> ha sido renovado';
+                break;
         }
         $msg = sprintf($msg, $item, $subitem);
         return $msg;

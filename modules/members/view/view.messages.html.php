@@ -81,6 +81,22 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
             $('#messages-container').append('<div class="d-flex justify-content-end"><div class="message message-sent"><p>' + response.data.content + '</p><small>' + response.data.sent_at + '</small></div></div>');
             $('#messages-container').scrollTop($('#messages-container')[0].scrollHeight); // Desplazarse hacia abajo
             lastMessageId = response.data.id;
+
+            // Enviar correo al usuario
+            $.ajax({
+              type: 'POST',
+              url: '<?= gLink('members/message.actions'); ?>',
+              data: {
+                do: 'sendEmail',
+                ajax: true,
+                to_member_id: receiverId
+              },
+              dataType: 'json',
+              success: function(response) {
+                console.log(response);
+              }
+            });
+            // Fin enviar correo al usuario
           } else {
             Toastify({
               text: response.msg,

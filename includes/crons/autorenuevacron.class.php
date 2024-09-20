@@ -120,6 +120,9 @@ class AutoRenuevaCron
 
       // Confirmar la transacción
       $this->db->commit();
+      //Envia notificacion al usuario 
+      newNotification($member_id, 0, 'renewalSuccess', $thread_id);
+      //
       $this->log('El usuario ' . $member_id . ' ha renovado el hilo ' . $thread_id);
       return true;
     }

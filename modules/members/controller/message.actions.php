@@ -72,6 +72,17 @@ if (isset($_POST['do']))
       $msg = ['status' => false, 'msg' => 'No se han podido cargar los mensajes'];
     }
   }
+
+  elseif ($_POST['do'] == 'sendEmail')
+  {
+    /* Enviar correo al usuario */
+    // Optiene usuario to_member
+    $to_member_id = cleanString($_POST['to_member_id']);
+    $to_member = loadClass('admin/members')->getMember($to_member_id);
+    // Envia correo
+    loadClass('core/email')->sendEmail('newmessage', $to_member['email'], array('from_member' => $session->memberData, 'to_member' => $to_member));
+  }
+
   echo json_encode($msg);
 }
 else
