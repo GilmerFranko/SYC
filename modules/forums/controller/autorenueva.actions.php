@@ -15,13 +15,12 @@ if (isset($_POST['do']) && isset($_POST['token']) && $session->checkToken($_POST
   $message = array('status' => false, 'message' => 'Error');
   $thread_id = escape($_POST['thread_id']);
   $action = $_POST['do']; // Acción a realizar: renovar manualmente o activar auto-renueva
-  $member_id = $m_id; // ID del usuario autenticado
 
   // Instanciar la clase AutoRenueva
   $autoRenueva = loadClass('forums/autorenueva');
 
   // Verifica que el usuario sea el propietario del hilo
-  if (loadClass('forums/threads')->isThreadOwner($thread_id, $member_id) === true)
+  if (loadClass('forums/threads')->isThreadOwner($thread_id, $m_id) === true)
   {
 
     if ($action == 'manualRenew')

@@ -42,7 +42,7 @@ $contact = $contact ?? ['name' => ''];
     <div class="subheader">
       <div><?php echo $thread['member_name']; ?></div>
       <? if ($isAutoRenewEnabled): ?>
-        <div class="btn-autorenueva"><a href="<?php echo $config['forum_url']; ?><?php echo $thread->locations['location_id']; ?>/<?php echo $thread['id']; ?>">AUTO·RENUEVA</a></div>
+        <div class="btn-autorenueva"><a href="#">AUTO·RENUEVA</a></div>
       <? endif; ?>
     </div>
   </div>

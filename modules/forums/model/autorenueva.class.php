@@ -29,10 +29,12 @@ class AutoRenueva extends Model
    */
   public function manualRenew($thread_id, $member_id)
   {
+    error_log('Renueva un hilo manualmente (una sola vez)');
     // Verificar si el usuario tiene suficiente saldo en la billetera
-    $userWallet = $this->getUserBalance($member_id);
+    $userWallet = getBalance($member_id);
     if ($userWallet < $this->renewalCost)
     {
+      error_log('El usuario no tiene suficiente saldo en la billetera');
       // No tiene suficiente saldo, detener la renovación
       return false;
     }
@@ -47,6 +49,7 @@ class AutoRenueva extends Model
       {
         // Hubo un problema al debitar, revertir transacción
         $this->db->rollback();
+        error_log('No se pudo debitar el monto fijo de la billetera del usuario');
         return false;
       }
 
@@ -58,11 +61,13 @@ class AutoRenueva extends Model
       {
         // No se actualizó ningún hilo, revertir transacción
         $this->db->rollback();
+        error_log('No se pudo actualizar la columna position del hilo');
         return false;
       }
 
       // Confirmar la transacción
       $this->db->commit();
+      error_log('Se actualizo la columna position del hilo');
       return true;
     }
     catch (Exception $e)
@@ -108,7 +113,7 @@ class AutoRenueva extends Model
   public function disableAutoRenew($thread_id)
   {
     // Verificar si el hilo tiene activado el auto-renueva
-    if (!$this->isAutoRenewEnabled($thread_id))
+    if ($this->isAutoRenewEnabled($thread_id) == false)
     {
       return false;
     }
@@ -125,11 +130,9 @@ class AutoRenueva extends Model
    */
   public function isAutoRenewEnabled($thread_id)
   {
-    $stmt = $this->db->prepare("SELECT 1 FROM auto_renueva_settings WHERE thread_id = ? AND is_enabled = 1");
-    $stmt->bind_param('i', $thread_id);
-    $stmt->execute();
-    $stmt->store_result();
-    return $stmt->num_rows > 0;
+    $result = $this->db->query("SELECT id FROM auto_renueva_settings WHERE thread_id = $thread_id AND is_enabled = 1");
+    error_log("SELECT id FROM auto_renueva_settings WHERE thread_id = $thread_id AND is_enabled = 1");
+    return $result->num_rows > 0;
   }
 
   /**
@@ -167,23 +170,6 @@ class AutoRenueva extends Model
     }
   }
 
-
-  /**
-   * Obtiene el saldo actual de la billetera del usuario
-   *
-   * @param int $member_id ID del usuario
-   * @return float Saldo disponible en la billetera
-   */
-  public function getUserBalance($member_id)
-  {
-    $stmt = $this->db->prepare("SELECT balance FROM member_balance WHERE member_id = ?");
-    $stmt->bind_param('i', $member_id);
-    $stmt->execute();
-    $stmt->bind_result($balance);
-    $stmt->fetch();
-    return (float)$balance;
-  }
-
   /**
    * Debita un monto de la billetera del usuario
    *
@@ -193,40 +179,13 @@ class AutoRenueva extends Model
    */
   public function debitWallet($member_id, $amount)
   {
-    // Iniciar una transacción
-    $this->db->begin_transaction();
-
-    try
+    // Verificar que el usuario tenga saldo suficiente
+    $balance = getBalance($member_id);
+    if ($balance < $amount)
     {
-      // Verificar que el usuario tenga saldo suficiente
-      $balance = $this->getUserBalance($member_id);
-      if ($balance < $amount)
-      {
-        $this->db->rollback();
-        return false;
-      }
-
-      // Actualizar el saldo de la billetera
-      $stmt = $this->db->prepare("UPDATE member_balance SET balance = balance - ?, last_updated = UNIX_TIMESTAMP() WHERE member_id = ?");
-      $stmt->bind_param('di', $amount, $member_id);
-      $stmt->execute();
-
-      if ($stmt->affected_rows === 0)
-      {
-        // No se actualizó ningún saldo, revertir transacción
-        $this->db->rollback();
-        return false;
-      }
-
-      // Confirmar la transacción
-      $this->db->commit();
-      return true;
-    }
-    catch (Exception $e)
-    {
-      // En caso de error, revertir la transacción
-      $this->db->rollback();
       return false;
     }
+
+    return loadClass('members/transactions')->updateBalance($member_id, $amount, false, 'autoRenewal');
   }
 }

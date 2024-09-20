@@ -23,7 +23,7 @@
         <!-- Select para elegir el intervalo de renovación -->
         <form id="renewForm" action="<?php echo gLink('forums/autorenueva.actions'); ?>" method="post">
           <!-- Campo oculto para el thread_id -->
-          <input type="hidden" id="thread_id_renueva" name="thread_id" value="<?php echo $thread['id']; ?>">
+          <input type="hidden" id="thread_id_renueva" name="thread_id" value="">
           <div class="mb-2">
             <label for="interval" class="form-label" style="font-size: 0.85rem;">Intervalo de renovación:</label>
             <select class="form-select form-select-sm" id="interval" name="interval">
@@ -74,7 +74,7 @@
 
         <form id="unRenewForm" action="<?php echo gLink('forums/autorenueva.actions'); ?>" method="post">
           <!-- Campo oculto para el thread_id -->
-          <input type="hidden" id="thread_id_unRenueva" name="thread_id" value="<?php echo $thread['id']; ?>">
+          <input type="hidden" id="thread_id_unRenueva" name="thread_id" value="">
           <div style="display: flex; justify-content: space-between;">
             <button id="unRenewBtn" type="submit" class="btn btn-danger btn-sm">Desactivar Auto-renueva</button>
           </div>
@@ -144,7 +144,7 @@
 
       // Recoger los datos del formulario
       var formData = {
-        thread_id: $('#thread_id_renueva').val(), // ID del hilo (debe estar en el formulario)
+        thread_id: $('#thread_id_unRenueva').val(), // ID del hilo (debe estar en el formulario)
         do: 'disableAutoRenew', // Acción a realizar (activar auto-renueva)
         ajax: 'true',
         token: '<?php echo $session->token; ?>',
@@ -194,8 +194,16 @@
 
       // Asignar el thread_id al campo oculto del formulario
       $('#thread_id').val(threadId);
+    });
+
+    $('#unRenewModal').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget); // Botón que activó el modal
+      var threadId = button.data('thread-id'); // Obtener el ID del hilo del atributo data-thread-id
+
+      // Asignar el thread_id al campo oculto del formulario
       $('#thread_id_unRenueva').val(threadId);
     });
+
   });
 
   // INSERVIBLE
