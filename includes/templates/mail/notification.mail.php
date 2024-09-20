@@ -7,19 +7,16 @@
  * @author Gilmer Franco <gil2017.com@gmail.com>
  *=======================================================
  *
- * @Description Plantilla de correo para notificar al usuario de un nuevo mensaje
+ * @Description Plantilla de correo para notificaciones generales al usuario
  *
  */
-$script_name = Core::config('script_name');
-
+$script_abbreviation = Core::config('script_abbreviation');
 $year = date('Y');
-
 $base_url = Core::config('base_url');
+$subject = 'Notificacion de ' . $script_abbreviation;
 
-$subject = 'Tienes un nuevo mensaje en ' . $script_name;
-
-// Genera el enlace al mensaje
-$messageLink = gLink('members/view.messages', ['r_id' => $params['from_member']['member_id']]);
+// Enlace de ejemplo, personaliza según la notificación
+$notificationLink = gLink('members/notifications');
 
 $content = <<<HTML
 <!DOCTYPE html>
@@ -28,7 +25,7 @@ $content = <<<HTML
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Language" content="es">
-    <title>Nuevo mensaje en {$script_name}</title>
+    <title>Notificaci&oacute;n de {$script_abbreviation}</title>
     <style>
         /* Estilos para correos electrónicos */
         body {
@@ -95,19 +92,21 @@ $content = <<<HTML
 <body>
     <div class="container">
         <div class="header">
-            <h1>Tienes un nuevo mensaje en {$script_name}!</h1>
+            <h1>Nueva notificaci&oacute;n de {$script_abbreviation}</h1>
         </div>
         <div class="body-content">
             <p>Hola <strong>{$params['to_member']['name']}</strong>,</p>
-            <p>{$params['from_member']['name']} Te ha enviado un nuevo mensaje en <strong>{$script_name}</strong>.</p>
-            <p>Para leer tu mensaje, haz clic en el siguiente botón:</p>
-            <p>¡Gracias por ser parte de nuestra comunidad!</p>
+            <p>Tienes una nueva notificaci&oacute;n en <strong>{$script_abbreviation}</strong>.</p>
+            <p>Descripci&oacute;n de la notificaci&oacute;n:</p>
+            <p><strong>{$params['content']}</strong></p>
+            <p>Para ver m&aacute;s detalles, haz clic en el bot&oacute;n a continuaci&oacute;n:</p>
             <p style="text-align:center;">
-                <a href="{$messageLink}" class="btn">Ver mensaje</a>
+                <a href="{$notificationLink}" class="btn">Ver Notificaci&oacute;n</a>
             </p>
+            <p>&iexcl;Gracias por ser parte de nuestra comunidad!</p>
         </div>
         <div class="footer">
-            <p>&copy; {$year} {$script_name} - Todos los derechos reservados.</p>
+            <p>&copy; {$year} {$script_abbreviation} - Todos los derechos reservados.</p>
             <p><a href="{$base_url}">Visitar nuestro sitio</a></p>
         </div>
     </div>

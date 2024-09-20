@@ -15,17 +15,8 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class Email extends Model
+class Email
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->session = Core::model('session', 'core');
-    }
-
-    function __destruct()
-    {
-    }
 
     /**
      * Envía un correo electrónico utilizando PHPMailer

@@ -217,21 +217,15 @@ class Db extends Model
     {
       $whereClause = 'WHERE `' . $where[0] . '` = \'' . $this->db->real_escape_string($where[1]) . '\'';
 
-      // Verificar si el registro existe
-      $query = $this->db->query('SELECT 1 FROM `' . $table . '` ' . $whereClause);
-
-      if ($query && $query->num_rows > 0)
+      $setClause = '';
+      foreach ($data as $key => $value)
       {
-        $setClause = '';
-        foreach ($data as $key => $value)
-        {
-          $setClause .= '`' . $key . '` = \'' . $this->db->real_escape_string($value) . '\', ';
-        }
-        $setClause = rtrim($setClause, ', ');
-
-        $sql = 'UPDATE `' . $table . '` SET ' . $setClause . ' ' . $whereClause;
-        error_log('UPDATE `' . $table . '` SET ' . $setClause . ' ' . $whereClause);
+        $setClause .= '`' . $key . '` = \'' . $this->db->real_escape_string($value) . '\', ';
       }
+      $setClause = rtrim($setClause, ', ');
+
+      $sql = 'UPDATE `' . $table . '` SET ' . $setClause . ' ' . $whereClause;
+      error_log('UPDATE `' . $table . '` SET ' . $setClause . ' ' . $whereClause);
     }
     else
     {

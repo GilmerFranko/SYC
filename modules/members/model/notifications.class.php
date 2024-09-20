@@ -157,6 +157,11 @@ class Notifications extends Session
                 // SUMAR ESTAD�STICA A USUARIO
                 $this->db->query('UPDATE `members` SET `notifications` = `notifications` + 1 WHERE `member_id` = \'' . $to_member . '\' LIMIT 1');
 
+                // Envia notificaion por email //
+                $to_member1 = getColumns('members', ['name', 'email'], ['member_id', $to_member]); //Core::model('extra', 'core')->getMemberData($to_member);
+                $content = $this->generateNotification($to_member, $from_member, $key, $item, $subitem);
+                loadClass('core/email')->sendEmail('notification', $to_member1['email'], array('to_member' => $to_member1, 'content' => $content));
+
                 // TODO BIEN
                 return true;
             }
