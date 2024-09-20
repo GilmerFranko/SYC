@@ -117,6 +117,8 @@ class Access extends Model
         $hash = Core::model('extra', 'core')->generateUUID(30);
         //
         $query = $this->db->query('INSERT INTO `site_recovers` (`id`, `member_id`, `email`, `date`, `type`, `ip_address`) VALUES (\'' . $hash . '\', \'' . $member_id . '\', \'' . $this->db->real_escape_string($email) . '\', \'' . time() . '\', \'' . $type . '\', \'' . $this->db->real_escape_string(Core::model('extra', 'core')->getIp()) . '\') ');
+
+        error_log('INSERT INTO `site_recovers` (`id`, `member_id`, `email`, `date`, `type`, `ip_address`) VALUES (\'' . $hash . '\', \'' . $member_id . '\', \'' . $this->db->real_escape_string($email) . '\', \'' . time() . '\', \'' . $type . '\', \'' . $this->db->real_escape_string(Core::model('extra', 'core')->getIp()) . '\') ');
         //
         if ($query == true)
         {

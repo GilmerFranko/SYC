@@ -97,5 +97,5 @@ if (isset($_POST['register']))
     }
 
     // ESTABLECER MENSAJE EN LA SESION
-    setToast($message);
+    setTI($message);
 }

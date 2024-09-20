@@ -41,17 +41,17 @@ if (isset($_GET['hash']) && !empty($_GET['hash']))
 				$email = Core::model('email', 'core')->sendEmail('newpassword', $recover['email'], array('name' => 'usuario', 'password' => $password));
 				if ($email == true)
 				{
-					$message[] = array('Te hemos enviado por email la nueva contrase&ntilde;a por favor verifica tambien en la carpeta spam de tu correo', 'success');
+					$message[] = array('Te hemos enviado por email la nueva contraseña por favor verifica tambien en la carpeta spam de tu correo', 'success');
 				}
 				else
 				{
-					$message[] = array('No hemos podido enviarte un email con la contrase&ntilde;a, as&iacute; que te la mostramos aqu&iacute;: <strong>' . $password . '</strong>. <a href="' . Core::model('extra', 'core')->generateUrl('members', 'login') .
-						'">Inicia sesi&oacute;n y c&aacute;mbiala</a>.', 'fatal');
+					$message[] = array('No hemos podido enviarte un email con la contraseña, así que te la mostramos aquí: <strong>' . $password . '</strong>. <a href="' . Core::model('extra', 'core')->generateUrl('members', 'login') .
+						'">Inicia sesión y cámbiala</a>.', 'fatal');
 				}
 			}
 			else
 			{
-				$message[] = array('No se ha podido actualizar la contrase&ntilde;a', 'error');
+				$message[] = array('No se ha podido actualizar la contraseña', 'error');
 			}
 		}
 		else
@@ -60,7 +60,7 @@ if (isset($_GET['hash']) && !empty($_GET['hash']))
 			$validate = Core::model('account', 'members')->setMemberInput($config['reg_group'], 'group_id', $recover['member_id']);
 			if ($validate == true)
 			{
-				$message[] = array('Cuenta validada. Inicie sesi&oacute;n.', 'success');
+				$message[] = array('Cuenta validada. Inicie sesión.', 'success');
 			}
 			else
 			{
@@ -73,12 +73,12 @@ if (isset($_GET['hash']) && !empty($_GET['hash']))
 	}
 	else
 	{
-		$message[] = array('No se ha encontrado ninguna petici&oacute;n', 'error');
+		$message[] = array('No se ha encontrado ninguna petición', 'error');
 	}
 }
 else
 {
-	$message[] = array('Faltan par&aacute;metros', 'error');
+	$message[] = array('Faltan parámetros', 'error');
 }
 
 if (isset($message[0][0]))
@@ -90,7 +90,7 @@ if (isset($message[0][0]))
 	}
 
 	// ESTABLECER MENSAJE EN LA SESION
-	Core::model('extra', 'core')->setToast($message);
+	setTI($message);
 
 	// REDIRECCIONAR A LA HOME
 	Core::model('extra', 'core')->redirectTo($config['base_url']);
