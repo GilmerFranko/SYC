@@ -22,7 +22,7 @@
 { ?>
   <?php if ($thread['member_id'] == $m_id): ?>
     <!-- Botón para renovar -->
-    <div id="renewBtnModal" class="chip selectable" data-bs-toggle="modal" data-bs-target="<?= $isAutoRenewEnabled ? '#unRenewModal' : '#renewModal' ?>" data-thread-id="<?= $thread['id'] ?>">
+    <div id="renewBtnModal-<?= $thread['id'] ?>" class="chip selectable" data-bs-toggle="modal" data-bs-target="<?= $isAutoRenewEnabled ? '#unRenewModal' : '#renewModal' ?>" data-thread-id="<?= $thread['id'] ?>">
       <i class="em em-recycle" aria-role="presentation" aria-label="BLACK UNIVERSAL RECYCLING SYMBOL"></i>
       <strong class="d-none d-sm-inline small-in-movil">Renovar</strong>
     </div>

@@ -119,7 +119,8 @@
             // Cierra modal
             $('#renewModal').modal('hide');
             // Cambia data-bs-target del boton
-            $("#renewBtnModal").attr("data-bs-target", "#unRenewModal");
+            identifier = '#renewBtnModal-' + $('#thread_id_renueva').val();
+            $(identifier).attr("data-bs-target", "#unRenewModal");
           } else {
             // Mostrar mensaje de error
             Toastify({
@@ -168,8 +169,9 @@
             }).showToast();
             // Cierra modal
             $('#renewModal').modal('hide');
+            let identifier = '#renewBtnModal-' + $('#thread_id_unRenueva').val();
             // Cambia data-bs-target del boton
-            $("#renewBtnModal").attr("data-bs-target", "#renewModal");
+            $(identifier).attr("data-bs-target", "#renewModal");
           } else {
             // Mostrar mensaje de error
             Toastify({
@@ -193,7 +195,7 @@
       var threadId = button.data('thread-id'); // Obtener el ID del hilo del atributo data-thread-id
 
       // Asignar el thread_id al campo oculto del formulario
-      $('#thread_id').val(threadId);
+      $('#thread_id_renueva').val(threadId);
     });
 
     $('#unRenewModal').on('show.bs.modal', function(event) {

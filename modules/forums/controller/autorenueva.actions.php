@@ -26,7 +26,7 @@ if (isset($_POST['do']) && isset($_POST['token']) && $session->checkToken($_POST
     if ($action == 'manualRenew')
     {
       // Renovación manual
-      if ($autoRenueva->manualRenew($thread_id, $member_id))
+      if ($autoRenueva->manualRenew($thread_id, $m_id))
       {
         $message = array('status' => true, 'message' => 'Anuncio renovado manualmente');
       }
@@ -41,7 +41,7 @@ if (isset($_POST['do']) && isset($_POST['token']) && $session->checkToken($_POST
       if ($autoRenueva->isAutoRenewEnabled($thread_id) == false)
       {
         // Activar auto-renueva con renovación instantánea
-        if ($autoRenueva->activateAutoRenew($thread_id, $member_id))
+        if ($autoRenueva->activateAutoRenew($thread_id, $m_id))
         {
           $message = array('status' => true, 'message' => 'Auto-renueva activado y anuncio renovado');
         }
