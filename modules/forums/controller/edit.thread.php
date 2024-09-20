@@ -111,8 +111,6 @@ if (isset($_GET['edit_thread']))
     // El BBCode recibido desde el formulario
     $bbcode = $_POST['content'] ?? '';
 
-    error_log($bbcode);
-
     $bbcode = str_replace(PHP_EOL, '[br]', $bbcode);
 
 
@@ -133,7 +131,6 @@ if (isset($_GET['edit_thread']))
 
     if ($update['status'])
     {
-      error_log(var_export((array) $_FILES, 1));
       // Verifica que las imagenes que se quieren subir y las imagenes actuales no superen la cantidad de 9
       $imagesc = loadClass('core/db')->getCount('f_threads_images', 'id', [$thread_id, 'thread_id']);
       $images_count = 0;

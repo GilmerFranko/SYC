@@ -56,11 +56,7 @@ require Core::view('head', 'core');
             </div>
           </div>
           <div class="footer">
-            <?= $messages['pages']['paginator'];
-            error_log(var_export($messages, true));
-
-
-            ?>
+            <?= $messages['pages']['paginator']; ?>
           </div>
         </div>
       </div>

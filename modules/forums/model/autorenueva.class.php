@@ -67,7 +67,6 @@ class AutoRenueva extends Model
 
       // Confirmar la transacción
       $this->db->commit();
-      error_log('Se actualizo la columna position del hilo');
       return true;
     }
     catch (Exception $e)

@@ -129,8 +129,6 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
                 }
                 $html .= '};</script>';
 
-                error_log($html);
-
                 unset($_SESSION['message_ti']);
 
                 return $html;

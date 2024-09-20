@@ -46,8 +46,7 @@ require Core::view('head', 'core');
     </div>
     <div class="card-footer">
       <!--paginador-->
-      <?php echo $threads['pages']['paginator'];
-      error_log(var_export($threads['pages'], 1)); ?>
+      <?php echo $threads['pages']['paginator']; ?>
       <!--fin_paginador-->
     </div>
   </div>

@@ -52,7 +52,6 @@ if (isset($_POST['do']))
         {
           // Verifica si el mensaje debe enviar correo al usuario (si han pasado 60 segundos desde el ultimo mensaje)
           $message['sendEmail'] = ((time() - $lastMessage['sent_at']) >= 60) ? true : false;
-          error_log((time() - $lastMessage['sent_at']));
         }
         else
         {

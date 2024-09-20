@@ -194,7 +194,6 @@ class messages extends Model
 
     list($data['total']) = $total_query->fetch_row();
 
-    error_log('Conversaciones: ' . $data['total']);
 
     // Paginador
     $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('members', 'messages'), $data['total'], $limit);
