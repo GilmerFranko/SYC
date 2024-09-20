@@ -134,7 +134,7 @@ class Transactions extends Session
 		list($total) = $queryTotal->fetch_row();
 
 		// Calcular el total de páginas y generar el paginador
-		$paginator = Core::model('paginator', 'core')->pageIndex(array('admin', 'wallet_add_remove_credits', null, array('member_id' => $member_id)), $total, $perPage);
+		$paginator = Core::model('paginator', 'core')->pageIndex(array('wallet', 'my_transactions', null, array('member_id' => $member_id)), $total, $perPage);
 
 		// Obtener las transacciones para la página actual
 		$queryTransactions = $this->db->query("SELECT * FROM `members_transactions` WHERE `member_id` = '{$member_id}' ORDER BY `timestamp` DESC LIMIT $offset, $perPage");

@@ -465,3 +465,9 @@ nav {
     flex-direction: column;
     justify-content: space-between;
 }
+
+
+.dropdown-menu hr
+{
+  margin: .3rem 0;
+}

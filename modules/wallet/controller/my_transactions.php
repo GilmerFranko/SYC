@@ -25,4 +25,6 @@ $transactions = loadClass('members/transactions')->getMyTransactions($page);
 $reasonAr = [
 	'addForAdmin'   => 'Anadido por el administrador',
 	'removeForAdmin' => 'Removido por el administrador',
+	'recharguePaypal' => 'Recarga mediante PayPal',
+	'autoRenewal' => 'Auto Renovación',
 ];

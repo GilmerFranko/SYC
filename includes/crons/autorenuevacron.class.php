@@ -9,16 +9,9 @@
  * @author Gilmer Franco <gil2017.com@gmail.com>
  */
 
-class AutoRenuevaCron
+class AutoRenuevaCron extends Model
 {
   private $renewalCost = 0.2; // Monto fijo para la renovación
-
-  public $db;
-  public function __construct()
-  {
-    global $db;
-    $this->db = $db;
-  }
 
   /**
    * Ejecuta la función de auto-renueva para los hilos que lo tengan activado
@@ -77,12 +70,11 @@ class AutoRenuevaCron
    */
   public function manualRenew($thread_id, $member_id)
   {
-
     // Verificar si el usuario tiene suficiente saldo en la billetera
     $userWallet = $this->getUserBalance($member_id);
     if ($userWallet < $this->renewalCost)
     {
-      //Envia notificacion al usuario 
+      // Enviar notificación al usuario 
       newNotification($member_id, 0, 'renewalFail', $thread_id);
       // No tiene suficiente saldo, detener la renovación
       $this->disableAutoRenew($thread_id);
@@ -91,38 +83,44 @@ class AutoRenuevaCron
       return false;
     }
 
-    // Iniciar una transacción
-    $this->db->begin_transaction();
-
+    // Iniciar una transacción y desactivar el autocommit
+    if ($this->db->begin_transaction())
+    {
+      $this->db->autocommit(false);
+      echo 'si';
+    }
     try
     {
       // Restar el monto fijo de la billetera del usuario
       if (!$this->debitWallet($member_id, $this->renewalCost))
       {
         // Hubo un problema al debitar, revertir transacción
-        $this->db->rollback();
-
-        $this->log('No se pudo restar el monto fijo de la billetera del usuario ' . $member_id . ' para renovar el hilo ' . $thread_id);
-        return false;
+        throw new Exception('No se pudo debitar el monto de la billetera');
       }
 
       // Actualizar la columna position del hilo con la hora actual (formato UNIX)
       $stmt = $this->db->prepare("UPDATE f_threads SET position = UNIX_TIMESTAMP(), count_renewals = count_renewals + 1 WHERE id = ?");
+      if (!$stmt)
+      {
+        throw new Exception('Error preparando la consulta: ' . $this->db->error);
+      }
+
       $stmt->bind_param('i', $thread_id);
       $stmt->execute();
+
       if ($stmt->affected_rows === 0)
       {
         // No se actualizó ningún hilo, revertir transacción
-        $this->db->rollback();
-        $this->log('No se pudo actualizar la columna position del hilo ' . $thread_id);
-        return false;
+        throw new Exception('No se pudo actualizar la columna position del hilo ' . $thread_id);
       }
 
       // Confirmar la transacción
       $this->db->commit();
-      //Envia notificacion al usuario 
+      $this->db->autocommit(true);
+
+      // Enviar notificación al usuario 
       newNotification($member_id, 0, 'renewalSuccess', $thread_id);
-      //
+
       $this->log('El usuario ' . $member_id . ' ha renovado el hilo ' . $thread_id);
       return true;
     }
@@ -130,9 +128,20 @@ class AutoRenuevaCron
     {
       // En caso de error, revertir la transacción
       $this->db->rollback();
+      if ($this->db->ping())
+      {
+        echo ('Rollback ejecutado con éxito');
+      }
+      else
+      {
+        echo ('Error: La conexión a la base de datos no está activa');
+      }
+      $this->db->autocommit(true);
+      $this->log('Error en la renovación del hilo: ' . $e->getMessage());
       return false;
     }
   }
+
 
   /**
    * Obtiene el saldo actual de la billetera del usuario
@@ -173,15 +182,7 @@ class AutoRenuevaCron
       return false;
     }
 
-    // Actualizar el saldo de la billetera
-    $query = $this->db->query(
-      "
-            UPDATE member_balance 
-            SET balance = balance - $amount, last_updated = UNIX_TIMESTAMP() 
-            WHERE member_id = " . (int)$member_id
-    );
-
-    return $query ? true : false;
+    return loadClass('members/transactions')->updateBalance($member_id, $amount, false, 'autoRenewal');
   }
 
   /**

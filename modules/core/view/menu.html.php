@@ -73,11 +73,25 @@
               </a>
 
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'account'); ?>">Mi cuenta</a></li>
+                <!-- MI CUENTA -->
+                <li>
+                  <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'account'); ?>">Mi cuenta</a>
+                </li>
+                <!-- MONEDERO -->
+                <li>
+                  <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('wallet', 'my_transactions'); ?>">Monedero</a>
+                </li>
+                <hr>
+                <!-- CONFIGURACION -->
                 <?php if (loadClass('admin/members')->isAdmod($m_id) == 1): ?>
                   <li><a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('admin', 'configuration'); ?>">Configuraci&oacuten</a></li>
+
                 <?php endif; ?>
-                <li><a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'logout', null, ['token' => $session->token]); ?>">Salir</a></li>
+                <hr>
+                <!-- CERRAR SESION -->
+                <li>
+                  <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'logout', null, ['token' => $session->token]); ?>">Salir</a>
+                </li>
               </ul>
             </div>
           </div>
