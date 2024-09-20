@@ -41,9 +41,24 @@ if (isset($_POST['do']))
         'content' => cleanString($_POST['messageContent'])
       ];
 
+      // Optiene el ultimo mensaje que ha recibido el usuario receptor en este chat
+      $lastMessage = loadClass('members/messages')->getLastMessage($data['from_member_id'], $data['to_member_id']);
+
       if ($messageId = loadClass('members/messages')->sendMessage($data))
       {
         $message = loadClass('members/messages')->getMessageById($messageId);
+
+        if ($lastMessage != false)
+        {
+          // Verifica si el mensaje debe enviar correo al usuario (si han pasado 60 segundos desde el ultimo mensaje)
+          $message['sendEmail'] = ((time() - $lastMessage['sent_at']) >= 60) ? true : false;
+          error_log((time() - $lastMessage['sent_at']));
+        }
+        else
+        {
+          $message['sendEmail'] = false;
+        }
+
 
         $msg = ['status' => true, 'msg' => 'El mensaje se ha enviado correctamente', 'data' => $message];
       }

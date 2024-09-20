@@ -110,7 +110,23 @@ class messages extends Model
   {
     if ($message = loadClass('core/db')->getColumns('members_messages', ['id', 'from_member_id', 'to_member_id', 'content', 'image_url', 'sent_at', 'is_read'], ['id', $id]))
     {
-      $message['sent_at'] = date('m-d H:i', $message['sent_at']);
+      $message['sent_at_formatted'] = date('m-d H:i', $message['sent_at']);
+      return $message;
+    }
+    return false;
+  }
+
+  /**
+   * Devuelve el último mensaje entre dos usuarios
+   * @param int $from_member_id ID del usuario que envía el mensaje
+   * @param int $to_member_id ID del usuario que recibe el mensaje
+   * @return array|boolean El último mensaje o false si no hay
+   */
+  public function getLastMessage($from_member_id, $to_member_id)
+  {
+    if ($message = $this->db->query("SELECT * FROM `members_messages` WHERE `from_member_id` = $from_member_id AND `to_member_id` = $to_member_id ORDER BY `sent_at` DESC LIMIT 1"))
+    {
+      $message = $message->fetch_assoc();
       return $message;
     }
     return false;

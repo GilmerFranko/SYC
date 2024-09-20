@@ -59,11 +59,24 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
 
 <script>
   $(document).ready(function() {
+    let lastMessageId = <?php echo $lastMessageId; ?>;
+    let canSend = true; // Flag para determinar si se puede enviar un mensaje
+
     $('#message-form').submit(function(event) {
       event.preventDefault();
 
-      var messageContent = $('#messageContent').val();
-      var receiverId = <?php echo $receiverId; ?>;
+      if (!canSend) {
+        Toastify({
+          text: 'Espere 5 segundos antes de enviar otro mensaje',
+        }).showToast();
+        return false;
+      }
+
+      canSend = false; // No se permite enviar otro mensaje
+
+      let messageContent = $('#messageContent').val();
+      let receiverId = <?php echo $receiverId; ?>;
+      $('#messageContent').val(''); // Limpiar el campo de texto
 
       $.ajax({
         type: 'POST',
@@ -77,26 +90,16 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
         dataType: 'json',
         success: function(response) {
           if (response.status) {
-            $('#messageContent').val(''); // Limpiar el campo de texto
-            $('#messages-container').append('<div class="d-flex justify-content-end"><div class="message message-sent"><p>' + response.data.content + '</p><small>' + response.data.sent_at + '</small></div></div>');
+            $('#messages-container').append('<div class="d-flex justify-content-end"><div class="message message-sent"><p>' + response.data.content + '</p><small>' + response.data.sent_at_formatted + '</small></div></div>');
             $('#messages-container').scrollTop($('#messages-container')[0].scrollHeight); // Desplazarse hacia abajo
             lastMessageId = response.data.id;
 
             // Enviar correo al usuario
-            $.ajax({
-              type: 'POST',
-              url: '<?= gLink('members/message.actions'); ?>',
-              data: {
-                do: 'sendEmail',
-                ajax: true,
-                to_member_id: receiverId
-              },
-              dataType: 'json',
-              success: function(response) {
-                console.log(response);
-              }
-            });
+            if (response.data.sendEmail) {
+              sendEmail(receiverId);
+            }
             // Fin enviar correo al usuario
+
           } else {
             Toastify({
               text: response.msg,
@@ -111,6 +114,12 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
         },
         error: function() {
           alert('Error en la comunicación con el servidor');
+        },
+        complete: function() {
+          // Después de enviar el mensaje, permitir enviar otro mensaje después de 5 segundos
+          setTimeout(function() {
+            canSend = true;
+          }, 5000);
         }
       });
     });
@@ -120,8 +129,6 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
         $('#message-form').submit();
       }
     });
-
-    let lastMessageId = <?php echo $lastMessageId; ?>;
 
     function loadNewMessages() {
       $.ajax({
@@ -138,7 +145,7 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
           console.log(response);
           if (response.status && response.data.rows > 0) {
             response.data.data.forEach(function(message) {
-              $('#messages-container').append('<div class="d-flex ' + (message.from_member_id == <?php echo $m_id; ?> ? 'justify-content-end' : 'justify-content-start') + '"><div class="message ' + (message.from_member_id == <?php echo $m_id; ?> ? 'message-sent' : 'message-received') + '"><p>' + message.content + '</p><small>' + message.sent_at + '</small></div></div>');
+              $('#messages-container').append('<div class="d-flex ' + (message.from_member_id == <?php echo $m_id; ?> ? 'justify-content-end' : 'justify-content-start') + '"><div class="message ' + (message.from_member_id == <?php echo $m_id; ?> ? 'message-sent' : 'message-received') + '"><p>' + message.content + '</p><small>' + message.sent_at_formatted + '</small></div></div>');
               lastMessageId = message.id; // Actualiza el ID del último mensaje cargado
             });
           }
@@ -152,6 +159,22 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
     // Llamar a la función cada cierto tiempo para cargar nuevos mensajes
     setInterval(loadNewMessages, 5000);
   });
+
+  function sendEmail(receiverId) {
+    $.ajax({
+      type: 'POST',
+      url: '<?= gLink('members/message.actions'); ?>',
+      data: {
+        do: 'sendEmail',
+        ajax: true,
+        to_member_id: receiverId
+      },
+      dataType: 'json',
+      success: function(response) {
+        console.log(response);
+      }
+    });
+  }
 </script>
 
 <style>
