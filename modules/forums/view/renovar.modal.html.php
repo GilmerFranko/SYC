@@ -43,7 +43,7 @@
 
           <div style="display: flex; justify-content: space-between;">
             <button id="renewBtn" type="submit" class="btn btn-primary btn-sm">Activar Auto-renueva</button>
-            <a href="comprar-creditos.php" class="btn btn-success btn-sm">Comprar Créditos</a>
+            <a href="<?= gLink('members/rechargue.wallet') ?>" class="btn btn-success btn-sm">Comprar Créditos</a>
           </div>
         </form>
       </div>

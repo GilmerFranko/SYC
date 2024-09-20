@@ -13,18 +13,33 @@
  */
 if (isset($_GET['user']) && ctype_digit($_GET['user']))
 {
+    $user = escape($_GET['user']);
     // SE ASOCIA LA INFORMACIÓN DEL PERFIL
-    $memberData = Core::model('profile', 'members')->getMemberProfile($_GET['user']);
+    $profileData = Core::model('profile', 'members')->getMemberProfile($user);
     //
-    if (is_array($memberData))
+    if (is_array($profileData))
     {
         // COMPROBAR SI ME TIENE BLOQUEADO
-        if (Core::model('profile', 'members')->checkBlock($session->memberData['member_id'], $memberData['member_id']) === false)
+        if (Core::model('profile', 'members')->checkBlock($session->memberData['member_id'], $profileData['member_id']) === false)
         {
 
             // ESTABLECE EL TÍTULO DE LA PÁGINA
-            $page['name'] = 'Perfil de ' . $memberData['name'];
+            $page['name'] = 'Perfil de ' . $profileData['name'];
             $page['code'] = 'memberProfile';
+
+            $isOwner = ($profileData['member_id'] == $session->memberData['member_id']);
+
+            if (!$threads = loadClass('forums/threads')->getThreadsByProfileId($profileData['member_id']))
+            {
+                $msg[] = 'No hay anuncios para mostrar';
+            }
+
+            if (!empty($msg))
+            {
+                setTI([$msg]);
+                redirect('core/home-guest');
+                exit;
+            }
         }
         else
         {
@@ -46,7 +61,7 @@ else
     // Si estoy registrado, me redirige a mi perfil, pero si no, me redirige a la pagina principal
     if ($session->is_member == true)
     {
-        Core::model('extra', 'core')->generateUrl('members', 'profile', NULL, array('user' => $session->memberData['member_id']), true);
+        Core::model('extra', 'core')->generateUrl('members', 'profile', NULL, array('user' => $m_id), true);
     }
     else
     {

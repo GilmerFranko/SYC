@@ -10,129 +10,119 @@
  *
  */
 
-require Core::view('head', 'core');
 ?>
-
 <!-- Header -->
-<?php require Core::view('menu', 'core'); ?>
+<?php require Core::view('head', 'core'); ?>
 <!-- / Header -->
 
-<script>
-  var pName = '<?php echo $memberData['name']; ?>',
-    pID = <?php echo $memberData['member_id']; ?>,
-    pGender = <?php echo $memberData['pp_gender']; ?>
-</script>
+<section class="">
+  <?php require Core::view('menu', 'core'); ?>
 
-<!-- Body -->
-<section id="memberProfile">
-  <div class="card">
-    <div class="card-image avatar">
-      <img class="responsive-img materialboxed" src="<?php echo Core::model('member', 'members')->getAvatar($memberData['member_id'], false); ?>">
-      <span class="card-title notranslate"><?php echo $memberData['name']; ?></span>
-    </div>
-    <div class="card-content">
-      <p class="flow-text">
-        Informaci&oacute;n
-        <?php if ($session->is_admod == 1)
-        { ?>
-          <a href="<?php echo Core::model('extra', 'core')->generateUrl('admin', 'members', null, array('edit' => $memberData['member_id'])); ?>" class="waves-effect waves-light btn brown darken-3 right"><i class="material-icons left">edit</i>Editar</a>
-        <?php } ?>
-      </p>
-    </div>
-    <!-- ACCIONES SOBRE EL USUARIO -->
-    <?php if ($memberData['member_id'] !== $session->memberData['member_id'])
-    { ?>
-      <div class="card-action">
-        <div class="row">
-          <div class="col s4">
-            <?php if (Core::model('profile', 'members')->getFollowsBlocks($session->memberData['member_id'], $memberData['member_id']) === false)
-            { ?>
-              <a href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'profile', 'follow', array('user' => $memberData['member_id'], 'action' => 'follow', 'token' => $session->token)); ?>" class="waves-effect waves-light btn blue darken-3"><i class="material-icons left">visibility</i><span class="hide-on-small-only">Seguir</span></a>
-            <?php }
-            else
-            { ?>
-              <a href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'profile', 'follow', array('user' => $memberData['member_id'], 'action' => 'unfollow', 'token' => $session->token)); ?>" class="waves-effect waves-light btn red darken-2"><i class="material-icons left">visibility</i><span class="hide-on-small-only">No Seguir</span></a>
-            <?php } ?>
+  <div class="container">
+    <div class="row">
+      <!-- Tarjeta de Perfil -->
+      <div class="col-md-8 offset-md-2">
+        <div class="card" style="border:none;">
+          <div class="card-body text-center">
+            <!-- Imagen de Perfil -->
+            <img src="<?= $config['avatar_url'] . '/' . $profileData['pp_main_photo']  ?>" alt="Foto de perfil" class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover;">
+
+            <!-- Nombre de Usuario -->
+            <h3 class="mt-3"><?= $profileData['pp_full_name']; ?></h3>
+
+            <!-- Género -->
+            <p class="text-muted">
+              <?= $profileData['pp_gender'] == '0' ? 'Hombre' : ($profileData['pp_gender'] == '1' ? 'Mujer' : 'Otro'); ?>
+            </p>
+
+            <h5 class="card-title">Información Básica</h5>
+            <p><strong>Fecha de Nacimiento:</strong> <?= $profileData['birthday']; ?></p>
+            <p><strong>Última Actividad:</strong> <?= date('d M, Y H:i', $profileData['last_activity']); ?></p>
+
+            <!-- Botón de editar (solo visible si el perfil pertenece al usuario) -->
+            <?php if ($isOwner): ?>
+              <a href="editar_perfil.php?id=<?= $profileData['member_id']; ?>" class="btn btn-primary">
+                <i class="bi bi-pencil-square"></i> Editar Perfil
+              </a>
+            <?php else: ?>
+              <!-- Boton enviar mensaje con icono -->
+              <a href="enviar_mensaje.php?to=<?= $profileData['member_id']; ?>" class="btn btn-success">
+                <i class="bi bi-envelope"></i> Enviar Mensaje
+              </a>
+            <?php endif; ?>
           </div>
-          <!-- BLOQUEO -->
-          <div class="col s4">
-            <a class="waves-effect waves-light btn modal-trigger red darken-3" href="#modalBlock"><i class="material-icons left">block</i><span class="hide-on-small-only">Bloquear</span></a>
-            <div id="modalBlock" class="modal bottom-sheet">
-              <div class="modal-content">
-                <h4>Bloquear a <?php echo $memberData['name']; ?></h4>
-                <p>&iquest;Seguro que quieres bloquear a <?php echo $memberData['name']; ?>?</p>
-              </div>
-              <div class="modal-footer">
-                <a href="#!" class="modal-close waves-effect waves-blue btn">Cancelar</a>
-                <a href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'profile', 'block', array('user' => $memberData['member_id'], 'action' => 'block', 'token' => $session->token)); ?>" class="modal-close waves-effect waves-red btn red darken-3">Bloquear</a>
-              </div>
-            </div>
-          </div>
-          <!-- ./BLOQUEO -->
-          <!-- DENUNCIA -->
-          <div class="col s4">
-            <a class="waves-effect waves-light btn orange darken-3 modal-trigger" href="#modalReport"><i class="material-icons left">warning</i><span class="hide-on-small-only">Denunciar</span></a>
-            <!-- MODAL DENUNCIA -->
-            <div id="modalReport" class="modal modal-fullscreen modal-fixed-footer">
-              <form action="<?php echo Core::model('extra', 'core')->generateUrl('site', 'report', null, array('type' => 'user', 'obj' => $memberData['member_id'], 'action' => 'new')); ?>" method="post">
-                <div class="modal-content">
-                  <h4>Denunciar a <?php echo $memberData['name']; ?></h4>
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input type="hidden" name="token" value="<?php echo $session->token; ?>">
-                      <textarea name="reason" id="reason" class="materialize-textarea" required></textarea>
-                      <label for="reason">Motivo de la denuncia</label>
-                      <span class="helper-text">La autora del shout <strong>NO VER&Aacute;</strong> la denuncia. <strong>No utilice este sistema para enviar mensajes a la autora.</strong></span>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <a href="#!" class="modal-close waves-effect waves-blue btn">Cancelar</a>
-                  <button class="waves-effect waves-orange btn orange darken-3 autodisabled" type="submit" name="report">Denunciar
-                    <i class="material-icons right">warning</i>
-                  </button>
-                </div>
-              </form>
-            </div>
-            <!-- ./MODAL DENUNCIA -->
-          </div>
-          <!-- ./DENUNCIA -->
         </div>
       </div>
-    <?php } ?>
-    <!-- ./ ACCIONES SOBRE EL USUARIO -->
-    <div class="card-tabs">
-      <ul class="tabs tabs-fixed-width">
-        <li class="tab"><a href="#pinfo" id="cInfo">Info</a></li>
-        <?php if ($memberData['pp_gender'] == 1)
-        {
-          echo '<li class="tab"><a href="#pfollowers">' . $memberData['follows'] . ' Seguidores</a></li>
-                <li class="tab"><a href="#pshouts" id="cShouts">Shouts</a></li>
-                <li class="tab"><a href="#pshoutsVip" id="cShoutsVip">Shouts VIP</a></li>';
-        }
-        else
-        {
-          echo '<li class="tab"><a href="#pfollowing">Siguiendo</a></li>';
-        }
-        ?>
-      </ul>
     </div>
-
+    <br>
+    <br>
+    <!-- Anuncios del usuario -->
+    <?php if ($threads['rows'] > 0): ?>
+      <div class="card-panel green lighten-4 green-text text-darken-4 flow-text center-align">Anuncios de <?= $profileData['pp_full_name']; ?></div>
+      <br>
+      <?php foreach ($threads['data'] as $thread): ?>
+        <?php require Core::view('thread.piece', 'forums'); ?>
+      <?php endforeach ?>
+    <?php else: ?>
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">
+            No hay anuncios
+          </span>
+        </div>
+      </div>
+    <?php endif ?>
   </div>
 
-  <?php if ($memberData['member_id'] === $session->memberData['member_id'])
-  { ?>
-    <!-- BOTON DE EDITAR PERFIL -->
-    <div class="fixed-action-btn">
-      <a href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'account'); ?>" class="btn-floating btn-large grey darken-4">
-        <i class="large material-icons">mode_edit</i>
-      </a>
-    </div>
-  <?php } ?>
 
+
+  <!-- Modal denunciar -->
+  <?php require Core::view('report.modal', 'forums'); ?>
+
+  <!-- Modal Renovar -->
+  <?php require Core::view('renovar.modal', 'forums'); ?>
+
+  <script>
+    function adjustTextLength() {
+      $('.thread-content').each(function() {
+        var originalText = $(this).text().trim();
+        var maxLength = window.innerWidth < 768 ? 100 : originalText.length;
+
+        if (originalText.length > maxLength) {
+          var truncatedText = originalText.substring(0, maxLength) + '...';
+          $(this).text(truncatedText);
+        } else {
+          $(this).text(originalText); // Restaurar el texto completo si es necesario
+        }
+      });
+    }
+
+    // Ejecutar la función al cargar la página
+    adjustTextLength();
+
+    // Recalcular al cambiar el tamaño de la ventana
+    $(window).resize(function() {
+      adjustTextLength();
+    });
+  </script>
+
+
+  <!-- Tarjeta adicional para acciones futuras o más detalles -->
+  <!--<div class="row mt-4">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Acciones adicionales</h5>
+          <p class="text-muted">Aquí puedes agregar más detalles, enlaces o funciones relacionadas con el perfil.</p>
+        </div>
+      </div>
+    </div>
+  </div>-->
 </section>
-<!-- / Body -->
 
 <!-- Footer -->
 <?php require Core::view('footer', 'core'); ?>
 <!-- / Footer -->
+
+<!-- JS adicional -->
+<script type="text/javascript" src="<?php echo $config['base_url']; ?>/static/js/profile.js"></script>

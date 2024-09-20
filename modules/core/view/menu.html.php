@@ -75,12 +75,15 @@
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <!-- MI CUENTA -->
                 <li>
-                  <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'account'); ?>">Mi cuenta</a>
+                  <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'profile'); ?>">Mi perfil</a>
                 </li>
-                <!-- MONEDERO -->
                 <li>
                   <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('wallet', 'my_transactions'); ?>">Monedero</a>
                 </li>
+                <li>
+                  <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'account'); ?>">Mi cuenta</a>
+                </li>
+                <!-- MONEDERO -->
                 <hr>
                 <!-- CONFIGURACION -->
                 <?php if (loadClass('admin/members')->isAdmod($m_id) == 1): ?>

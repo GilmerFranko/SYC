@@ -36,7 +36,7 @@ class Profile extends Model
         // BUSCAR POR ID O NOMBRE
         $where = ctype_digit($user) ? ('m.`member_id` = \'' . (int)$user . '\'') : ('LOWER(m.`name`) = \'' . $this->db->real_escape_string($user) . '\'');
 
-        $query = $this->db->query('SELECT m.`member_id`, m.`name`, m.`group_id`, m.`email`, m.`banned`, m.`last_activity`, m.`last_login`, m.`pp_full_name`, m.`pp_main_photo`, m.`pp_thumb_photo`, m.`pp_photo_type`, m.`pp_setting_preferences`, m.`pp_gender`, m.`pp_joined`, r.`g_title`, r.`g_colour` FROM `members` AS m LEFT JOIN `members_groups` AS r ON r.`g_id` = m.`group_id` WHERE ' . $where . ' LIMIT 1');
+        $query = $this->db->query('SELECT m.`member_id`, m.`name`, m.`group_id`, m.`email`, `birthday`, m.`banned`, m.`last_activity`, m.`last_login`, m.`pp_full_name`, m.`pp_main_photo`, m.`pp_thumb_photo`, m.`pp_photo_type`, m.`pp_setting_preferences`, m.`pp_gender`, m.`pp_joined`, r.`g_title`, r.`g_colour` FROM `members` AS m LEFT JOIN `members_groups` AS r ON r.`g_id` = m.`group_id` WHERE ' . $where . ' LIMIT 1');
 
         //
         if ($query == true && $query->num_rows > 0)

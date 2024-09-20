@@ -111,6 +111,43 @@ class threads extends Model
     return $data;
   }
 
+  /**
+   * @Description Obtiene todos los threads de un usuario
+   * @param int $location_id
+   * @param int $page El n mero de p gina
+   * @return array|boolean Un array con los threads
+   */
+  public function getThreadsByProfileId($member_id, $page = 1, $limit = 20)
+  {
+
+    $query = $this->db->query(
+      'SELECT 
+        t.*,
+        m.`name` AS member_name,
+        m.`member_id` AS member_id
+      FROM 
+        `f_threads` AS t
+      INNER JOIN 
+        `members` AS m ON t.`member_id` = m.`member_id`
+      WHERE 
+        t.`member_id` = "' . $member_id . '" 
+      ORDER BY 
+        t.`position` DESC'
+    );
+
+    $data['rows'] = $query->num_rows;
+    // Obtener los resultados de la consulta
+    if ($query and $data['rows'] > 0)
+    {
+      while ($row = $query->fetch_assoc())
+      {
+        $data['data'][] = $row;
+      }
+      return $data;
+    }
+    return $data;
+  }
+
   public function searchThreads($params, $page = 1, $limit = 20)
   {
     $where = [];

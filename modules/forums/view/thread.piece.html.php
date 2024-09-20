@@ -33,7 +33,7 @@ loadClass('forums/threads')->registerVisit($thread['id'], $m_id, $session->membe
 // Verifica si el hilo tiene activado el auto-renueva
 $isAutoRenewEnabled = loadClass('forums/autorenueva')->isAutoRenewEnabled($thread['id']);
 
-
+$contact = $contact ?? ['name' => ''];
 ?>
 
 <div class="card thread-card">
