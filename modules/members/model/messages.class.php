@@ -110,7 +110,7 @@ class messages extends Model
   {
     if ($message = loadClass('core/db')->getColumns('members_messages', ['id', 'from_member_id', 'to_member_id', 'content', 'image_url', 'sent_at', 'is_read'], ['id', $id]))
     {
-      $message['sent_at_formatted'] = date('m-d H:i', $message['sent_at']);
+      $message['sent_at_formatted'] = loadClass('core/date')->getFormattedDate($message['sent_at']);
       return $message;
     }
     return false;

@@ -62,6 +62,8 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
     let lastMessageId = <?php echo $lastMessageId; ?>;
     let canSend = true; // Flag para determinar si se puede enviar un mensaje
 
+    $('#messages-container').scrollTop($('#messages-container')[0].scrollHeight);
+
     $('#message-form').submit(function(event) {
       event.preventDefault();
 
