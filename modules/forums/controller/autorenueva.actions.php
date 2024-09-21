@@ -37,11 +37,12 @@ if (isset($_POST['do']) && isset($_POST['token']) && $session->checkToken($_POST
     }
     elseif ($action == 'enableAutoRenew')
     {
+      $interval = escape($_POST['interval']);
       // Verifica que no este activo el auto-renueva
       if ($autoRenueva->isAutoRenewEnabled($thread_id) == false)
       {
         // Activar auto-renueva con renovación instantánea
-        if ($autoRenueva->activateAutoRenew($thread_id, $m_id))
+        if ($autoRenueva->activateAutoRenew($thread_id, $m_id, $interval))
         {
           $message = array('status' => true, 'message' => 'Auto-renueva activado y anuncio renovado');
         }

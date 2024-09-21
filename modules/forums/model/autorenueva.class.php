@@ -84,7 +84,7 @@ class AutoRenueva extends Model
    * @param int $member_id ID del usuario
    * @return bool True si se activó y renovó correctamente, False si no
    */
-  public function activateAutoRenew($thread_id, $member_id)
+  public function activateAutoRenew($thread_id, $member_id, $interval = 6)
   {
     // Verificar si ya tiene activado auto-renueva
     if ($this->isAutoRenewEnabled($thread_id))
@@ -99,7 +99,7 @@ class AutoRenueva extends Model
     }
 
     // Activar la función de auto-renueva
-    return $this->toggleAutoRenew($thread_id, true);
+    return $this->toggleAutoRenew($thread_id, true, $interval);
   }
 
 
@@ -141,7 +141,7 @@ class AutoRenueva extends Model
    * @param bool $enable True para activar, False para desactivar
    * @return bool True si se activó/desactivó correctamente
    */
-  public function toggleAutoRenew($thread_id, $enable)
+  public function toggleAutoRenew($thread_id, $enable, $interval = 6)
   {
     $is_enabled = $enable ? 1 : 0;
 
@@ -154,16 +154,16 @@ class AutoRenueva extends Model
     if ($stmt->num_rows > 0)
     {
       // Registro existe, hacer actualización
-      $stmt = $this->db->prepare("UPDATE auto_renueva_settings SET is_enabled = ? WHERE thread_id = ?");
-      $stmt->bind_param('ii', $is_enabled, $thread_id);
+      $stmt = $this->db->prepare("UPDATE auto_renueva_settings SET is_enabled = ?, renewal_interval = ? WHERE thread_id = ?");
+      $stmt->bind_param('iii', $is_enabled, $interval, $thread_id);
       $stmt->execute();
       return $stmt->affected_rows > 0;
     }
     else
     {
       // Registro no existe, hacer inserción
-      $stmt = $this->db->prepare("INSERT INTO auto_renueva_settings (thread_id, is_enabled) VALUES (?, ?)");
-      $stmt->bind_param('ii', $thread_id, $is_enabled);
+      $stmt = $this->db->prepare("INSERT INTO auto_renueva_settings (thread_id, is_enabled, renewal_interval) VALUES (?, ?, ?)");
+      $stmt->bind_param('ii', $thread_id, $is_enabled, $interval);
       $stmt->execute();
       return $stmt->affected_rows > 0;
     }
