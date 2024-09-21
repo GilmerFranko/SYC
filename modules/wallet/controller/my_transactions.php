@@ -15,11 +15,6 @@
 $page['name'] = 'Mis Transacciones';
 $page['code'] = 'myTransactions';
 
-
-if (isset($_GET['page'])) $page = $_GET['page'];
-
-else $page = 1;
-
 $transactions = loadClass('members/transactions')->getMyTransactions($page);
 
 $reasonAr = [
