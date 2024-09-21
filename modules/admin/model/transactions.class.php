@@ -99,19 +99,18 @@ class Transactions extends Session
 	 * @param int $perPage Cantidad de transacciones por página
 	 * @return array Arreglo asociativo con las transacciones y la información de paginación
 	 */
-	public function getAllTransactions($page = 1, $perPage = 10)
+	public function getAllTransactions($perPage = 10)
 	{
-		$offset = ($page - 1) * $perPage;
 
 		// Obtener el total de transacciones
 		$queryTotal = $this->db->query("SELECT COUNT(*) FROM `members_transactions`");
 		list($total) = $queryTotal->fetch_row();
 
 		// Calcular el total de páginas y generar el paginador
-		$paginator = Core::model('paginator', 'core')->pageIndex(['admin', 'transactions', null, null], $total, $perPage);
+		$paginator = Core::model('paginator', 'core')->pageIndex(['admin', 'transactions'], $total, $perPage);
 
 		// Obtener las transacciones para la página actual
-		$queryTransactions = $this->db->query("SELECT * FROM `members_transactions` ORDER BY `timestamp` DESC LIMIT $offset, $perPage");
+		$queryTransactions = $this->db->query("SELECT * FROM `members_transactions` ORDER BY `timestamp` DESC LIMIT {$paginator['limit']} ");
 
 		$transactions = [];
 		if ($queryTransactions && $queryTransactions->num_rows > 0)

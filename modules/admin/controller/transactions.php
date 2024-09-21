@@ -15,7 +15,7 @@
 $page['name'] = 'Transacciones';
 $page['code'] = 'transacctions';
 
-$transactions = loadClass('admin/transactions')->getAllTransactions($page);
+$transactions = loadClass('admin/transactions')->getAllTransactions();
 
 $reasonAr = [
     'addForAdmin'   => 'Anadido por el administrador',
@@ -24,3 +24,10 @@ $reasonAr = [
     'recharguePaypal' => 'Recarga mediante PayPal',
     'autoRenewal' => 'Auto Renovación',
 ];
+
+if (isset($_POST['ajax']) && isset($_GET['page']))
+{
+    echo '1: ';
+    require Core::view('transactions.area', 'admin');
+    exit;
+}

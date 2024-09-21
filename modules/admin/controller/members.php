@@ -47,7 +47,7 @@ if (!isset($_POST['ajax']) || (isset($_POST['ajax']) && isset($_GET['page'])))
 {
     $page['name'] = 'Usuarios - Administraci&oacute;n';
     //
-    $members = Core::model('members', 'admin')->getMembers($search, 1, $bots);
+    $members = Core::model('members', 'admin')->getMembers($search, 20, $bots);
     //
     if ($members['rows'] < 1)
     {

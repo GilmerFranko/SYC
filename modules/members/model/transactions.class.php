@@ -121,13 +121,10 @@ class Transactions extends Session
 	 * @param int $perPage Cantidad de transacciones por página (opcional)
 	 * @return array Arreglo asociativo con las transacciones y el paginador
 	 */
-	public function getMyTransactions($page = 1, $perPage = 10)
+	public function getMyTransactions($perPage = 10)
 	{
 
 		$member_id = $this->memberData['member_id'];
-
-
-		$offset = ($page - 1) * $perPage;
 
 		// Obtener el total de transacciones
 		$queryTotal = $this->db->query("SELECT COUNT(*) FROM `members_transactions` WHERE `member_id` = '{$member_id}'");
@@ -137,7 +134,7 @@ class Transactions extends Session
 		$paginator = Core::model('paginator', 'core')->pageIndex(array('wallet', 'my_transactions', null, array('member_id' => $member_id)), $total, $perPage);
 
 		// Obtener las transacciones para la página actual
-		$queryTransactions = $this->db->query("SELECT * FROM `members_transactions` WHERE `member_id` = '{$member_id}' ORDER BY `timestamp` DESC LIMIT $offset, $perPage");
+		$queryTransactions = $this->db->query("SELECT * FROM `members_transactions` WHERE `member_id` = '{$member_id}' ORDER BY `timestamp` DESC LIMIT {$paginator['limit']} ");
 
 		$transactions = [];
 		if ($queryTransactions && $queryTransactions->num_rows > 0)

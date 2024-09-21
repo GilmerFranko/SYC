@@ -199,6 +199,7 @@ var admin = {
                 }
             });
         },
+
         page: function(section, id, area = '', search = '') {
             $('#content' + section + 's').css('pointer-events', 'none').css('opacity', '0.5');
             //
@@ -212,6 +213,7 @@ var admin = {
             var pageUrl = global.url + '/index.php?app=admin&section=' + section.strtolower() + 's' + area + search + '&page=' + id;
             $.post(pageUrl, 'ajax=true', function(a) {
                 success: {
+                    console.log(a)
                     if (a.charAt(0) == '1') {
                         // Ocultamos formulario de edición
                         admin.forms.get(section, '', true);
@@ -222,7 +224,7 @@ var admin = {
                         // Definimos la URL actual
                         window.history.pushState(null, null, pageUrl);
                     } else {
-                        swal.fire('',a.substring(2),'');
+                        console.log(a);
                     }
                 }
             });

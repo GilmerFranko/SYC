@@ -15,7 +15,7 @@
 $page['name'] = 'Mis Transacciones';
 $page['code'] = 'myTransactions';
 
-$transactions = loadClass('members/transactions')->getMyTransactions($page);
+$transactions = loadClass('members/transactions')->getMyTransactions();
 
 $reasonAr = [
 	'addForAdmin'   => 'Anadido por el administrador',
