@@ -29,7 +29,7 @@ require Core::view('head', 'core');
           </div>
           <div class="card-body">
             <div id="messages-container">
-              <?php if (($messages['rows'] > 0)) : ?>
+              <?php if (($messages and $messages['rows'] > 0)) : ?>
                 <?php foreach ($messages['data'] as $message) : ?>
                   <div class="message-item d-flex align-items-start mb-3">
                     <div class="profile-picture">
@@ -55,9 +55,11 @@ require Core::view('head', 'core');
               <?php endif; ?>
             </div>
           </div>
-          <div class="footer">
-            <?= $messages['pages']['paginator']; ?>
-          </div>
+          <?php if (($messages and $messages['rows'] > 0)) : ?>
+            <div class="footer">
+              <?= $messages['pages']['paginator']; ?>
+            </div>
+          <?php endif; ?>
         </div>
       </div>
     </div>

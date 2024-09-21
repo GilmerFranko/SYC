@@ -175,17 +175,6 @@ class Paginator
 			$base[3] = isset($base[3]['search']) ? $base[3]['search'] : '';
 			$onclick = 'mod.forms.page(\'' . substr(ucfirst($base[1]), 0, -1) . '\', \'{page_n}\', \'' . $base[2] . '\', \'' . $base[3] . '\'); return false;';
 		}
-		elseif ($base[1] == 'messages')
-		{
-			if ($base[2] == 'view')
-			{
-				$onclick = 'messages.conversation.page(\'' . $base['hash'] . '\', \'' . $base[3]['id'] . '\', \'{page_n}\'); return false;';
-			}
-			else
-			{
-				$onclick = 'messages.forms.page(\'' . substr(ucfirst($base[2]), 0, -1) . '\', \'{page_n}\'); return false;';
-			}
-		}
 		else
 		{
 			$onclick = '';
