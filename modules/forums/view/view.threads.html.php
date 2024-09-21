@@ -25,26 +25,30 @@ require Core::view('head', 'core');
     <div class="row">
 
       <div class="col col-sm-12 col-md-9 col-lg-10">
-        <!-- Menu de busqueda -->
-        <?php require Core::view('menu.search', 'core'); ?>
+        <div class="preAviso mt-4"></div>
 
-        <div style="font-size: 12px; text-align: center; margin: 0 0 10px 0px">
-          Encontrados <strong><?= $threads['rows'] ?></strong> anuncios en "<?= $contact['name'] ?>"
-        </div>
+        <div class="preAviso0" style="display:none">
+          <!-- Menu de busqueda -->
+          <?php require Core::view('menu.search', 'core'); ?>
 
-        <?php if ($threads['rows'] > 0): ?>
-          <?php foreach ($threads['data'] as $thread): ?>
-            <?php require Core::view('thread.piece', 'forums'); ?>
-          <?php endforeach ?>
-        <?php else: ?>
-          <div class="card">
-            <div class="card-content">
-              <span class="card-title">
-                No hay anuncios
-              </span>
-            </div>
+          <div style="font-size: 12px; text-align: center; margin: 0 0 10px 0px">
+            Encontrados <strong><?= $threads['rows'] ?></strong> anuncios en "<?= $contact['name'] ?>"
           </div>
-        <?php endif ?>
+
+          <?php if ($threads['rows'] > 0): ?>
+            <?php foreach ($threads['data'] as $thread): ?>
+              <?php require Core::view('thread.piece', 'forums'); ?>
+            <?php endforeach ?>
+          <?php else: ?>
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">
+                  No hay anuncios
+                </span>
+              </div>
+            </div>
+          <?php endif ?>
+        </div>
       </div>
       <div class="menu-sidebar1 col d-none d-sm-none d-md-flex col-md-3 col-lg-2">
         <!-- SIDEBAR Solo para escritorio -->
@@ -58,6 +62,9 @@ require Core::view('head', 'core');
 
 <!-- Modal Renovar -->
 <?php require Core::view('renovar.modal', 'forums'); ?>
+
+<!-- Aviso -->
+<?php require Core::view('preaviso.modal', 'forums'); ?>
 
 <script>
   function adjustTextLength() {

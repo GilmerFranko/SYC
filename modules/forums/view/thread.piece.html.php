@@ -34,6 +34,8 @@ loadClass('forums/threads')->registerVisit($thread['id'], $m_id, $session->membe
 $isAutoRenewEnabled = loadClass('forums/autorenueva')->isAutoRenewEnabled($thread['id']);
 
 $contact = $contact ?? ['name' => ''];
+
+$thread_url = loadClass('forums/threads')->getThreadUrl($thread['id']);
 ?>
 
 <div class="card thread-card">
@@ -50,7 +52,7 @@ $contact = $contact ?? ['name' => ''];
     <div class="container">
       <div class="row">
         <div class="col col-9">
-          <a href="<?= loadClass('forums/threads')->getThreadUrl($thread['id']) ?>" class="materialboxed">
+          <a href="<?= $thread_url ?>" class="materialboxed">
             <strong class="thread-title">
               <?= strtoupper($thread['title']); ?>
             </strong>
@@ -60,14 +62,14 @@ $contact = $contact ?? ['name' => ''];
             <?php echo cutText(getPlainText($thread['content']), 512); ?>
           </p>
           <div style="margin: 5px 0;">
-            <div><a href="<?= loadClass('forums/threads')->getThreadUrl($thread['id']) ?>" class="btn btn-sm btn-primary">Ver Fotos</a></div>
+            <div><a href="<?= $thread_url ?>" class="btn btn-sm btn-primary">Ver Fotos</a></div>
           </div>
         </div>
         <div class="col col-3">
           <?php if ($images['rows'] > 0) : ?>
             <?php foreach ($images['data'] as $image) : ?>
               <div class="image-container">
-                <a href="<?= $config['images_url'] ?>/<?= $image['image_url'] ?>" class="materialboxed">
+                <a href="<?= $thread_url ?>" class="materialboxed">
                   <?php if ($image['image_url'] == null): ?>
                     <img src="<?= $config['default_thread_photo'] ?>" alt="" class="" width="100" height="100">
                   <?php else: ?>

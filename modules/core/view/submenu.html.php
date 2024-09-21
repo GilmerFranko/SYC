@@ -23,9 +23,10 @@
         <br>
         <div class="search w-100 gap-2 d-inline-flex flex-md-row flex-column bg-morado py-2 px-2 text-white text-center justify-content-center" style="border-radius: 10px">
           <div class="d-flex flex-row w-50 align-items-center flex-wrap justify-content-center">
-            <input type="submit" value="Buscar">
-            <input id="searchText" name="searchText" type="search" class="form-control col fs-14 me-1" placeholder="" value="">
-
+            <form class="d-flex" action="<?= gLink('forums/view.searches') ?>" method="get">
+              <input type="submit" value="Buscar">
+              <input id="searchText" name="words" type="search" class="form-control col fs-14 me-1" placeholder="" value="">
+            </form>
             <!--<div class="d-flex align-items-center col-6 col-md-4 p-1">
 								<select name="selectedCategory" class=" d-flex form-select w-100" style="height: 30px;color: #444; font-size: 14px; padding: 0 20% 0 5%; line-height: 28px; font-family: 'Montserrat', sans-serif !important" id="categorySelect">
 									<option value="" selected="">Todas las Categorías</option>

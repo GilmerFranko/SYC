@@ -61,56 +61,61 @@ $count_autorenew = $thread['count_renewals'];
   <div class="container">
     <div class="row">
       <div class="col col-sm-12 col-md-9 col-lg-9">
-        <div class="card thread-card">
 
-          <div class="card-header" style="background: #e2f0e0; font-size: 14px">
-            <div style="width: auto;"> Ref: <?php echo obtenerExtension($thread['slug']); ?></div>
-            <div><?php echo $contact['name']; ?></div>
-            <div class=" subheader">
-              <div class="subheader"><?php echo date('d-m-Y', $thread['created_at']); ?></div>
-            </div>
-          </div>
+        <div class="preAviso mt-4">
 
-          <div class="card-body">
-            <div class="container">
-              <div class="row">
-                <div class="col col-12">
-                  <strong class="thread-title">
-                    <?= strtoupper($thread['title']); ?>
-                  </strong>
-                  <br>
-                  <p class="thread-content">
-                    <?php
-                    $parser->parse($thread['content']);
-                    echo tobr($parser->getAsHTML());
-                    ?>
-                  </p>
-                </div>
-                <div class="" style="display: flex; padding: 0px 13px 15px; flex-wrap: wrap; flex-direction: row;">
-                  <?php if ($images['rows'] > 0) : ?>
-                    <?php foreach ($images['data'] as $image) : ?>
-                      <div class="">
+        </div>
+        <div class="preAviso0" style="display:none">
+          <div class="card thread-card">
 
-                        <?php if ($image['image_url'] == null): ?>
-                          <img src="<?= $config['default_thread_photo'] ?>" class="rounded" data-bs-toggle=" modal" data-bs-target="#imageModal" style="cursor: pointer;" width="100" height="100">
-                        <?php else: ?>
-                          <img src="<?= $config['threads_url'] ?>/<?= $image['image_url'] ?>" class="rounded-1" data-bs-toggle="modal" data-bs-target="#imageModal" style="cursor: pointer;" width="100">
-                        <?php endif; ?>
-
-                      </div>
-                    <?php endforeach; ?>
-                  <?php endif; ?>
-                </div>
-
+            <div class="card-header" style="background: #e2f0e0; font-size: 14px">
+              <div style="width: auto;"> Ref: <?php echo obtenerExtension($thread['slug']); ?></div>
+              <div><?php echo $contact['name']; ?></div>
+              <div class=" subheader">
+                <div class="subheader"><?php echo date('d-m-Y', $thread['created_at']); ?></div>
               </div>
             </div>
-          </div>
-          <div class="card-footer">
-            <!-- Botones del footer -->
-            <?php require Core::view('thread.footer', 'forums'); ?>
+
+            <div class="card-body">
+              <div class="container">
+                <div class="row">
+                  <div class="col col-12">
+                    <strong class="thread-title">
+                      <?= strtoupper($thread['title']); ?>
+                    </strong>
+                    <br>
+                    <p class="thread-content">
+                      <?php
+                      $parser->parse($thread['content']);
+                      echo tobr($parser->getAsHTML());
+                      ?>
+                    </p>
+                  </div>
+                  <div class="" style="display: flex; padding: 0px 13px 15px; flex-wrap: wrap; flex-direction: row;">
+                    <?php if ($images['rows'] > 0) : ?>
+                      <?php foreach ($images['data'] as $image) : ?>
+                        <div class="">
+
+                          <?php if ($image['image_url'] == null): ?>
+                            <img src="<?= $config['default_thread_photo'] ?>" class="rounded" data-bs-toggle=" modal" data-bs-target="#imageModal" style="cursor: pointer;" width="100" height="100">
+                          <?php else: ?>
+                            <img src="<?= $config['threads_url'] ?>/<?= $image['image_url'] ?>" class="rounded-1" data-bs-toggle="modal" data-bs-target="#imageModal" style="cursor: pointer;" width="100">
+                          <?php endif; ?>
+
+                        </div>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <!-- Botones del footer -->
+              <?php require Core::view('thread.footer', 'forums'); ?>
+            </div>
           </div>
         </div>
-
       </div>
       <!-- Estadísticas de visitas -->
       <div class="col col-md-3 col-lg-3" style="">
@@ -201,6 +206,9 @@ $count_autorenew = $thread['count_renewals'];
 
 <!-- Modal Renovar -->
 <?php require Core::view('renovar.modal', 'forums'); ?>
+
+<!-- Aviso -->
+<?php require Core::view('preaviso.modal', 'forums'); ?>
 
 <!-- FOOTER -->
 <?php require Core::view('footer', 'core'); ?>

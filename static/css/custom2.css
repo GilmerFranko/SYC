@@ -2,7 +2,7 @@
 
 :root {
   --red: red;
-  --green: #7dd957;
+  --green: #3f8a66 !important;
   --primary: #391334;
   --primary-dark: #3a003a;
   --primary-200: #5C395C;
@@ -194,6 +194,10 @@ nav {
 
 .text-primary-dark {
   color: var(--primary-dark) !important;
+}
+
+.text-secondary {
+  color: var(--green) !important;
 }
 
 /* Fin colores de textos */

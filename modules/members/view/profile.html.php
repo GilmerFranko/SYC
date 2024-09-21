@@ -57,22 +57,26 @@
     <br>
     <br>
     <!-- Anuncios del usuario -->
-    <?php if ($threads['rows'] > 0): ?>
-      <div class="card-panel green lighten-4 green-text text-darken-4 flow-text center-align">Anuncios de <?= $profileData['pp_full_name']; ?></div>
-      <br>
-      <?php foreach ($threads['data'] as $thread): ?>
-        <?php require Core::view('thread.piece', 'forums'); ?>
-      <?php endforeach ?>
-    <?php else: ?>
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">
-            No hay anuncios
-          </span>
+    <div class="preAviso mt-4"></div>
+    <div class="preAviso0" style="display:none">
+      <?php if ($threads['rows'] > 0): ?>
+        <div class="card-panel green lighten-4 green-text text-darken-4 flow-text center-align">Anuncios de <?= $profileData['pp_full_name']; ?></div>
+        <br>
+        <?php foreach ($threads['data'] as $thread): ?>
+          <?php require Core::view('thread.piece', 'forums'); ?>
+        <?php endforeach ?>
+      <?php else: ?>
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              No hay anuncios
+            </span>
+          </div>
         </div>
-      </div>
-    <?php endif ?>
+      <?php endif ?>
+    </div>
   </div>
+
 
 
 
@@ -81,6 +85,9 @@
 
   <!-- Modal Renovar -->
   <?php require Core::view('renovar.modal', 'forums'); ?>
+
+  <!-- Aviso -->
+  <?php require Core::view('preaviso.modal', 'forums'); ?>
 
   <script>
     function adjustTextLength() {
