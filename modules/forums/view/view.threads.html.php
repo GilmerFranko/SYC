@@ -32,13 +32,17 @@ require Core::view('head', 'core');
           <?php require Core::view('menu.search', 'core'); ?>
 
           <div style="font-size: 12px; text-align: center; margin: 0 0 10px 0px">
-            Encontrados <strong><?= $threads['rows'] ?></strong> anuncios en "<?= $contact['name'] ?>"
+            Encontrados <strong><?= $threads['total'] ?></strong> anuncios en "<?= $contact['name'] ?>"
           </div>
 
           <?php if ($threads['rows'] > 0): ?>
+            <?php // Desactivado por ahoraecho $threads['pages']['paginator']; 
+            ?>
             <?php foreach ($threads['data'] as $thread): ?>
               <?php require Core::view('thread.piece', 'forums'); ?>
             <?php endforeach ?>
+            <!-- Paginador -->
+            <?php echo $threads['pages']['paginator']; ?>
           <?php else: ?>
             <div class="card">
               <div class="card-content">

@@ -11,8 +11,6 @@
  *
  */
 
-$page_index = isset($_GET['page']) ? escape($_GET['page']) : 1;
-
 if (!isset($_GET['location_url']) or empty($_GET['location_url']))
 {
   redirect('core/home-guest');
@@ -20,12 +18,12 @@ if (!isset($_GET['location_url']) or empty($_GET['location_url']))
 
 $location_url = escape($_GET['location_url']);
 
-if (!$location = getColumns('f_locations', ['id', 'contact_id'], ['short_url', $location_url]))
+if (!$location = getColumns('f_locations', ['id', 'short_url', 'contact_id'], ['short_url', $location_url]))
 {
   redirect('core/home-guest');
 }
 
-if (!$threads = loadClass('forums/threads')->getThreadsByLocationId($location['id'], $page_index))
+if (!$threads = loadClass('forums/threads')->getThreadsByLocationId($location['id'], $location['short_url'], 4))
 {
   $msg[] = 'No hay anuncios para mostrar';
 }

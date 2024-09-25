@@ -70,15 +70,27 @@ class threads extends Model
    * @param int $page El n mero de p gina
    * @return array|boolean Un array con los threads
    */
-  public function getThreadsByLocationId($location_id, $page = 1, $limit = 20)
+  public function getThreadsByLocationId(int $location_id, string $short_url, int $limit = 20)
   {
     $where = [
       'location_id' => $location_id
     ];
 
-    // Calcular el límite inferior y superior 
-    $lowerLimit = ($page - 1) * $limit;
-    $upperLimit = $limit;
+    $total_query = $this->db->query(
+      'SELECT 
+        COUNT(id)
+      FROM 
+        `f_threads` AS t
+      INNER JOIN 
+        `members` AS m ON t.`member_id` = m.`member_id`
+      WHERE 
+        t.`location_id` = "' . $location_id . '"'
+    );
+
+    list($data['total']) = $total_query->fetch_row();
+
+    // Paginador
+    $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('f', $short_url), $data['total'], $limit);
 
     $query = $this->db->query(
       'SELECT 
@@ -93,7 +105,7 @@ class threads extends Model
         t.`location_id` = "' . $location_id . '" 
       ORDER BY 
         t.`position` DESC 
-      LIMIT ' . $lowerLimit . ',' . $upperLimit
+      LIMIT ' . $data['pages']['limit']
     );
 
     $data['rows'] = $query->num_rows;
@@ -104,8 +116,6 @@ class threads extends Model
       {
         $data['data'][] = $row;
       }
-      // Paginador
-      $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('forums', 'views.threads', $location_id, null), $data['rows'], $limit);
       return $data;
     }
     return $data;
