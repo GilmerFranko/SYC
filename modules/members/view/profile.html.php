@@ -58,7 +58,7 @@
     <br>
     <!-- Anuncios del usuario -->
     <div class="preAviso mt-4"></div>
-    <div class="preAviso0" style="display:none">
+    <div class="preAviso0" style="display: <?= (isset($_COOKIE['hasAcceptedAdultContent']) ? 'block' : 'none') ?>;">
       <?php if ($threads['rows'] > 0): ?>
         <div class="card-panel green lighten-4 green-text text-darken-4 flow-text center-align">Anuncios de <?= $profileData['pp_full_name']; ?></div>
         <br>

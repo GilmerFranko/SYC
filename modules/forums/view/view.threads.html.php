@@ -27,7 +27,7 @@ require Core::view('head', 'core');
       <div class="col col-sm-12 col-md-9 col-lg-10">
         <div class="preAviso mt-4"></div>
 
-        <div class="preAviso0" style="display:none">
+        <div class="preAviso0" style="display: <?= (isset($_COOKIE['hasAcceptedAdultContent']) ? 'block' : 'none') ?>;">
           <!-- Menu de busqueda -->
           <?php require Core::view('menu.search', 'core'); ?>
 

@@ -65,7 +65,7 @@ $count_autorenew = $thread['count_renewals'];
         <div class="preAviso mt-4">
 
         </div>
-        <div class="preAviso0" style="display:none">
+        <div class="preAviso0" style="display: <?= (isset($_COOKIE['hasAcceptedAdultContent']) ? 'block' : 'none') ?>;">
           <div class="card thread-card">
 
             <div class="card-header" style="background: #e2f0e0; font-size: 14px">
