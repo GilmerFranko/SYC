@@ -15,7 +15,7 @@ $page['code'] = 'siteContact';
 
 if (isset($_SESSION['message']) && !empty($_SESSION['message']))
 {
-	echo Core::model('extra', 'core')->getToast($_SESSION['message']);
+	echo Core::model('extra', 'core')->getTI($_SESSION['message']);
 }
 
 // SI SE RECIBE EL FORMULARIO
@@ -100,7 +100,7 @@ if (isset($_POST['contact']))
 	if (isset($message[0][0]))
 	{
 		// ESTABLECER MENSAJE EN LA SESION
-		Core::model('extra', 'core')->setToast($message);
+		Core::model('extra', 'core')->setTI($message);
 
 		if ($message[0][1] == 'success')
 		{

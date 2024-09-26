@@ -37,6 +37,8 @@ class Site extends Model
     {
         $query = $this->db->query('INSERT INTO `site_contacts` (`member_id`, `name`, `email`, `title`, `content`, `date`, `ip`) VALUES (\'' . $contact['member_id'] . '\', \'' . $this->db->real_escape_string($contact['name']) . '\', \'' . $this->db->real_escape_string($contact['email']) . '\',  \'' . $this->db->real_escape_string($contact['title']) . '\', \'' . $this->db->real_escape_string($contact['content']) . '\',   UNIX_TIMESTAMP(), \'' . $this->db->real_escape_string(Core::model('extra', 'core')->getIp()) . '\') ');
 
+        error_log('INSERT INTO `site_contacts` (`member_id`, `name`, `email`, `title`, `content`, `date`, `ip`) VALUES (\'' . $contact['member_id'] . '\', \'' . $this->db->real_escape_string($contact['name']) . '\', \'' . $this->db->real_escape_string($contact['email']) . '\',  \'' . $this->db->real_escape_string($contact['title']) . '\', \'' . $this->db->real_escape_string($contact['content']) . '\',   UNIX_TIMESTAMP(), \'' . $this->db->real_escape_string(Core::model('extra', 'core')->getIp()) . '\') ');
+
         // SI SE HA AGREGADO
         if ($query == true)
         {

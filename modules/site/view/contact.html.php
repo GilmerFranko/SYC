@@ -8,7 +8,6 @@
  *=======================================================
  * @Description Vista de contacto
  *
- *
  */
 
 require Core::view('head', 'core');
@@ -29,55 +28,88 @@ require Core::view('head', 'core');
     form {
         position: relative;
         margin: 20px auto;
-        width: 300px;
+        max-width: 400px;
     }
 
     h3 {
         font-size: 16px;
         font-weight: 600;
-        color: rgba(0, 0, 0, 0.8)
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+    .form-control {
+        margin-bottom: 20px;
+    }
+
+    .form-floating label {
+        color: #6c757d;
     }
 </style>
-<section id="<?php echo $page['code']; ?>">
-    <div class="row">
-        <article class="col s12 m6 offset-m3">
-            <blockquote class="flow-text">Utiliza este formulario para ponerte en contacto con el administrador del sitio. <strong>Nadie m&aacute;s leer&aacute; el mensaje.</strong></blockquote>
-            <form id="sendform" method="POST" action="">
-                <input type="hidden" name="member_id" value="<?php echo $session->memberData['member_id']; ?>">
-                <input type="hidden" name="contact" value="">
 
-                <?php if ($session->is_member == false)
-                { ?>
-                    <div class="input-field">
-                        <i class="material-icons prefix">perm_identity</i>
-                        <label for="name">Nombre</label>
-                        <input type="text" name="name" id="name" value="<?php echo Core::model('extra', 'core')->getInputValue('name', 'post', $session->memberData['name']); ?>" required>
-                    </div>
-                    <div class="input-field">
-                        <i class="material-icons prefix">email</i>
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" value="<?php echo Core::model('extra', 'core')->getInputValue('email', 'post', $session->memberData['email']); ?>" required>
-                    </div>
-                <?php } ?>
-                <div class="input-field">
-                    <i class="material-icons prefix">title</i>
-                    <label for="title">T&iacute;tulo corto del mensaje</label>
-                    <input type="text" name="title" id="title" value="<?php echo Core::model('extra', 'core')->getInputValue('title', 'post'); ?>" required>
+<section id="<?php echo $page['code']; ?>" class="py-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm p-4">
+                    <blockquote class="blockquote mb-4">
+                        Utiliza este formulario para ponerte en contacto con el administrador del sitio.
+                        <strong>Nadie más leerá el mensaje.</strong>
+                    </blockquote>
+                    <form id="sendform" method="POST" action="">
+                        <input type="hidden" name="member_id" value="<?php echo $session->memberData['member_id']; ?>">
+                        <input type="hidden" name="contact" value="">
+
+                        <?php if ($session->is_member == false)
+                        { ?>
+                            <!-- Nombre -->
+                            <div class="form-floating mb-3">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Nombre"
+                                    value="<?php echo Core::model('extra', 'core')->getInputValue('name', 'post', $session->memberData['name']); ?>" required>
+                                <label for="name"><i class="bi bi-person-fill me-2"></i>Nombre</label>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-floating mb-3">
+                                <input type="email" name="email" id="email" class="form-control" placeholder="Email"
+                                    value="<?php echo Core::model('extra', 'core')->getInputValue('email', 'post', $session->memberData['email']); ?>" required>
+                                <label for="email"><i class="bi bi-envelope-fill me-2"></i>Email</label>
+                            </div>
+                        <?php } ?>
+
+                        <!-- Título del mensaje -->
+                        <div class="form-floating mb-3">
+                            <input type="text" name="title" id="title" class="form-control" placeholder="Título corto del mensaje"
+                                value="<?php echo Core::model('extra', 'core')->getInputValue('title', 'post'); ?>" required>
+                            <label for="title"><i class="bi bi-chat-left-text-fill me-2"></i>Título corto del mensaje</label>
+                        </div>
+
+                        <!-- Contenido del mensaje -->
+                        <div class="form-floating mb-3">
+                            <textarea name="content" id="content" class="form-control" style="height: 150px;"
+                                placeholder="Escribe aquí tu mensaje" required><?php echo Core::model('extra', 'core')->getInputValue('content', 'post'); ?></textarea>
+                            <label for="content"><i class="bi bi-pencil-fill me-2"></i>Escribe aquí tu Mensaje</label>
+                        </div>
+
+                        <!-- Captcha -->
+                        <div class="h-captcha" data-sitekey="ac48f6bb-17c3-4fcb-a43a-d1be043d20fb"></div>
+                        <br>
+
+                        <!-- Botón Enviar -->
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-send-fill me-2"></i>Enviar
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="input-field">
-                    <i class="material-icons prefix">mode_edit</i>
-                    <label for="content">Escribe aqu&iacute; tu Mensaje</label>
-                    <textarea name="content" id="content" rows="10" class="materialize-textarea" length="1000" required><?php echo Core::model('extra', 'core')->getInputValue('content', 'post'); ?></textarea>
-                </div>
-                <div class="h-captcha" data-sitekey="ac48f6bb-17c3-4fcb-a43a-d1be043d20fb"></div>
-                <br>
-                <button class="btn" type="submit"><i class="material-icons right notranslate">send</i>Enviar</button>
-            </form>
-        </article>
+            </div>
+        </div>
     </div>
 </section>
+
 <script src="https://hcaptcha.com/1/api.js" async defer></script>
 <!-- / Body -->
+
 <!-- Footer -->
 <?php require Core::view('footer', 'core'); ?>
 <!-- / Footer -->
