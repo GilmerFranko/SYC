@@ -14,7 +14,7 @@
 $page_index = isset($_GET['page']) ? escape($_GET['page']) : 1;
 
 
-if (!$threads = loadClass('forums/threads')->getFavoritedThreads($m_id, $page_index))
+if (!$threads = loadClass('forums/threads')->getFavoritedThreads($m_id, 10))
 {
   $msg[] = 'No hay anuncios para mostrar';
 }

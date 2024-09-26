@@ -13,11 +13,12 @@
 require Core::view('head', 'core');
 ?>
 
-<!-- Header -->
-<?php require Core::view('menu', 'core'); ?>
-<!-- / Header -->
 
 <section>
+  <!-- Header -->
+  <?php require Core::view('menu', 'core'); ?>
+  <!-- / Header -->
+
   <div class="container">
     <div class="card">
       <!-- Título principal de la página -->
@@ -26,6 +27,7 @@ require Core::view('head', 'core');
       </div>
     </div>
     <div class="card-body">
+      <br>
       <div style="font-size: 12px; text-align: center; margin: 0 0 10px 0px">
         Encontrados <strong><?= $threads['rows'] ?></strong> anuncios
       </div>
@@ -44,6 +46,7 @@ require Core::view('head', 'core');
         </div>
       <?php endif ?>
     </div>
+    <br>
     <div class="card-footer">
       <!--paginador-->
       <?php echo $threads['pages']['paginator']; ?>

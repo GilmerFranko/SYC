@@ -261,15 +261,30 @@ class threads extends Model
    * @param int $page El n mero de p gina
    * @return array|boolean Un array con los threads
    */
-  public function getFavoritedThreads($member_id, $page = 1, $limit = 20)
+  public function getFavoritedThreads($member_id, $limit = 20)
   {
     $where = [
       'member_id' => $member_id
     ];
 
-    // Calcular el límite inferior y superior 
-    $lowerLimit = ($page - 1) * $limit;
-    $upperLimit = $limit;
+    $query_count = $this->db->query(
+      'SELECT 
+        COUNT(*)
+      FROM 
+        `f_threads` AS t
+      INNER JOIN 
+        `members_favorites` AS mf ON t.`id` = mf.`thread_id`
+      INNER JOIN 
+        `members` AS m ON t.`member_id` = m.`member_id`
+      WHERE 
+        mf.`member_id` = "' . $member_id . '" 
+    '
+    );
+
+    list($data['total']) = $query_count->fetch_row();
+
+    // Paginador
+    $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('mi-panel', 'favoritos'), $data['total'], $limit);
 
     $query = $this->db->query(
       'SELECT 
@@ -285,29 +300,11 @@ class threads extends Model
       WHERE 
         mf.`member_id` = "' . $member_id . '" 
       ORDER BY 
-        t.`created_at` DESC 
-      LIMIT ' . $lowerLimit . ',' . $upperLimit
+      t.`created_at` DESC 
+      LIMIT ' . $data['pages']['limit']
     );
-
-    $query_count = $this->db->query(
-      'SELECT 
-        COUNT(*)
-      FROM 
-        `f_threads` AS t
-      INNER JOIN 
-        `members_favorites` AS mf ON t.`id` = mf.`thread_id`
-      INNER JOIN 
-        `members` AS m ON t.`member_id` = m.`member_id`
-      WHERE 
-        mf.`member_id` = "' . $member_id . '" 
-    '
-    );
-    $total = $query_count->fetch_row()[0];
 
     $data['rows'] = $query->num_rows;
-    // Paginador
-    //$data['pages'] = Core::model('paginator', 'core')->pageIndex(array('anuncios', 'favoritos', null, ['member_id' => $member_id]), $total, $limit);
-
     // Obtener los resultados de la consulta
     if ($query and $data['rows'] > 0)
     {
