@@ -13,30 +13,30 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
     </div>
     <div class="item-container">
       <img src="<?= gImage('home-design.png') ?>" alt="Imagen 1">
-      <div class="item-text">PÁGINA<br>PRINCIPAL</div>
+      <div class="item-text"><a href="<?= gLink() ?>">PÁGINA<br>PRINCIPAL</a></div>
     </div>
 
     <!-- Item 2 -->
     <div class="item-container">
       <img src="https://nuevapasion.com/images/ico-public-advertisements.png" alt="Imagen 2">
-      <div class="item-text">PUBLICAR<br>ANUNCIOS</div>
+      <div class="item-text"><a href="<?= gLink('mi-panel/publicar') ?>">PUBLICAR<br>ANUNCIOS</a></div>
     </div>
 
     <!-- Item 3 -->
     <div class="item-container">
       <img src="https://nuevapasion.com/images/edit-advertisements.png" alt="Imagen 3">
-      <div class="item-text">MODIFICAR<br>MIS ANUNCIOS</div>
+      <div class="item-text"><a href="<?= gLink('mi-panel/anuncios') ?>">MODIFICAR <br>MIS ANUNCIOS</a></div>
     </div>
 
     <!-- Item 4 -->
     <div class="item-container">
       <img src="https://nuevapasion.com/images/fav-advertisements.png" alt="Imagen 4">
-      <div class="item-text">MI SELECCION<br> DE ANUNCIOS</div>
+      <div class="item-text"><a href="<?= gLink('mi-panel/favoritos') ?>">MI SELECCION <br>DE ANUNCIOS</a></div>
     </div>
 
     <div class="item-container">
       <img src="<?= $config['images_url'] ?>/contactus.png" alt="Imagen 4">
-      <div class="item-text">CONTACTAR CON <br> NUESTRO EQUIPO</div>
+      <div class="item-text"><a href="<?= gLink('site/contact') ?>">CONTACTAR CON<br> NUESTRO EQUIPO</a></div>
     </div>
   </div>
 
@@ -66,7 +66,7 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
 
   <?php }
   // Si la sección es 'view.threads'
-  else
+  elseif ($sSection == 'view.threads')
   {
     $locations_in = loadClass('forums/locations')->getLocationsByContactId($contact['id']);
   ?>

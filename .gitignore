@@ -3,6 +3,7 @@ filestore
 .phpintel
 *.png
 *.jpg
+*.gif
 *.mp4
 *.zip
 *.webp

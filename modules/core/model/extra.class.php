@@ -728,7 +728,9 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
             ],
             'mi-panel' => [
                 'anuncios' => ['forums', 'my.threads'],
-                'editar' => ['forums', 'edit.thread']
+                'editar' => ['forums', 'edit.thread'],
+                'publicar' => ['forums', 'new.thread'],
+                'favoritos' => ['forums', 'my.favorites']
             ],
             'mensajes' =>
             [
