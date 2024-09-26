@@ -42,9 +42,9 @@ $thread_url = loadClass('forums/threads')->getThreadUrl($thread['id']);
   <div class="card-header">
     <div><?php echo $contact['name']; ?></div>
     <div class="subheader">
-      <div><?php echo $thread['member_name']; ?></div>
+      <div><a href="<?= gLink('members/profile', ['user' => $thread['member_id']]) ?>"><?php echo $thread['member_name']; ?></a></div>
       <? if ($isAutoRenewEnabled): ?>
-        <div class="btn-autorenueva"><a href="#">AUTO·RENUEVA</a></div>
+        <div class="btn-autorenueva"><a href="<?= gLink('wallet/auto-renueva/') ?>">AUTO·RENUEVA</a></div>
       <? endif; ?>
     </div>
   </div>
