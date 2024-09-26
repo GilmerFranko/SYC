@@ -35,20 +35,23 @@ if ($config['debug_mode'] == 1): ?>
 <?php
 
 ?>
-<footer class="page-footer center" style="margin-bottom: 30px; padding: 5px 0">
-	<div class="footer-copyright">
-		<div class="row center-align">
-			<div class="container">
-				<div class="row">
-					<div class="col col-sm-12">
-						<a href="">CONDICIONES DE USO, PRIVACIDAD Y COOKIES</a> -
-						<a href="">CONTACTAR</a> -
-						<a href="">AGREGAR A FAVORITOS</a>
-					</div>
-					<div class="col col-sm-12" style="color: gray">
-						&copy; <?php echo date('Y') . PHP_EOL . $config['script_name']; ?>
-					</div>
-					<?php /*<div class="col s12 m6">
+
+<?php // No mostrar en admin
+if ($sModule != 'admin'): ?>
+	<footer class="page-footer center" style="margin-bottom: 30px; padding: 5px 0">
+		<div class="footer-copyright">
+			<div class="row center-align">
+				<div class="container">
+					<div class="row">
+						<div class="col col-sm-12">
+							<a href="">CONDICIONES DE USO, PRIVACIDAD Y COOKIES</a> -
+							<a href="">CONTACTAR</a> -
+							<a href="">AGREGAR A FAVORITOS</a>
+						</div>
+						<div class="col col-sm-12" style="color: gray">
+							&copy; <?php echo date('Y') . PHP_EOL . $config['script_name']; ?>
+						</div>
+						<?php /*<div class="col s12 m6">
 				<!-- ESPAÑOL -->
 				<a href="#" onclick="doGTranslate('es|es');return false;" title="Spanish" class="gflag nturl" style="background-position:-600px -200px;">
 					<img src="//gtranslate.net/flags/blank.png" height="24" width="24" alt="Spanish" />
@@ -71,14 +74,14 @@ if ($config['debug_mode'] == 1): ?>
 				</a>
 			</div>
 			*/ ?>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</footer>
+	</footer>
+<?php endif ?>
 
-
-<?php if ($config['debug_mode'] == 0 and $sSection != 'view_messages'): ?>
+<?php if ($config['debug_mode'] == 0 and $sSection === 'view_messages'): ?>
 	<div id="google_translate_element2"></div>
 	<script type="text/javascript">
 		function googleTranslateElementInit2() {

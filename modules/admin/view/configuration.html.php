@@ -25,18 +25,22 @@ require Core::view('head', 'core');
 
         <!-- NOMBRE DEL SITIO -->
         <div class="row">
-          <div class="input-field col s12">
+          <div class="input-field col s6">
             <input id="script_name" name="script_name" type="text" class="validate" value="<?php echo $config['script_name']; ?>" required="required">
-            <label for="script_name" class="active">Nombre del sitio</label>
+            <label for="script_name" class="active">Nombre del sitio (ej: Facebook)</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="script_abbreviation" name="script_abbreviation" type="text" class="validate" value="<?php echo $config['script_abbreviation']; ?>" required="required" maxlength="4">
+            <label for="script_abbreviation" class="active">Siglas del sitio (ej: FB)</label>
           </div>
         </div>
         <!-- NOMBRE DE LA COOKIE -->
         <div class="row">
-          <div class="input-field col s6">
+          <div class="input-field col s6" title="Es el nombre que se le da a la cookie que almacena la session del usuario">
             <input id="cookie_name" name="cookie_name" type="text" class="validate" value="<?php echo $config['cookie_name']; ?>" required="required">
             <label for="cookie_name" class="active">Nombre de cookie</label>
           </div>
-          <div class="input-field col s6">
+          <div class="input-field col s6" title="Es el tiempo que dura la sesión del usuario al loguearse">
             <input id="cookie_time" name="cookie_time" type="number" class="validate" value="<?php echo $config['cookie_time']; ?>" required="required">
             <label for="cookie_time" class="active">Tiempo de cookie (d&iacute;as)</label>
           </div>
@@ -50,7 +54,7 @@ require Core::view('head', 'core');
         </div>
         <!-- CONFIGURACIÓN EXTRA -->
         <div class="row">
-          <div class="input-field col s6">
+          <div class="input-field col s6" title="Si esta activo, el sitio queda inactivo para los usuarios">
             <div class="switch">
               <label>
                 <input type="checkbox" value="1" name="maintenance" id="maintenance" <?php echo $config['maintenance'] == 1 ? 'checked="checked"' : ''; ?>>
@@ -60,7 +64,7 @@ require Core::view('head', 'core');
             </div>
             <label for="maintenance" class="active">Mantenimiento</label>
           </div>
-          <div class="input-field col s6">
+          <div class="input-field col s6" title="Si está activado muestra el panel de depuración">
             <div class="switch">
               <label>
 
@@ -72,7 +76,7 @@ require Core::view('head', 'core');
             <label for="debug_mode" class="active">Depuraci&oacute;n</label>
           </div>
         </div>
-        <div class="row">
+        <div class="row" title="Si está activado valida el correo antes de registrarse">
           <div class="input-field col s6">
             <div class="switch">
               <label>
@@ -83,23 +87,18 @@ require Core::view('head', 'core');
             </div>
             <label for="reg_validate" class="active">Validar por correo</label>
           </div>
-        </div>
 
-        <!-- CONFIGURACION DE AVATAR -->
-        <blockquote class="flow-text">Avatar</blockquote>
+          <div class="input-field col s6" title="Si está activo envía un correo al recibir un mensaje privado">
+            <div class="switch">
+              <label>
+                <input type="checkbox" value="1" name="enable_email_on_message" id="enable_email_on_message" <?php echo $config['enable_email_on_message'] == 1 ? 'checked="checked"' : ''; ?>>
+                <span class="lever"></span>
 
-
-
-        <!-- PUBLICIDAD -->
-        <blockquote class="flow-text">Publicidad</blockquote>
-        <div class="row">
-          <div class="input-field col s12">
-            <textarea id="ad300250" name="ad_300x250" class="materialize-textarea"><?php echo $config['ad_300x250']; ?></textarea>
-            <label for="ad300250">Publicidad 300x250</label>
+              </label>
+            </div>
+            <label for="enable_email_on_message" class="active">Enviar email al recibir un mensaje</label>
           </div>
         </div>
-
-
 
         <!-- BOTON GUARDAR -->
         <button class="btn waves-effect waves-light grey darken-3" type="submit" name="save">Guardar cambios
