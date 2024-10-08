@@ -46,7 +46,7 @@
               </a>
             <?php else: ?>
               <!-- Boton enviar mensaje con icono -->
-              <a href="enviar_mensaje.php?to=<?= $profileData['member_id']; ?>" class="btn btn-success">
+              <a href="<?= gLink('members/view.messages', ['r_id' => $profileData['member_id']]) ?>" class="btn btn-success">
                 <i class="bi bi-envelope"></i> Enviar Mensaje
               </a>
             <?php endif; ?>
