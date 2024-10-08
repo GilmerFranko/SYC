@@ -43,12 +43,12 @@ if ($sModule != 'admin'): ?>
 			<div class="row center-align">
 				<div class="container">
 					<div class="row">
-						<div class="col col-sm-12">
+						<div>
 							<a href="">CONDICIONES DE USO, PRIVACIDAD Y COOKIES</a> -
 							<a href="">CONTACTAR</a> -
 							<a href="">AGREGAR A FAVORITOS</a>
 						</div>
-						<div class="col col-sm-12" style="color: gray">
+						<div style="color: gray">
 							&copy; <?php echo date('Y') . PHP_EOL . $config['script_name']; ?>
 						</div>
 						<?php /*<div class="col s12 m6">
