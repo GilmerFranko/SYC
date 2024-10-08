@@ -88,7 +88,7 @@ require Core::view('head', 'core');
             <label for="reg_validate" class="active">Validar por correo</label>
           </div>
 
-          <div class="input-field col s6" title="Si está activo envía un correo al recibir un mensaje privado">
+          <div class="input-field col s6" title="Si está activo envía un correo al usuario al recibir un mensaje privado">
             <div class="switch">
               <label>
                 <input type="checkbox" value="1" name="enable_email_on_message" id="enable_email_on_message" <?php echo $config['enable_email_on_message'] == 1 ? 'checked="checked"' : ''; ?>>

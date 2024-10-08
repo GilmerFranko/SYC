@@ -91,6 +91,7 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
         },
         dataType: 'json',
         success: function(response) {
+          console.log(response);
           if (response.status) {
             $('#messages-container').append('<div class="d-flex justify-content-end"><div class="message message-sent"><p>' + response.data.content + '</p><small>' + response.data.sent_at_formatted + '</small></div></div>');
             $('#messages-container').scrollTop($('#messages-container')[0].scrollHeight); // Desplazarse hacia abajo

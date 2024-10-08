@@ -55,7 +55,7 @@ if (isset($_POST['do']))
         }
         else
         {
-          $message['sendEmail'] = false;
+          $message['sendEmail'] = true;
         }
 
 

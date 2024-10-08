@@ -1,27 +1,44 @@
+<style>
+  @media only screen and (max-width: 767px) {
+    .submenu-item {
+      padding-left: 0 !important;
+
+      img {
+        width: 18px;
+        height: 18px;
+      }
+
+      a {
+        font-size: 11px;
+      }
+    }
+  }
+</style>
+
 <div style="display:flex;justify-content-center;flex-direction: column;align-items: center;">
   <div class="container">
     <div class="row">
       <div class="col-md-9">
         <!-- OPCIONES MENU -->
-        <div class="container overflow-auto" style="width: 95vw; max-width: 525px;">
-          <div class="row" style="width:525px;">
-            <div class="col-3 d-flex text-center justify-content-center align-items-center">
+        <div class="container overflow-auto">
+          <div class="row">
+            <div class="submenu-item col col-sm-3 d-flex text-center justify-content-center align-items-center">
               <img src="https://nuevapasion.com/images/ico-public-advertisements.png" class="index-icon" alt="Publicar anuncio">
               <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="<?= gLink('forums/new.thread') ?>">&nbsp;PUBLICAR<br>&nbsp;ANUNCIOS
               </a>
             </div>
-            <div class="col-3 d-flex text-center justify-content-center align-items-center">
+            <div class="submenu-item col col-sm-3 d-flex text-center justify-content-center align-items-center">
               <img src="https://nuevapasion.com/images/edit-advertisements.png" class="index-icon" alt="Publicar anuncio">
               <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="<?= gLink('mi-panel/anuncios') ?>">&nbsp;MODIFICAR<br>&nbsp; ANUNCIOS</a>
             </div>
-            <div class="col-3 d-flex text-center justify-content-center align-items-center">
+            <div class="submenu-item col col-sm-3 d-flex text-center justify-content-center align-items-center">
               <img src="https://nuevapasion.com/images/fav-advertisements.png" class="index-icon" alt="Mis anuncios favoritos">
               <a class="btnin fs-12 fs-mobile10 fw-bold ff-arial" href="<?= gLink('anuncios/favoritos') ?>">&nbsp; ANUNCIOS<br>&nbsp;FAVORITOS</a>
             </div>
           </div>
         </div>
         <br>
-        <div class="search w-100 gap-2 d-inline-flex flex-md-row flex-column bg-morado py-2 px-2 text-white text-center justify-content-center" style="border-radius: 10px">
+        <div class="search w-100 gap-2 d-none d-md-inline-flex flex-md-row flex-column bg-morado py-2 px-2 text-white text-center justify-content-center" style="border-radius: 10px">
           <div class="d-flex flex-row w-50 align-items-center flex-wrap justify-content-center">
             <form class="d-flex" action="<?= gLink('forums/view.searches') ?>" method="get">
               <input type="submit" value="Buscar">

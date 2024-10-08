@@ -51,6 +51,8 @@ if (isset($_POST['save']))
             $data['script_name'] = empty($_POST['script_name']) ? 'SYC' : htmlspecialchars($_POST['script_name']);
             // SIGLAS DEL SITIO
             $data['script_abbreviation'] = cleanInput($_POST['script_abbreviation']);
+            // 
+            $data['enable_email_on_message'] = empty($_POST['enable_email_on_message']) ? '0' : '1';
             // CODIGO PUBLICIDAD 300X250
             $data['ad_300x250'] = empty($_POST['ad_300x250']) ? '' : $_POST['ad_300x250'];
             // ESTABLECER NOMBRE DE COOKIE
