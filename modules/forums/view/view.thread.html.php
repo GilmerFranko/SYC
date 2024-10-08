@@ -16,7 +16,8 @@ require Core::view('head', 'core');
 $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);
 
 // Registra a la visita del hilo (solo si no se ha visitado el mismo dia) (Primero se está cargando el hilo y luego se registra la visitta por lo que esta no estará reflejada en el momento)
-loadClass('forums/threads')->registerVisit($thread['id'], $m_id, $session->memberData['ip_address']);
+if ($session->is_member)
+  loadClass('forums/threads')->registerVisit($thread['id'], $m_id, $session->memberData['ip_address']);
 
 // Optiene las visitas detalladas del hilo
 $visits = loadClass('forums/threads')->getThreadVisitsLast10Days($thread['id']);
@@ -118,7 +119,7 @@ $count_autorenew = $thread['count_renewals'];
         </div>
       </div>
       <!-- Estadísticas de visitas -->
-      <div class="col col-md-3 col-lg-3" style="">
+      <div id="item-stats" class="col col-md-3 col-lg-3" style="">
         <div class="pagAnuStatsAnuBox" bis_skin_checked="1">
           <div class="pagAnuStatsAnu" bis_skin_checked="1">
             <div class="stats" bis_skin_checked="1">
@@ -126,7 +127,7 @@ $count_autorenew = $thread['count_renewals'];
             </div>
             <div class="dato" bis_skin_checked="1"><strong><?= $thread['views_count'] ?></strong>
               veces listado
-              <a href="javascript:alert('Veces listado es el número de veces que se ha mostrado el anuncio a los usuarios, bien sea en el listado de resultados como en la página propia del anuncio.');"><b>?</b></a>
+              <a href="javascript:alert('Veces listado es el número de veces que se ha mostrado el anuncio a los usuarios, bien sea en el listado de resultados como en la página propia del anuncio. Solo se cuenta una vez por usuario y este debe estar logueado');"><b>?</b></a>
             </div>
             <div class="dato" bis_skin_checked="1"><strong><?= $thread['count_favorites'] ?></strong> añadido a favoritos
               <a href="javascript:alert('Añadido a favoritos es el número de usuarios que han añadido este anuncio a su lista de \'Mi selección de anuncios\'.');"><b>?</b></a>
@@ -209,6 +210,9 @@ $count_autorenew = $thread['count_renewals'];
 
 <!-- Aviso -->
 <?php require Core::view('preaviso.modal', 'forums'); ?>
+
+<!-- Estadisticas -->
+<?php require Core::view('stats.modal', 'forums'); ?>
 
 <!-- FOOTER -->
 <?php require Core::view('footer', 'core'); ?>

@@ -70,13 +70,13 @@ else
   </div>
 <?php } ?>
 
-<!-- Botón para ver estadísticas solo si esta en section view.threads -->
-<?php if ($sSection == 'view.threads'): ?>
-  <div class="chip selectable" data-bs-toggle="tooltip" data-bs-placement="top" title="Estadisticas">
-    <i class="em em-bar_chart small-in-movil" aria-role="presentation" aria-label="BAR CHART"></i>
-    <span class="d-none d-sm-inline small-in-movil">Estadisticas</span>
-  </div>
-<?php endif; ?>
+<!-- Botón para ver estadísticas -->
+
+<div class="chip selectable" data-bs-toggle="tooltip" data-bs-placement="top" title="Estadisticas" onclick="openStatsModal(<?= $thread['id'] ?>)">
+  <i class="em em-bar_chart small-in-movil" aria-role="presentation" aria-label="BAR CHART"></i>
+  <span class="d-none d-sm-inline small-in-movil">Estadisticas</span>
+</div>
+
 <!-- Botón para denunciar el hilo -->
 <div class="chip selectable" onclick="openReportModal(<?= $thread['id'] ?>, '<?= $thread['title'] ?>')">
   <i class="em em-warning small-in-movil" aria-role="presentation" aria-label="WARNING SIGN"></i>

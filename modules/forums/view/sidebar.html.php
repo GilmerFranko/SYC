@@ -59,7 +59,7 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
       <?php foreach ($contacts_in['data'] as $contact_in)
       { ?>
         <div class="item-container <?= ($contact_in['id'] == $contact_id) ? 'item-container-active' : '' ?>">
-          <a class="item-text" href="<?= gLink('c/location', ['location_id' => $contact_in['id']]) ?>"><strong><?= $contact_in['name'] ?></strong></a>
+          <a class="item-text" href="<?= gLink('forums/view.searches', ['contact_id' => $contact['id']]) ?>"><strong><?= $contact_in['name'] ?></strong></a>
         </div>
       <?php } ?>
     </div>
@@ -79,7 +79,7 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
       <?php foreach ($locations_in['data'] as $location_in)
       { ?>
         <div class="item-container <?= ($location_in['short_url'] == $location_url) ? 'item-container-active' : '' ?>">
-          <a class="item-text" href="<?= gLink('f/' . $location_in['short_url']) ?>"><strong><?= strtoupper($contact['name'] . ' EN ' . $location_in['name']) ?></strong></a>
+          <a class="item-text" href="<?= gLink('forums/view.searches', ['contact_id' => $contact['id']]) ?>"><strong><?= strtoupper($contact['name'] . ' EN ' . $location_in['name']) ?></strong></a>
         </div>
       <?php } ?>
     </div>

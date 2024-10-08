@@ -89,6 +89,9 @@
   <!-- Aviso -->
   <?php require Core::view('preaviso.modal', 'forums'); ?>
 
+  <!-- Estadisticas -->
+  <?php require Core::view('stats.modal', 'forums'); ?>
+
   <script>
     function adjustTextLength() {
       $('.thread-content').each(function() {

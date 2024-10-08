@@ -85,5 +85,39 @@ if (isset($_POST['do']))
     }
   }
 
+  // Devuelve estadisticas
+  if ($_POST['do'] == 'stats')
+  {
+    $thread_id = escape($_POST['thread_id']);
+
+    // Devuelve hilo
+    $thread = getColumns('f_threads', ['id', 'views_count', 'count_favorites', 'count_renewals'], ['id', $thread_id]);
+
+    // Optiene la cantidad de favoritos
+    $count_favorites = $thread['count_favorites'];
+
+    // Optiene la cantidad de veces que se ha renovado el hilo
+    $count_autorenew = $thread['count_renewals'];
+
+    // Optiene las visitas
+    $views_count = $thread['views_count'];
+
+    // Optiene las visitas detalladas del hilo
+    $visits = loadClass('forums/threads')->getThreadVisitsLast10Days($thread['id']);
+
+    // Verifica si el hilo tiene activado el auto-renueva
+    $isAutoRenewEnabled = loadClass('forums/autorenueva')->isAutoRenewEnabled($thread['id']);
+
+
+    $message = [
+      'status' => true,
+      'count_favorites' => $count_favorites,
+      'count_autorenew' => $count_autorenew,
+      'views_count' => $views_count,
+      'visits' => $visits,
+      'isAutoRenewEnabled' => $isAutoRenewEnabled
+    ];
+  }
+
   echo json_encode($message);
 }

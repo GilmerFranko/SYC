@@ -115,5 +115,17 @@ require Core::view('head', 'core');
   });
 </script>
 
+<!-- Modal denunciar -->
+<?php require Core::view('report.modal', 'forums'); ?>
+
+<!-- Modal Renovar -->
+<?php require Core::view('renovar.modal', 'forums'); ?>
+
+<!-- Aviso -->
+<?php require Core::view('preaviso.modal', 'forums'); ?>
+
+<!-- Estadisticas -->
+<?php require Core::view('stats.modal', 'forums'); ?>
+
 <!-- FOOTER -->
 <?php require Core::view('footer', 'core'); ?>

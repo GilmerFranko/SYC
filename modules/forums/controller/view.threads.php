@@ -42,7 +42,8 @@ if (!empty($msg))
   exit;
 }
 
-loadClass('forums/locations')->registerVisit($location['id'], $m_id, $session->memberData['ip_address']);
+if ($session->is_member)
+  loadClass('forums/locations')->registerVisit($location['id'], $m_id, $session->memberData['ip_address']);
 
 /* Se definen estas variables para el modulo search */
 $_GET['location_id'] = $location['id'];

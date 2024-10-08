@@ -28,8 +28,10 @@ else
 }
 
 // Registra a la visita del hilo (solo si no se ha visitado el mismo dia) (Primero se está cargando el hilo y luego se registra la visitta por lo que esta no estará reflejada en el momento)
-loadClass('forums/threads')->registerVisit($thread['id'], $m_id, $session->memberData['ip_address']);
-
+if ($session->is_member)
+{
+  loadClass('forums/threads')->registerVisit($thread['id'], $m_id, $session->memberData['ip_address']);
+}
 // Verifica si el hilo tiene activado el auto-renueva
 $isAutoRenewEnabled = loadClass('forums/autorenueva')->isAutoRenewEnabled($thread['id']);
 
