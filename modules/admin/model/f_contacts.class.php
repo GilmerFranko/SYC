@@ -136,7 +136,7 @@ class f_contacts extends Model
         }
         else
         {
-          return false;
+          error_log('Error al actualizar la imagen del contacto');
         }
       }
       else

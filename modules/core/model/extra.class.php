@@ -761,7 +761,7 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
     function uploadImage($image = array(), $path = '')
     {
         // Verificar si el tipo de archivo es JPEG o PNG y no pese mas de 2MB
-        if (($image['type'] == 'image/jpeg' || $image['type'] == 'image/png') && $image['size'] <= 2097152)
+        if (($image['type'] == 'image/jpeg' || $image['type'] == 'image/png' || $image['type'] == 'image/gif') && $image['size'] <= 2097152)
         {
             // Crear el directorio si no existe
             if (!file_exists($path))
@@ -797,8 +797,11 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
     public function deleteImage($image_name, $path = '')
     {
         $image_path = $path . DS . $image_name;
-
-        return unlink($image_path) ? true : false;
+        if (file_exists($image_path))
+        {
+            return unlink($image_path) ? true : false;
+        }
+        return true;
     }
 
     static function generateSlug(string $title): string
