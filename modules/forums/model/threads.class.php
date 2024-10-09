@@ -254,6 +254,80 @@ class threads extends Model
     return $data;
   }
 
+  public function searchThreadsByLocationName($params, $page = 1, $limit = 20)
+  {
+    $where = [];
+    $bindings = [];
+
+    // Filtrar por ubicacion (contact_id)
+    if (!empty($params['location_name']))
+    {
+      $where[] = 'l.name = "' . $this->db->real_escape_string($params['location_name']) . '"';
+    }
+
+    // Ordenar por fecha (ascendente o descendente)
+    $order_by = !empty($params['order_by']) && in_array($params['order_by'], ['asc', 'desc'])
+      ? $params['order_by']
+      : 'desc';
+
+    // Construir la cláusula WHERE
+    $where_clause = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+
+    // Calcular el límite inferior y superior
+    $lowerLimit = ($page - 1) * $limit;
+    $upperLimit = $limit;
+
+    // Consulta para obtener el total de resultados (sin límite de paginación)
+    $total_query = $this->db->query(
+      'SELECT COUNT(*) 
+        FROM `f_threads` AS t
+        INNER JOIN `members` AS m ON t.`member_id` = m.`member_id`
+        INNER JOIN `f_locations` AS l ON t.`location_id` = l.`id`
+        INNER JOIN `f_contacts` AS c ON l.`contact_id` = c.`id`
+        ' . $where_clause
+    );
+
+    list($data['total']) = $total_query->fetch_row();
+
+    // Paginador
+    $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('forums', 'view.searches', null, $params), $data['total'], $limit);
+
+    // Construir la consulta SQL final con paginación
+    $query = $this->db->query(
+      'SELECT 
+            t.*,
+            c.`id` AS contact_id,
+            m.`name` AS member_name,
+            m.`member_id` AS member_id
+        FROM 
+            `f_threads` AS t
+        INNER JOIN 
+            `members` AS m ON t.`member_id` = m.`member_id`
+        INNER JOIN 
+            `f_locations` AS l ON t.`location_id` = l.`id`
+        INNER JOIN 
+            `f_contacts` AS c ON l.`contact_id` = c.`id`
+        ' . $where_clause . '
+        ORDER BY 
+            t.`created_at` ' . $order_by . ' 
+        LIMIT ' . $data['pages']['limit']
+    );
+
+    $data['rows'] = $query->num_rows;
+
+    // Obtener los resultados de la consulta
+    if ($query && $data['rows'] > 0)
+    {
+      while ($row = $query->fetch_assoc())
+      {
+        $data['data'][] = $row;
+      }
+    }
+
+    return $data;
+  }
+
+
 
   /**
    * @Description Obtiene todos los threads guardados en favoritos por un usuario

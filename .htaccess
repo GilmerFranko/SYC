@@ -43,6 +43,9 @@ RewriteRule ^cron.php$ cron.php [NC,L,QSA]
 # Redirecciona URLs para "f" antes de reglas más generales
 RewriteRule ^f/([^/]+)$ index.php?app=forums&section=view.threads&location_url=$1 [NC,L,QSA]
 
+# Redirecciona URLs para "region" antes de reglas más generales
+RewriteRule ^region/([^/]+)$ index.php?app=forums&section=view.by.location&location_name=$1 [NC,L,QSA]
+
 # Redirecciona URLs para "anuncio" antes de reglas más generales
 RewriteRule ^anuncio/([^/]+)$ index.php?app=forums&section=view.thread&thread_id=$1 [NC,L,QSA]
 
