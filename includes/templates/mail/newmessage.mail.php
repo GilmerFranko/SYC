@@ -19,7 +19,7 @@ $base_url = Core::config('base_url');
 $subject = 'Tienes un nuevo mensaje en ' . $script_name;
 
 // Genera el enlace al mensaje
-$messageLink = gLink('members/view.messages', ['r_id' => $params['from_member']['member_id']]);
+$messageLink = gLink('members/view.messages', ['r_id' => $params['to_member']['member_id']]);
 
 $content = <<<HTML
 <!DOCTYPE html>
