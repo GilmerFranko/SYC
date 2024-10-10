@@ -139,6 +139,14 @@
                 <li>
                   <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('wallet', 'my_transactions'); ?>">Monedero</a>
                 </li>
+                <!-- Mis anuncios -->
+                <li>
+                  <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('mi-panel', 'anuncios'); ?>">Mis anuncios</a>
+                </li>
+                <!-- Favoritos -->
+                <li>
+                  <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('anuncios', 'favoritos'); ?>">Favoritos</a>
+                </li>
                 <li>
                   <a class="dropdown-item" href="<?php echo Core::model('extra', 'core')->generateUrl('members', 'account'); ?>">Mi cuenta</a>
                 </li>

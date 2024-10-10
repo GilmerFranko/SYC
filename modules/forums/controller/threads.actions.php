@@ -119,5 +119,41 @@ if (isset($_POST['do']))
     ];
   }
 
+  // Verifica si se ha pulsado el boton de eliminar anuncio (thread)
+  elseif ($_POST['do'] == 'delete')
+  {
+    if (isset($_POST['thread_id']) and !empty($_POST['thread_id']))
+    {
+      $thread_id = escape($_POST['thread_id']);
+
+      // Optiene el hilo
+      $data = getColumns('f_threads', ['id', 'member_id'], ['id', $thread_id]);
+
+      // Verifica si el hilo pertenece al usuario
+      if ($data and $data['member_id'] == $m_id)
+      {
+        $response = loadClass('forums/threads')->deleteThread($thread_id);
+
+        if ($response['status'] === true)
+        {
+          $message = array('success' => true, 'msg' => $response['msg']);
+          setToast([[$response['msg']]]);
+        }
+        else
+        {
+          $message = array('success' => false, 'msg' => $response['msg']);
+        }
+      }
+      else
+      {
+        $message = array('success' => false, 'msg' => 'No se ha podido eliminar el anuncio');
+      }
+    }
+    else
+    {
+      $message = array('success' => false, 'msg' => 'No se ha podido eliminar el anuncio');
+    }
+  }
+
   echo json_encode($message);
 }

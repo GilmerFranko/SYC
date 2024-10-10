@@ -14,11 +14,12 @@
 require Core::view('head', 'core');
 ?>
 
-<!-- Header -->
-<?php require Core::view('menu', 'core'); ?>
-<!-- / Header -->
 
-<section id="userTransactions" class="container mt-4">
+<section id="userTransactions" class="">
+    <!-- Header -->
+    <?php require Core::view('menu', 'core'); ?>
+    <!-- / Header -->
+
     <div class="alert alert-success text-center fw-bold">Mis Transacciones</div>
 
     <!-- Botón de Recargar -->

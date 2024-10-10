@@ -190,7 +190,12 @@ nav {
 
 .text-primary {
   color: var(--primary-light) !important;
+
+  &:hover {
+    color: var(--primary) !important;
+  }
 }
+
 
 .text-primary-dark {
   color: var(--primary-dark) !important;

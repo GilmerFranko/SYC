@@ -163,7 +163,7 @@ class AutoRenueva extends Model
     {
       // Registro no existe, hacer inserción
       $stmt = $this->db->prepare("INSERT INTO auto_renueva_settings (thread_id, is_enabled, renewal_interval) VALUES (?, ?, ?)");
-      $stmt->bind_param('ii', $thread_id, $is_enabled, $interval);
+      $stmt->bind_param('iii', $thread_id, $is_enabled, $interval);
       $stmt->execute();
       return $stmt->affected_rows > 0;
     }

@@ -584,6 +584,12 @@ class threads extends Model
     {
       foreach ($images['data'] as $image)
       {
+        if (empty($image['image_url']))
+        {
+          // Eliminar la imagen solo de la base de datos
+          loadClass('core/db')->deleteRow('f_threads_images', $image['id']);
+          continue;
+        }
         if (!$this->deleteImageById($image['id'], $thread_id))
         {
           return ['status' => false, 'msg' => 'Error al eliminar imágenes asociadas'];
@@ -601,6 +607,18 @@ class threads extends Model
     if (!$this->deleteAllReportsOfThread($thread_id))
     {
       return ['status' => false, 'msg' => 'Error al eliminar los reportes asociados'];
+    }
+
+    // Eliminar visitas
+    if (!$this->deleteAllVisitsByThreadId($thread_id))
+    {
+      return ['status' => false, 'msg' => 'Error al eliminar las visitas asociadas'];
+    }
+
+    // Elimina auto renovaciones
+    if (!$this->deleteAllAutoRenewalByThreadId($thread_id))
+    {
+      return ['status' => false, 'msg' => 'Error al eliminar las renovaciones asociadas'];
     }
 
     // Registra actividad
@@ -884,6 +902,31 @@ class threads extends Model
   public function deleteAllReportsOfThread($thread_id)
   {
     return $this->db->query('DELETE FROM `f_threads_reports` WHERE `thread_id` = "' . $thread_id . '"');
+  }
+
+
+  /**
+   * Elimina todas las visitas de un thread
+   * 
+   * @param int $thread_id ID del thread
+   * 
+   * @return bool
+   */
+  public function deleteAllVisitsByThreadId($thread_id)
+  {
+    return $this->db->query('DELETE FROM `f_threads_visits` WHERE `thread_id` = "' . $thread_id . '"');
+  }
+
+  /**
+   * Elimina todas las renovaciones de un thread
+   * 
+   * @param int $thread_id ID del thread
+   * 
+   * @return bool
+   */
+  public function deleteAllAutoRenewalByThreadId($thread_id)
+  {
+    return $this->db->query('DELETE FROM `auto_renueva_settings` WHERE `thread_id` = "' . $thread_id . '"');
   }
 
 

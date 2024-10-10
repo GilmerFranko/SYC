@@ -14,12 +14,12 @@
 require Core::view('head', 'core');
 ?>
 
-<!-- Header -->
-<?php require Core::view('menu', 'core'); ?>
-<!-- / Header -->
 
 <!-- Body -->
-<section id="memberAccount" class="py-5">
+<section id="memberAccount" class="">
+    <!-- Header -->
+    <?php require Core::view('menu', 'core'); ?>
+    <!-- / Header -->
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10 col-lg-8">
