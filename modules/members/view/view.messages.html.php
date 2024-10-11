@@ -24,7 +24,7 @@ $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
         <div class="card">
           <div class="card-header">
             <div class="d-flex align-items-center">
-              <!--<img src="<?php echo htmlspecialchars($memberReceiver['profile_picture']); ?>" alt="<?php echo htmlspecialchars($memberReceiver['name']); ?>" class="rounded-circle me-2" style="width: 40px; height: 40px;">-->
+              <img src="<?= $config['avatar_url'] . DS . $memberReceiver['pp_thumb_photo'] ?>" alt="Avatar de <?= cleanString($memberReceiver['name']); ?>" class="rounded-circle me-2" style="width: 40px; height: 40px;">
               <span><?php echo htmlspecialchars($memberReceiver['name']); ?></span>
             </div>
           </div>

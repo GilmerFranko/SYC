@@ -22,7 +22,7 @@ if (!isset($_GET['r_id']) or empty($_GET['r_id']))
 $receiverId = intval($_GET['r_id']);
 
 // Obtener los datos del usuario receptor (para mostrar la conversación)
-if (!$memberReceiver = loadClass('members/member')->getMemberFromID($receiverId))
+if (!$memberReceiver = getColumns('members', ['member_id', 'name', 'pp_thumb_photo'], ['member_id', $receiverId]))
 {
   $msg[] = 'El usuario receptor no existe.';
 }
