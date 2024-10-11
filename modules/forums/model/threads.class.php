@@ -466,28 +466,6 @@ class threads extends Model
    */
   public function getThread($identifier, $member_id, $isSlug = false)
   {
-
-    // Configuración de la base de datos
-    $host = 'localhost';      // Cambia esto si tu base de datos está en otro host
-    $username = 'root';    // Tu nombre de usuario de la base de datos
-    $password = ''; // Tu contraseña de la base de datos
-    $dbname = 'sexoycontacto'; // El nombre de tu base de datos
-
-    // Crear una nueva conexión
-    $mysqli = new mysqli($host, $username, $password, $dbname);
-
-    // Verificar la conexión
-    if ($mysqli->connect_error)
-    {
-      die("Error de conexión: " . $mysqli->connect_error);
-    }
-
-    // Configurar el conjunto de caracteres de la conexión para usar utf8mb4
-    if (!$mysqli->set_charset("utf8mb4"))
-    {
-      die("Error al configurar el conjunto de caracteres: " . $mysqli->error);
-    }
-
     // Determinar la columna a buscar
     $column = $isSlug ? 't.`slug`' : 't.`id`';
 

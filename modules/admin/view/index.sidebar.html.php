@@ -112,29 +112,6 @@
               Transacciones
             </a>
           </li>
-          <li <?php if ($sSection == 'wallet_all_deposits')
-              {
-                echo ' class="active"';
-              } ?>>
-            <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'wallet_all_deposits'); ?>">
-              <i class="material-icons">wallet</i>
-              Depositos
-            </a>
-          </li>
-          <li <?php if ($sSection == 'wallet_pending_deposits')
-              {
-                echo ' class="active"';
-              } ?>>
-            <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'wallet_pending_deposits'); ?>">
-              <?php if (loadClass('wallet/wallettransactions')->getPendingDepositsCount() > 0): ?>
-                <i class="material-icons red-text">wallet</i>
-              <?php else: ?>
-                <i class="material-icons">wallet</i>
-              <?php endif ?>
-
-              Depositos pendientes
-            </a>
-          </li>
         </ul>
       </div>
     </li>
