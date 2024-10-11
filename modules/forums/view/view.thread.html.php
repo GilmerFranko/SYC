@@ -51,10 +51,11 @@ $count_autorenew = $thread['count_renewals'];
   }
 </style>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+
 <section>
   <!-- Header -->
   <?php require Core::view('menu', 'core'); ?>
@@ -87,8 +88,9 @@ $count_autorenew = $thread['count_renewals'];
                     <br>
                     <p class="thread-content">
                       <?php
-                      $parser->parse($thread['content']);
-                      echo tobr($parser->getAsHTML());
+                      //$parser->parse($thread['content']);
+                      //echo tobr($parser->getAsHTML());
+                      echo tobr($thread['content']);
                       ?>
                     </p>
                   </div>

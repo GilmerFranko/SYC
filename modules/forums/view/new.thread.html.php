@@ -17,9 +17,9 @@ require Core::view('head', 'core');
 <!-- Header -->
 <?php require Core::view('menu', 'core'); ?>
 <!-- / Header -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>-->
 
 <section>
   <div class="container mt-5">
@@ -93,7 +93,7 @@ require Core::view('head', 'core');
       </div>
 
       <div class="mb-3">
-        <label for="content" class="form-label">Contenido (Soporte para BBCode)</label>
+        <label for="content" class="form-label">Contenido</label>
         <textarea class="form-control" id="content" name="content" rows="5" maxlength="10000" required>[b]Texto en negrita[/b], [i]Texto en cursiva[/i], [url]http://example.com[/url]</textarea>
       </div>
 
@@ -181,7 +181,7 @@ require Core::view('head', 'core');
 
   $(document).ready(function() {
     // Inicializa SCEditor en el textarea
-    const $textarea = $('#content');
+    /*const $textarea = $('#content');
     sceditor.create($textarea[0], {
       format: 'bbcode',
       style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css',
@@ -189,7 +189,7 @@ require Core::view('head', 'core');
       toolbar: 'bold,italic,underline|bulletlist,orderedlist|link,unlink|source',
       width: '100%',
       height: '200px',
-    });
+    });*/
 
 
     // Maneja el cambio en la categoría

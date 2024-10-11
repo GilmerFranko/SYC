@@ -92,9 +92,19 @@ if (isset($_GET['new_thread']))
     $bbcode = $_POST['content'] ?? '';
 
     // Parsear el BBCode
-    $parser->parse($bbcode);
+    //$parser->parse($bbcode);
 
-    $thread['content'] = cleanString($bbcode);
+    // Limpia el contenido del String
+    $bbcode = cleanString($bbcode);
+
+    // Convierte los saltos de linea en <br>
+    $bbcode = nl2br2($bbcode);
+
+    // Escapa el contenido del String
+    $bbcode = escape($bbcode);
+
+    // Agrega el contenido del String a la variable $thread
+    $thread['content'] = $bbcode;
 
     // Verifica que exista la ubicacion
     // Que esté activa

@@ -61,7 +61,7 @@ $thread_url = loadClass('forums/threads')->getThreadUrl($thread['id']);
           </a>
           <br>
           <p class="thread-content">
-            <?php echo cutText(getPlainText($thread['content']), 512); ?>
+            <?php echo cutText($thread['content'], 512); ?>
           </p>
           <div style="margin: 5px 0;">
             <div><a href="<?= $thread_url ?>" class="btn btn-sm btn-primary">Ver Fotos</a></div>

@@ -106,7 +106,7 @@ foreach ($locations['data'] as $location)
       </div>
 
       <div class="mb-3">
-        <label for="content" class="form-label">Contenido (Soporte para BBCode)</label>
+        <label for="content" class="form-label">Contenido</label>
         <textarea class="form-control" id="content" name="content" rows="5" maxlength="10000" required><?= $thread['content'] ?></textarea>
       </div>
 

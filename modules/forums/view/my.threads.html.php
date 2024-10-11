@@ -45,7 +45,7 @@ require Core::view('head', 'core');
                 <h6 class="card-subtitle mb-2 text-muted">Publicado el <?= date('d/m/Y', $thread['created_at']); ?></h6>
                 <p class="card-text">
                   <?php
-                  echo cutText(getPlainText($thread['content']), 64);
+                  echo cutText($thread['content'], 64);
                   ?>
                 </p>
               </div>

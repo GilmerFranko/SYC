@@ -111,19 +111,22 @@ if (isset($_GET['edit_thread']))
     // El BBCode recibido desde el formulario
     $bbcode = $_POST['content'] ?? '';
 
-    $bbcode = str_replace(PHP_EOL, '[br]', $bbcode);
-
-
+    //$bbcode = str_replace(PHP_EOL, '[br]', $bbcode);
+    //$parser->parse($bbcode);
 
     // Parsear el BBCode
-    $parser->parse($bbcode);
+    //$parser->parse($bbcode);
 
+    // Limpia el contenido del String
     $bbcode = cleanString($bbcode);
-    $bbcode = str_replace('\n', '', $bbcode);
-    $bbcode = str_replace('\r', '[br]', $bbcode);
-    $bbcode = str_replace('\r\n', '[br]', $bbcode);
-    $bbcode = str_replace('\n\r', '[br]', $bbcode);
 
+    // Convierte los saltos de linea en <br>
+    $bbcode = nl2br2($bbcode);
+
+    // Escapa el contenido del String
+    $bbcode = escape($bbcode);
+
+    // Agrega el contenido del String a la variable $thread
     $thread['content'] = $bbcode;
 
     // Si no hay errores, actualiza el hilo

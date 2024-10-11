@@ -266,12 +266,20 @@ function getPlainText($string)
 
 
 /**
- * 
+ *  Funcion para convertir una cadena de texto en un formato de texto con saltos de linea
  */
 function tobr($string)
 {
   $string = str_replace(htmlentities('[br]'), "<br>", $string);
   return nl2br($string);
+}
+
+function nl2br2($string)
+{
+
+  $string = str_replace(array("\r\n", "\r", "\n"), "<br>", $string);
+
+  return $string;
 }
 
 /**
