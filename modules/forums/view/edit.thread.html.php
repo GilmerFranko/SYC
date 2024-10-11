@@ -29,9 +29,10 @@ foreach ($locations['data'] as $location)
 <!-- / Header -->
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
+<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>-->
+
 <section>
   <div class="container mt-5">
     <h2 class="mb-4">Modificar Hilo</h2>
@@ -107,7 +108,7 @@ foreach ($locations['data'] as $location)
 
       <div class="mb-3">
         <label for="content" class="form-label">Contenido</label>
-        <textarea class="form-control" id="content" name="content" rows="5" maxlength="10000" required><?= $thread['content'] ?></textarea>
+        <textarea class="form-control" id="content" name="content" rows="5" maxlength="10000" required><?= br2nl($thread['content']) ?></textarea>
       </div>
 
       <!-- Si el hilo ya tiene imágenes, debería mostrarlas aquí para permitir su eliminación o modificación -->
@@ -216,7 +217,7 @@ foreach ($locations['data'] as $location)
 
   $(document).ready(function() {
     // Inicializa SCEditor en el textarea
-    const $textarea = $('#content');
+    /*const $textarea = $('#content');
     sceditor.create($textarea[0], {
       format: 'bbcode',
       style: 'https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/content/default.min.css',
@@ -224,7 +225,7 @@ foreach ($locations['data'] as $location)
       toolbar: 'bold,italic,underline|bulletlist,orderedlist|link,unlink|source',
       width: '100%',
       height: '200px',
-    });
+    });*/
 
 
     // Maneja el cambio en la categoría

@@ -84,7 +84,8 @@ class threads extends Model
       INNER JOIN 
         `members` AS m ON t.`member_id` = m.`member_id`
       WHERE 
-        t.`location_id` = "' . $location_id . '"'
+        t.`location_id` = "' . $location_id . '" AND
+        t.`status` = 1'
     );
 
     list($data['total']) = $total_query->fetch_row();
@@ -102,7 +103,8 @@ class threads extends Model
       INNER JOIN 
         `members` AS m ON t.`member_id` = m.`member_id`
       WHERE 
-        t.`location_id` = "' . $location_id . '" 
+        t.`location_id` = "' . $location_id . '" AND
+        t.`status` = 1 
       ORDER BY 
         t.`position` DESC 
       LIMIT ' . $data['pages']['limit']
@@ -140,7 +142,8 @@ class threads extends Model
       INNER JOIN 
         `members` AS m ON t.`member_id` = m.`member_id`
       WHERE 
-        t.`member_id` = "' . $member_id . '" 
+        t.`member_id` = "' . $member_id . '" AND
+        t.`status` = 1 
       ORDER BY 
         t.`position` DESC'
     );
@@ -192,13 +195,16 @@ class threads extends Model
       $where[] = 't.`age` <= ' . (int) $params['age_to'];
     }
 
+    // Filtrar por estado
+    $where[] = 't.`status` = ' . 1;
+
     // Ordenar por fecha (ascendente o descendente)
     $order_by = !empty($params['order_by']) && in_array($params['order_by'], ['asc', 'desc'])
       ? $params['order_by']
       : 'desc';
 
     // Construir la cláusula WHERE
-    $where_clause = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+    $where_clause = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : 'WHERE `status` = 1';
 
     // Calcular el límite inferior y superior
     $lowerLimit = ($page - 1) * $limit;
@@ -265,13 +271,16 @@ class threads extends Model
       $where[] = 'l.name = "' . $this->db->real_escape_string($params['location_name']) . '"';
     }
 
+    // Filtrar por estado
+    $where[] = 't.`status` = ' . 1;
+
     // Ordenar por fecha (ascendente o descendente)
     $order_by = !empty($params['order_by']) && in_array($params['order_by'], ['asc', 'desc'])
       ? $params['order_by']
       : 'desc';
 
     // Construir la cláusula WHERE
-    $where_clause = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : '';
+    $where_clause = !empty($where) ? 'WHERE ' . implode(' AND ', $where) : 'WHERE `status` = 1';
 
     // Calcular el límite inferior y superior
     $lowerLimit = ($page - 1) * $limit;
@@ -351,7 +360,8 @@ class threads extends Model
       INNER JOIN 
         `members` AS m ON t.`member_id` = m.`member_id`
       WHERE 
-        mf.`member_id` = "' . $member_id . '" 
+        mf.`member_id` = "' . $member_id . '" AND
+        t.`status` = 1
     '
     );
 
@@ -372,7 +382,8 @@ class threads extends Model
       INNER JOIN 
         `members` AS m ON t.`member_id` = m.`member_id`
       WHERE 
-        mf.`member_id` = "' . $member_id . '" 
+        mf.`member_id` = "' . $member_id . '" AND
+        t.`status` = 1
       ORDER BY 
       t.`created_at` DESC 
       LIMIT ' . $data['pages']['limit']
@@ -487,7 +498,8 @@ class threads extends Model
       LEFT JOIN 
           `members_favorites` AS f ON t.`id` = f.`thread_id` AND f.`member_id` = ' . $member_id . '
       WHERE 
-          ' . $column . ' = "' . $escapedIdentifier . '"
+          ' . $column . ' = "' . $escapedIdentifier . '" AND
+          t.`status` = 1
       GROUP BY 
           t.`id`'
     );

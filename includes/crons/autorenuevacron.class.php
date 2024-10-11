@@ -24,7 +24,7 @@ class AutoRenuevaCron extends Model
             FROM auto_renueva_settings ars
             INNER JOIN f_threads t ON ars.thread_id = t.id
             INNER JOIN member_balance mb ON t.member_id = mb.member_id
-            WHERE ars.is_enabled = 1
+            WHERE ars.is_enabled = 1 AND t.status = 1
         ");
 
     if ($query && $query->num_rows > 0)

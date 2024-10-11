@@ -95,7 +95,7 @@ if (isset($_GET['new_thread']))
     //$parser->parse($bbcode);
 
     // Limpia el contenido del String
-    $bbcode = cleanString($bbcode);
+    $bbcode = cleanString($bbcode, false);
 
     // Convierte los saltos de linea en <br>
     $bbcode = nl2br2($bbcode);
