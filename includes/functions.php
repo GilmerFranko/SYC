@@ -209,11 +209,15 @@ function getBalance($member_id = null)
  * @param mixed $var
  * @return string
  */
-function cleanString($var)
+function cleanString($var, $escape = true)
 {
   $var = htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
   $var = trim($var);
-  $var = escape($var);
+
+  if ($escape)
+  {
+    $var = escape($var);
+  }
 
   return $var;
 }
@@ -280,6 +284,16 @@ function nl2br2($string)
   $string = str_replace(array("\r\n", "\r", "\n"), "<br>", $string);
 
   return $string;
+}
+
+/**
+ * Reemplaza los saltos de linea <br> por saltos de linea normales \n
+ * @param string $string
+ * @return string
+ */
+function br2nl($string)
+{
+  return $nl = preg_replace('#<br\s*/?>#i', "\n", $string);
 }
 
 /**
