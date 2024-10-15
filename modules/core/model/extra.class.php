@@ -701,7 +701,7 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
     public function getLogo()
     {
         global $config;
-        return $config['images_url'] . '/pasion.gif';
+        return $config['images_url'] . '/logo.png';
     }
 
     /**
@@ -816,5 +816,34 @@ if(count($_SESSION['lastUrl'])>2) array_shift($_SESSION['lastUrl']);*/
         $slug = trim($slug, '-');
 
         return $slug;
+    }
+
+
+    /**
+     * Verifica si un string contiene spam
+     * 
+     * Verifica si el string contiene @, o una url
+     * 
+     * @param string $string
+     * @return bool true si contiene spam, false de lo contrario
+     */
+    static function containsSpam(string $string): bool
+    {
+        // Patrón para URLs (http, https, www)
+        $patronUrls = '/\b(http:\/\/|https:\/\/|www\.)[^\s]+/i';
+
+        // Patrón para dominios (ej: .com, .net, etc.)
+        $patronDominios = '/\b\w+\.(com|net|org|edu|gov|info|biz|co|io|me|tech|xyz|site)\b/i';
+
+        // Patrón para arrobas (correos electrónicos o usuarios)
+        $patronArrobas = '/\b\w+@\w+\.\w{2,}\b/';
+
+        // Verificar si el texto contiene spam
+        if (preg_match($patronUrls, $string) || preg_match($patronDominios, $string) || preg_match($patronArrobas, $string))
+        {
+            return true; // Contiene spam
+        }
+
+        return false; // No contiene spam
     }
 }

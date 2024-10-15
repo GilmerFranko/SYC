@@ -101,7 +101,7 @@
 
 	<!-- Favicon -->
 
-	<link rel="shortcut icon" href="<?php echo $config['images_url']; ?>/favicon.png">
+	<link rel="shortcut icon" href="<?php echo $config['images_url']; ?>/logo.png">
 
 	<script>
 		var global = {
