@@ -241,9 +241,12 @@ function getColumns($table, $columns = null, $where = [], $limit = 1, $sentence 
  */
 function cutText($string, $length = 128)
 {
-  $string = substr($string, 0, $length);
-  $string = rtrim($string, "!,.-");
-  $string = $string . '...';
+  if (strlen($string) > $length)
+  {
+    $string = substr($string, 0, $length);
+    $string = rtrim($string, "!,.-");
+    $string = $string . '...';
+  }
 
   return $string;
 }
