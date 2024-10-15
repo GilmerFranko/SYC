@@ -14,7 +14,7 @@
 
 <!-- Body -->
 <section>
-  <h1 class="center-align">Todos los reportes</h1>
+  <h2 class="center-align">Todos los reportes</h2>
   <p class="center-align light grey-text text-darken-2">A continuación, todos los reportes se muestran agrupados por anuncio. Puedes presionar en <i class="material-icons">remove_red_eye</i> para los reportes de cada anuncio.</p>
   <div class="row">
     <div class="col s12 m10 offset-m1">
