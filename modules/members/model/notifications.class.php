@@ -210,7 +210,7 @@ class Notifications extends Session
                 break;
             case 'spamInThread':
                 $url['thread'] = loadClass('forums/threads')->getThreadUrl($item);
-                $msg = 'Tu <a href="' . $url['thread'] . '">anuncio</a> está  siendo revisado por posible spam, te notificaremos el resultado de nuestra revisi ón lo más pronto posible';
+                $msg = 'Tu <a href="' . $url['thread'] . '">anuncio</a> está  siendo revisado por posible spam, te notificaremos el resultado de nuestra revisión lo más pronto posible';
                 break;
         }
         $msg = sprintf($msg, $item, $subitem);
