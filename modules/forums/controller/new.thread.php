@@ -106,6 +106,16 @@ if (isset($_GET['new_thread']))
     // Agrega el contenido del String a la variable $thread
     $thread['content'] = $bbcode;
 
+    // Verifica si el hilo contiene spam
+    if (loadClass('core/extra')->containsSpam($thread['content']) or loadClass('core/extra')->containsSpam($thread['title']))
+    {
+      // Si contiene spam, cambia el estado del hilo
+      $thread['status'] = 0;
+
+      // Envia notificación al usuario
+      newNotification($m_id, 0, 'spamInThread', $thread_id);
+    }
+
     // Verifica que exista la ubicacion
     // Que esté activa
     // Y pertenezca al contacto (foro)
@@ -121,18 +131,26 @@ if (isset($_GET['new_thread']))
             // Sube las imagenes al servidor
             $imagens = loadClass('forums/threads')->uploadImages();
 
+            $slug = loadClass('forums/threads')->getThreadSlug($thread_id);
+
             foreach ($imagens[1] as $image_url)
             {
               // Sube las imagenes a la base de datos
               loadClass('forums/threads')->newThreadImage($thread_id, $image_url);
             }
-
+            if ($thread['status'] == 0)
+            {
+              $msg[] = 'Se ha creado la publicación correctamente, pero el anuncio ha sido marcado como no publicado';
+              setTI([$msg]);
+              redirect('anuncio/' . $slug);
+              exit;
+            }
             // Verifica si se subieron las imagenes correctamente
-            if ($imagens[0] === true)
+            elseif ($imagens[0] === true)
             {
               $msg[] = 'Se ha creado la publicación correctamente';
               setTI([$msg]);
-              redirect('forums/new.thread');
+              redirect('anuncio/' . $slug);
               exit;
             }
             else
@@ -140,7 +158,7 @@ if (isset($_GET['new_thread']))
               $msg[] = 'Se ha creado la publicación pero no se ha podido subir las imagenes';
               $msg[] = $imagens[1];
               setTI([$msg]);
-              redirect('forums/new.thread');
+              redirect('anuncio/' . $slug);
               exit;
             }
           }

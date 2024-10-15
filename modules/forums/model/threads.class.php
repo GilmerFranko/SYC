@@ -44,7 +44,6 @@ class threads extends Model
 
     $data2 = [
       'slug' => $url,
-      'status' => 1,
       'position' => time(),
       'views_count' => 0,
       'replies_count' => 0,
@@ -498,8 +497,7 @@ class threads extends Model
       LEFT JOIN 
           `members_favorites` AS f ON t.`id` = f.`thread_id` AND f.`member_id` = ' . $member_id . '
       WHERE 
-          ' . $column . ' = "' . $escapedIdentifier . '" AND
-          t.`status` = 1
+          ' . $column . ' = "' . $escapedIdentifier . '"
       GROUP BY 
           t.`id`'
     );

@@ -53,13 +53,24 @@ $count_autorenew = $thread['count_renewals'];
 
 <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <section>
   <!-- Header -->
   <?php require Core::view('menu', 'core'); ?>
   <!-- / Header -->
+
+  <?php if ($thread['status'] == 0)
+  { ?>
+    <div class="container">
+      <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Atención!</h4>
+        <p>Estamos revisando este anuncio para asegurarnos de que cumpla con nuestras normas de contenido. Gracias por tu paciencia.</p>
+      </div>
+    </div>
+  <?php } ?>
+
   <div class="container">
     <div class="row">
       <div class="col col-sm-12 col-md-9 col-lg-9">
@@ -160,7 +171,6 @@ $count_autorenew = $thread['count_renewals'];
   function drawChart() {
     var data = google.visualization.arrayToDataTable([
       ['Fecha', 'Veces listado'],
-      ['1-Dic', 56],
       <?php foreach ($visits as $visit)
       {
         echo "[\"$visit[0]\"," . $visit[1] . "],";

@@ -129,6 +129,18 @@ if (isset($_GET['edit_thread']))
     // Agrega el contenido del String a la variable $thread
     $thread['content'] = $bbcode;
 
+
+    // Verifica si el hilo contiene spam
+    if (loadClass('core/extra')->containsSpam($thread['content']) or loadClass('core/extra')->containsSpam($thread['title']))
+    {
+      // Si contiene spam, cambia el estado del hilo
+      $thread['status'] = 0;
+
+      // Envia notificación al usuario
+      newNotification($m_id, 0, 'spamInThread', $thread_id);
+    }
+
+
     // Si no hay errores, actualiza el hilo
     $update = loadClass('forums/threads')->updateThread($thread_id, $thread, $deleted_images);
 
@@ -163,8 +175,15 @@ if (isset($_GET['edit_thread']))
 
         $slug = loadClass('forums/threads')->getThreadSlug($thread_id);
 
+        if ($thread['status'] == 0)
+        {
+          $msg[] = 'Se ha creado la publicación correctamente, pero el anuncio ha sido marcado como no publicado';
+          setTI([$msg]);
+          redirect('anuncio/' . $slug);
+          exit;
+        }
         // Verifica si se subieron las imagenes correctamente
-        if ($imagens[0] === true)
+        elseif ($imagens[0] === true)
         {
           // Si se subió al menos una foto, se elimina cualquier imagen vacia (evita dejar la imagen default)
           if ($imagens[1][0] != 'null')

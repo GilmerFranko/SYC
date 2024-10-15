@@ -23,6 +23,12 @@ if (!$thread = loadClass('forums/threads')->getThread($thread_id, $m_id, true))
   $msg[] = 'No existe el anuncio';
 }
 
+// Verifica si el hilo esta desactivado y el usuario no es el propietario y si el usuario no es administrador/moderador
+if ($thread['status'] != 1 and $thread['member_id'] != $m_id and !$session->is_admod)
+{
+  $msg[] = 'Anuncio no disponible';
+}
+
 if (!empty($msg))
 {
   setTI([$msg]);
