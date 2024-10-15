@@ -72,10 +72,10 @@ else
 
 <!-- Botón para ver estadísticas -->
 
-<div class="chip selectable" data-bs-toggle="tooltip" data-bs-placement="top" title="Estadisticas" onclick="openStatsModal(<?= $thread['id'] ?>)">
+<!--<div class="chip selectable" data-bs-toggle="tooltip" data-bs-placement="top" title="Estadisticas" onclick="openStatsModal(<?= $thread['id'] ?>)">
   <i class="em em-bar_chart small-in-movil" aria-role="presentation" aria-label="BAR CHART"></i>
   <span class="d-none d-sm-inline small-in-movil">Estadisticas</span>
-</div>
+</div>-->
 
 <!-- Botón para denunciar el hilo -->
 <div class="chip selectable" onclick="openReportModal(<?= $thread['id'] ?>, '<?= $thread['title'] ?>')">
