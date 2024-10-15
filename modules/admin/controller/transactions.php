@@ -12,7 +12,7 @@
  *
  */
 
-$page['name'] = 'Transacciones';
+$page['name'] = 'Movimientos';
 $page['code'] = 'transacctions';
 
 $transactions = loadClass('admin/transactions')->getAllTransactions();

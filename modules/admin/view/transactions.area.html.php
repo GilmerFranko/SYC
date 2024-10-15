@@ -1,7 +1,8 @@
 <div id="contentTransactions">
   <br>
   <?php if ($transactions): ?>
-    <div class="card-panel green lighten-4 green-text text-darken-4 flow-text center-align">Transacciónes de usuarios</div>
+    <h2 class="center-align">Movimientos</h2>
+    <p class="center-align light grey-text text-darken-2">A continuación, se muestran todos los movimientos transaccionales de todos los usuarios del sistema.</p>
     <table class="striped responsive-table">
       <thead>
         <tr>
