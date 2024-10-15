@@ -208,6 +208,10 @@ class Notifications extends Session
                 $url['thread'] = loadClass('forums/threads')->getThreadUrl($item);
                 $msg = 'Tu <a href="' . $url['thread'] . '">anuncio</a> ha sido renovado';
                 break;
+            case 'spamInThread':
+                $url['thread'] = loadClass('forums/threads')->getThreadUrl($item);
+                $msg = 'Tu <a href="' . $url['thread'] . '">anuncio</a> está  siendo revisado por posible spam, te notificaremos el resultado de nuestra revisi ón lo más pronto posible';
+                break;
         }
         $msg = sprintf($msg, $item, $subitem);
         return $msg;
