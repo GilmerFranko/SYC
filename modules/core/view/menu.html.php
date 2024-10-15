@@ -103,7 +103,7 @@
 
         <div class="align-items-center brand-logo">
           <!-- Logo -->
-          <img class="" src="<?php echo $config['images_url'] . '/pasion.gif' ?>" alt="" onclick="location.href='<?php echo $config['base_url'] ?>'">
+          <img class="" src="<?= $extra->getLogo() ?>" alt="" onclick="location.href='<?php echo $config['base_url'] ?>'">
         </div>
         <div class="col d-none d-md-flex align-items-center">
           <?php if ($sSection == 'home-guest'): ?>
