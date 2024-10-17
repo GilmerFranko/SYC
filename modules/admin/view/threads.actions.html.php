@@ -67,6 +67,8 @@ require Core::view('head', 'core');
   <center>
     <a href="#ActivateThreadModal" class="btn waves-effect waves-light blue darken-3 modal-trigger">Activar anuncio</a>
 
+    <a href="<?= gLink('mi-panel/editar', ['thread_id' => $thread['id']]) ?>" class="btn waves-effect waves-light grey darken-3 modal-trigger">Editar anuncio</a>
+
     <a href="<?= loadClass('forums/threads')->getThreadUrl($thread['id']) ?>" class="btn waves-effect waves-light orange darken-3">Ver Anuncio</a>
 
     <a href="#suspendUserModal" class="btn waves-effect waves-light green darken-3 modal-trigger">Suspender usuario</a>

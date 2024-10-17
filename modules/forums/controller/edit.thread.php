@@ -28,7 +28,7 @@ if (!$threadData = loadClass('forums/threads')->getThreadByIdBasic($thread_id))
 }
 
 // Verifica si el usuario tiene permisos para manipular el hilo
-if (!$threadData['member_id'] == $m_id)
+if (!$threadData['member_id'] == $m_id and !$session->is_admod)
 {
   $msg[] = 'No tienes permiso para editar este anuncio';
 }
@@ -175,9 +175,9 @@ if (isset($_GET['edit_thread']))
 
         $slug = loadClass('forums/threads')->getThreadSlug($thread_id);
 
-        if ($thread['status'] == 0)
+        if ($thread['status'] === 0)
         {
-          $msg[] = 'Se ha creado la publicación correctamente, pero el anuncio ha sido marcado como no publicado';
+          $msg[] = 'Se ha modificado la publicación correctamente, pero el anuncio ha sido marcado como no publicado';
           setTI([$msg]);
           redirect('anuncio/' . $slug);
           exit;

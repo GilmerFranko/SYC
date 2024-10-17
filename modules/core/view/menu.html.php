@@ -17,10 +17,10 @@
     justify-content: flex-end;
     align-items: center;
     font-weight: 700;
+
   }
 
   .menu-head-left {
-    margin-right: 10px;
     width: 80%;
   }
 
@@ -34,7 +34,6 @@
   .brand-logo {
     padding: 5px;
     width: 420px;
-    margin-left: 103px;
 
     img {
       width: 100%;
@@ -44,13 +43,12 @@
   .body-menu-head {
     display: flex;
     align-items: center;
-    height: 160px
+    height: 160px;
+    margin: 0 10%;
   }
 
   @media only screen and (max-width: 1000px) {
-    .brand-logo {
-      margin-left: 30px;
-    }
+
 
     .footer-menu-head {
       font-size: 12px;
@@ -59,7 +57,6 @@
 
   @media only screen and (max-width: 767px) {
     .brand-logo {
-      margin-left: 10px;
       width: 200px;
     }
 
@@ -69,6 +66,7 @@
 
     .body-menu-head {
       height: max-content;
+      margin: 0 1vw;
     }
 
     .menu-member {
