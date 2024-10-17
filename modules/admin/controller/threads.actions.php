@@ -36,7 +36,7 @@ if (isset($_POST['ajax']) && isset($_POST['token']) && $session->checkToken($_PO
 
       if (loadClass('admin/members')->banMember($ban_member, $reason))
       {
-        $message = array('success' => true);
+        $message = array('success' => true, 'msg' => 'Usuario suspendido');
       }
       else
       {
@@ -101,6 +101,29 @@ if (isset($_POST['ajax']) && isset($_POST['token']) && $session->checkToken($_PO
     else
     {
       $message = array('success' => false, 'msg' => 'No se ha podido eliminar el anuncio');
+    }
+    echo json_encode($message);
+  }
+
+  // Verifica si se debe renovar el hilo
+  elseif (isset($_GET['renewThread']))
+  {
+    error_log(var_export($_POST, true));
+    if (isset($_POST['thread_id']) and !empty($_POST['thread_id']))
+    {
+      $thread_id = escape($_POST['thread_id']);
+      if (loadClass('admin/thread')->manualRenew($thread_id))
+      {
+        $message = array('success' => true, 'msg' => 'Anuncio renovado');
+      }
+      else
+      {
+        $message = array('success' => false, 'msg' => 'No se ha podido renovar el anuncio');
+      }
+    }
+    else
+    {
+      $message = array('success' => false, 'msg' => 'No se ha podido renovar el anuncio');
     }
     echo json_encode($message);
   }

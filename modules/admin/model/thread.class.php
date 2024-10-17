@@ -192,4 +192,20 @@ class thread extends Model
     }
     return false;
   }
+
+
+  /**
+   * Destaca (renueva) un hilo
+   * 
+   * @param int $thread_id ID del hilo
+   * @param int $status 0 para desactivar y 1 para activar
+   * @return boolean
+   */
+  public function manualRenew($thread_id): bool
+  {
+    $stmt = $this->db->prepare("UPDATE f_threads SET position = UNIX_TIMESTAMP() WHERE id = ?");
+    $stmt->bind_param('i', $thread_id);
+    $stmt->execute();
+    return $stmt->affected_rows > 0 ? true : false;
+  }
 }

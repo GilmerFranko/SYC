@@ -241,7 +241,7 @@ class threads extends Model
             `f_contacts` AS c ON l.`contact_id` = c.`id`
         ' . $where_clause . '
         ORDER BY 
-            t.`created_at` ' . $order_by . ' 
+            t.`position` ' . $order_by . ' 
         LIMIT ' . $data['pages']['limit']
     );
 
@@ -317,7 +317,7 @@ class threads extends Model
             `f_contacts` AS c ON l.`contact_id` = c.`id`
         ' . $where_clause . '
         ORDER BY 
-            t.`created_at` ' . $order_by . ' 
+            t.`position` ' . $order_by . ' 
         LIMIT ' . $data['pages']['limit']
     );
 
