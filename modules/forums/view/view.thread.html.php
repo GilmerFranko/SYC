@@ -154,12 +154,6 @@ $count_autorenew = $thread['count_renewals'];
         </div>
       </div>
     </div>
-    <div class="center-align">
-      <div style="width: 800px">
-        <!-- Menu de busqueda -->
-        <?php require Core::view('menu.search', 'core'); ?>
-      </div>
-    </div>
 </section>
 
 <script type="text/javascript">

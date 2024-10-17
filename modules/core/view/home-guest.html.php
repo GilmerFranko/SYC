@@ -19,7 +19,6 @@ require Core::view('menu', 'core');
 
 
 <section class="first-section content" id="main">
-	<?php require Core::view('submenu', 'core'); ?>
 
 	<div class="container">
 

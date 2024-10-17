@@ -591,8 +591,9 @@ input{
 
 .first-section
 {
-  padding-top: 100px;
-  margin: -80px 0 0 0;
+  padding-top: 40px;
+  margin: -20px 0 0 0;
+  box-shadow: 0 2px 6px #000;
 }
 
 /* Cuando la pantalla sea pequeña */

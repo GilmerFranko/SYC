@@ -28,9 +28,6 @@ require Core::view('head', 'core');
         <div class="preAviso mt-4"></div>
 
         <div class="preAviso0" style="display: <?= (isset($_COOKIE['hasAcceptedAdultContent']) ? 'block' : 'none') ?>;">
-          <!-- Menu de busqueda -->
-          <?php require Core::view('menu.search', 'core'); ?>
-
           <div style="font-size: 12px; text-align: center; margin: 0 0 10px 0px">
             Encontrados <strong><?= $threads['total'] ?></strong> anuncios en "<?= $contact['name'] ?>"
           </div>

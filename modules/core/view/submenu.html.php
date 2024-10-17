@@ -1,3 +1,17 @@
+<?php defined('SYC') || exit;
+
+/**
+ *=======================================================
+ *  SYC Project
+ *-------------------------------------------------------
+ * @author Gilmer Franco <gil2017.com@gmail.com>
+ *=======================================================
+ *
+ * @Description Archivo que incluye el sub menu de la cabecera inspirado en el menu de pasion.com y nuevapasion.com
+ *
+ *
+ */
+?>
 <style>
   @media only screen and (max-width: 767px) {
     .submenu-item {

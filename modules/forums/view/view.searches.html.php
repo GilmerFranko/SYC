@@ -49,9 +49,6 @@ $title_name = isset($location_name) ? "en <strong>{$location_name}</strong>" : '
         <div class="row">
 
           <div class="col col-sm-12 col-md-9 col-lg-10">
-            <!-- Menu de busqueda -->
-            <?php require Core::view('menu.search', 'core'); ?>
-
             <div style="font-size: 12px; text-align: center; margin: 0 0 10px 0px">
               Encontrados <strong><?= $search_results['pages']['results'] ?></strong> anuncios <?= $title_name ?>
             </div>
