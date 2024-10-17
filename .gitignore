@@ -8,5 +8,6 @@ filestore
 *.zip
 *.webp
 *.log
+*.env
 includes/library/rachet
 vendor

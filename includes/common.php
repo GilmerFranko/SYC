@@ -77,5 +77,9 @@ require BG_CONF . 'config.inc.php';
 // Carga de Autoload
 require BG_DIR . 'vendor/autoload.php';
 
+// Carga de Dotenv para las variables de entorno
+$dotenv = Dotenv\Dotenv::createImmutable(BG_DIR);
+$dotenv->load();
+
 /* Archivo que cargará SH-MVC */
 require Core::controller('init');
