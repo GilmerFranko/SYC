@@ -138,7 +138,7 @@ if (isset($_GET['new_thread']))
               // Sube las imagenes a la base de datos
               loadClass('forums/threads')->newThreadImage($thread_id, $image_url);
             }
-            if ($thread['status'] == 0)
+            if ($thread['status'] === 0)
             {
               $msg[] = 'Se ha creado la publicación correctamente, pero el anuncio ha sido marcado como no publicado';
               setTI([$msg]);
