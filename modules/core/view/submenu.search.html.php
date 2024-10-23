@@ -11,31 +11,58 @@
  *
  *
  */
+
+// Carga todos los contactos
+$contacts_search = loadClass('forums/f_contacts')->getAllContacts();
+
+// Carga todos los foros
+$locations_search = loadClass('forums/locations')->getAllLocations();
+
+$contact_id = isset($_GET['contact_id']) ? $_GET['contact_id'] : '';
+
+$location_id = isset($_GET['location_id']) ? $_GET['location_id'] : '';
+
+$age_from = isset($_GET['age_from']) ? $_GET['age_from'] : '';
+
+$age_to = isset($_GET['age_to']) ? $_GET['age_to'] : '';
+
+$words = isset($_GET['words']) ? $_GET['words'] : '';
+
+$order_by = isset($_GET['order_by']) ? $_GET['order_by'] : '';
 ?>
 
-<form class="d-flex justify-content-center align-items-center search-bar menu-search">
+<form class="d-flex justify-content-center align-items-center search-bar menu-search" action="<?= gLink('forums/view.searches') ?>">
   <!-- Select 1 -->
-  <select class="form-select me-2" name="categoria">
-    <option value="">Selecciona</option>
-    <option value="categoria1">Opción 1</option>
-    <option value="categoria2">Opción 2</option>
+  <select id="search-category" class="form-select me-2" name="contact_id">
+    <option selected value="">Selecciona</option>
+    <?php foreach ($contacts_search['data'] as $contact_search) : ?>
+      <option value="<?= $contact_search['id'] ?>" <?php if ($contact_id == $contact_search['id']) echo 'selected' ?>><?= $contact_search['name'] ?></option>
+    <?php endforeach; ?>
   </select>
 
   <!-- Select 2 -->
-  <select class="form-select me-2" name="ubicacion">
+  <select id="search-location" class="form-select me-2" name="location_id">
     <option value="">En toda España</option>
-    <option value="region1">Región 1</option>
-    <option value="region2">Región 2</option>
+    <?php foreach ($locations_search['data'] as $location_search)
+    {
+      // Si se ha seleccionado un contacto 
+      if ($contact_id and $contact_id == $location_search['contact_id'])
+      {
+        // Muestra las ubicaciones de ese contacto y si la ubicación coincide con la ubicación seleccionada se marca como seleccionada
+        echo '<option value="' . $location_search['id'] . '" ' . ($location_id == $location_search['id'] ? 'selected' : '') . '>' . $location_search['name'] . '</option>';
+      }
+    } ?>
+
   </select>
 
   <!-- Input de búsqueda -->
-  <input type="text" name="query" class="form-control me-2" placeholder="¿Qué buscas?">
+  <input type="text" name="words" class="form-control me-2" placeholder="¿Qué buscas?" value="<?= $words ?>">
 
   <!-- Select para ordenar por fecha -->
-  <select class="form-select me-2" name="ordenar">
-    <option value="recientes">Orden por fecha</option>
-    <option value="recientes">Más recientes</option>
-    <option value="antiguos">Más antiguos</option>
+  <select class="form-select me-2" name="order_by">
+    <option value="">Orden por fecha</option>
+    <option value="asc" <?php if ($order_by == 'asc') echo 'selected' ?>>Más recientes</option>
+    <option value="desc" <?php if ($order_by == 'desc') echo 'selected' ?>>Más antiguos</option>
   </select>
 
   <!-- Botón de búsqueda -->
@@ -130,3 +157,28 @@
     }
   }
 </style>
+
+<script>
+  const contacts_s = <?= json_encode($contacts_search) ?>;
+  const locations_s = <?= json_encode($locations_search) ?>;
+
+  $(document).ready(function() {
+    // Maneja el cambio en la categoría
+    $('#search-category').on('change', function() {
+      const selectedContact = $(this).val();
+      const $locationSelect = $('#search-location');
+
+      // Limpia el select de ubicaciones
+      $locationSelect.empty();
+
+      // Filtra y agrega las ubicaciones correspondientes a la categoría seleccionada
+      $locationSelect.append('<option value="">En toda España</option>');
+      // Filtra y agrega las ubicaciones correspondientes a la categoría seleccionada
+      locations_s.data.forEach(function(location) {
+        if (location.contact_id == selectedContact) {
+          $locationSelect.append('<option value="' + location.id + '">' + location.name + '</option>');
+        }
+      });
+    });
+  })
+</script>
