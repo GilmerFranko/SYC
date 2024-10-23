@@ -141,4 +141,41 @@ class locations extends Model
   {
     return $this->db->query("SELECT id FROM f_locations WHERE id = " . $forum_id . " AND status = 1")->num_rows > 0;
   }
+
+  /**
+   * @Description Obtiene las diez ubicaciones con más hilos creados
+   * @return array Un array con las diez ubicaciones con más hilos
+   */
+  public function getTop10LocationsWithMostThreads()
+  {
+    $query = $this->db->query(
+      'SELECT
+        l.id,
+        l.name,
+        COUNT(t.id) AS total_threads ,
+        c.name AS contact_name
+       FROM 
+        f_locations AS l 
+       LEFT JOIN 
+        f_threads AS t ON l.id = t.location_id 
+       INNER JOIN 
+        f_contacts AS c ON l.contact_id = c.id
+       WHERE 
+        l.status = 1
+       GROUP BY l.id 
+       ORDER BY total_threads DESC 
+       LIMIT 10'
+    );
+
+    $data = [];
+    if ($query && $query->num_rows > 0)
+    {
+      while ($row = $query->fetch_assoc())
+      {
+        $data[] = $row;
+      }
+    }
+
+    return $data;
+  }
 }

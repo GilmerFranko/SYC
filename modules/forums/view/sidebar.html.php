@@ -11,82 +11,55 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
     <div class="meca">
       MENÚ
     </div>
-    <div class="item-container">
+    <div class="item-menu-sidebar">
       <img src="<?= gImage('home-design.png') ?>" alt="Imagen 1">
       <div class="item-text"><a href="<?= gLink() ?>">PÁGINA<br>PRINCIPAL</a></div>
     </div>
 
     <!-- Item 2 -->
-    <div class="item-container">
+    <div class="item-menu-sidebar">
       <img src="https://nuevapasion.com/images/ico-public-advertisements.png" alt="Imagen 2">
       <div class="item-text"><a href="<?= gLink('mi-panel/publicar') ?>">PUBLICAR<br>ANUNCIOS</a></div>
     </div>
 
     <!-- Item 3 -->
-    <div class="item-container">
+    <div class="item-menu-sidebar">
       <img src="https://nuevapasion.com/images/edit-advertisements.png" alt="Imagen 3">
       <div class="item-text"><a href="<?= gLink('mi-panel/anuncios') ?>">MODIFICAR <br>MIS ANUNCIOS</a></div>
     </div>
 
     <!-- Item 4 -->
-    <div class="item-container">
+    <div class="item-menu-sidebar">
       <img src="https://nuevapasion.com/images/fav-advertisements.png" alt="Imagen 4">
       <div class="item-text"><a href="<?= gLink('mi-panel/favoritos') ?>">MI SELECCION <br>DE ANUNCIOS</a></div>
     </div>
 
-    <div class="item-container">
+    <div class="item-menu-sidebar">
       <img src="<?= $config['images_url'] ?>/contactus.png" alt="Imagen 4">
       <div class="item-text"><a href="<?= gLink('site/contact') ?>">CONTACTAR CON<br> NUESTRO EQUIPO</a></div>
     </div>
   </div>
 
-
-
-
-
   <?php
-  // Si la sección es 'view.searches'
-  if ($sSection == 'view.searches')
+  $locations_in = loadClass('forums/locations')->getTop10LocationsWithMostThreads();
+  usort($locations_in, function ($a, $b)
   {
-    $contacts_in = loadClass('forums/f_contacts')->getAllContacts();
+    return strcmp($b['contact_name'], $a['contact_name']);
+  });
   ?>
-    <!-- CONTACTOS -->
-    <div class="menu-sidebar1 row">
-      <!-- Item 1 -->
-      <div class="meca">
-        MENÚ
-      </div>
-      <?php foreach ($contacts_in['data'] as $contact_in)
-      { ?>
-        <div class="item-container <?= ($contact_in['id'] == $contact_id) ? 'item-container-active' : '' ?>">
-          <a class="item-text" href="<?= gLink('forums/view.searches', ['contact_id' => $contact['id']]) ?>"><strong><?= $contact_in['name'] ?></strong></a>
-        </div>
-      <?php } ?>
+  <!-- LAS 10 PROVINCIAS CON MAS ANUNCIOS -->
+  <div class="menu-sidebar1 row">
+    <!-- Item 1 -->
+    <div class="meca">
+      CON MÁS ANUNCIOS
     </div>
-
-  <?php }
-  // Si la sección es 'view.threads'
-  elseif ($sSection == 'view.threads')
-  {
-    $locations_in = loadClass('forums/locations')->getLocationsByContactId($contact['id']);
-  ?>
-    <!-- CONTACTOS -->
-    <div class="menu-sidebar1 row">
-      <!-- Item 1 -->
-      <div class="meca">
-        MENÚ
+    <?php foreach ($locations_in as $location_in)
+    { ?>
+      <div class="item-menu-sidebar <?= ($location_in['short_url'] == $location_url) ? 'item-menu-sidebar-active' : '' ?>">
+        <a class="item-text" href="<?= gLink('f/' . $location_in['short_url']) ?>"><strong><?= strtoupper($location_in['contact_name'] . ' EN ' . $location_in['name']) ?></strong></a>
       </div>
-      <?php foreach ($locations_in['data'] as $location_in)
-      { ?>
-        <div class="item-container <?= ($location_in['short_url'] == $location_url) ? 'item-container-active' : '' ?>">
-          <a class="item-text" href="<?= gLink('forums/view.searches', ['contact_id' => $contact['id']]) ?>"><strong><?= strtoupper($contact['name'] . ' EN ' . $location_in['name']) ?></strong></a>
-        </div>
-      <?php } ?>
-    </div>
-
-  <?php } ?>
-
-
+    <?php } ?>
+  </div>
 
   <!-- MAPA -->
   <div class="menu-sidebar1 row">
@@ -157,17 +130,59 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
     </div>
   </div>
 
+  <?php
+  // Si la sección es 'view.searches'
+  if ($sSection == 'view.searches')
+  {
+    $contacts_in = loadClass('forums/f_contacts')->getAllContacts();
+  ?>
+    <!-- CONTACTOS -->
+    <div class="menu-sidebar1 row">
+      <!-- Item 1 -->
+      <div class="meca">
+        MENÚ
+      </div>
+      <?php foreach ($contacts_in['data'] as $contact_in)
+      { ?>
+        <div class="item-menu-sidebar <?= ($contact_in['id'] == $contact_id) ? 'item-menu-sidebar-active' : '' ?>">
+          <a class="item-text" href="<?= gLink('forums/view.searches', ['contact_id' => $contact_in['id']]) ?>"><strong><?= $contact_in['name'] ?></strong></a>
+        </div>
+      <?php } ?>
+    </div>
+
+  <?php }
+  // Si la sección es 'view.threads'
+  elseif ($sSection == 'view.threads')
+  {
+    $locations_in = loadClass('forums/locations')->getLocationsByContactId($contact['id']);
+  ?>
+    <!-- CONTACTOS -->
+    <div class="menu-sidebar1 row">
+      <!-- Item 1 -->
+      <div class="meca">
+        MENÚ
+      </div>
+      <?php foreach ($locations_in['data'] as $location_in)
+      { ?>
+        <div class="item-menu-sidebar <?= ($location_in['short_url'] == $location_url) ? 'item-menu-sidebar-active' : '' ?>">
+          <a class="item-text" href="<?= gLink('f/' . $location_in['short_url']) ?>"><strong><?= strtoupper($contact['name'] . ' EN ' . $location_in['name']) ?></strong></a>
+        </div>
+      <?php } ?>
+    </div>
+
+  <?php } ?>
+
   <!-- LO MAS BUSCADO -->
-  <div class="menu-sidebar1 row">
+  <!--<div class="menu-sidebar1 row">
     <div class="meca">
       LO MÁS BUSCADO
     </div>
-    <?php foreach ($f_most_visited['data']  as $i  => $forum_mv): ?>
-      <div class="item-container">
+    <?php /*foreach ($f_most_visited['data']  as $i  => $forum_mv): ?>
+      <div class="item-menu-sidebar">
         <div class="item-text"><a href="<?= gLink('f/' . $forum_mv['short_url']) ?>"><span class="text-success"><?= ($i + 1) ?></span>. <?= ucfirst(strtolower($forum_mv['contact_name'])) . ' en ' . $forum_mv['name'] ?></a></div>
       </div>
-    <?php endforeach; ?>
-  </div>
+    <?php endforeach; */ ?>
+  </div>-->
 
 </div>
 

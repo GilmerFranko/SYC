@@ -408,25 +408,25 @@ nav {
   color: white; /* Color del ícono en hover */
 }
 
-.item-container {
+.item-menu-sidebar {
   display: flex;
   align-items: center;
-  height: 32px;
+  height: 40px;
   border-bottom: #f0dced 1px solid;
   border-left: #f0dced 1px solid;
   border-right: #f0dced 1px solid;
   background: #f8f1f7;
-  padding: 8px 0 8px 3px;
+  padding: 8px 0px 8px 10px;
 }
 
-.item-container img {
+.item-menu-sidebar img {
   width: 25px;
   height: 25px;
   padding: 2px;
   margin-right: 2px;
 }
 
-.item-container .item-text {
+.item-menu-sidebar .item-text {
   font-size: 10px;
 }
 
@@ -448,7 +448,7 @@ nav {
   }
 }
 
-.item-container-mobile {
+.item-menu-sidebar-mobile {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -461,18 +461,18 @@ nav {
   width: 100%; /* Ajuste automático al contenedor */
 }
 
-.item-container-mobile img {
+.item-menu-sidebar-mobile img {
   width: 25px;
   height: 25px;
   margin-right: 10px;
 }
 
-.item-container-mobile .item-text {
+.item-menu-sidebar-mobile .item-text {
   font-size: 9px;
   text-align: center;
 }
 
-.item-container-active {
+.item-menu-sidebar-active {
   background-color: #d5a5d0;
   .item-text {
     color: white !important;
