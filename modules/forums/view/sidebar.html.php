@@ -42,10 +42,10 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
 
   <?php
   $locations_in = loadClass('forums/locations')->getTop10LocationsWithMostThreads();
-  usort($locations_in, function ($a, $b)
+  /*usort($locations_in, function ($a, $b)
   {
     return strcmp($b['contact_name'], $a['contact_name']);
-  });
+  });*/
   ?>
   <!-- LAS 10 PROVINCIAS CON MAS ANUNCIOS -->
   <div class="menu-sidebar1 row">
@@ -55,7 +55,7 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
     </div>
     <?php foreach ($locations_in as $location_in)
     { ?>
-      <div class="item-menu-sidebar <?= ($location_in['short_url'] == $location_url) ? 'item-menu-sidebar-active' : '' ?>">
+      <div class="item-menu-sidebar">
         <a class="item-text" href="<?= gLink('f/' . $location_in['short_url']) ?>"><strong><?= strtoupper($location_in['contact_name'] . ' EN ' . $location_in['name']) ?></strong></a>
       </div>
     <?php } ?>

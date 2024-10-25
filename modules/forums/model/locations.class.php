@@ -152,6 +152,7 @@ class locations extends Model
       'SELECT
         l.id,
         l.name,
+        l.short_url,
         COUNT(t.id) AS total_threads ,
         c.name AS contact_name
        FROM 
