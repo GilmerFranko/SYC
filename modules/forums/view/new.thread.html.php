@@ -23,7 +23,7 @@ require Core::view('head', 'core');
 
 <section>
   <div class="container mt-5">
-    <h2 class="mb-4">Crear Nuevo Hilo</h2>
+    <h2 class="mb-4">Publicar Anuncio</h2>
     <form id="new_thread_form" action="<?= gLink('forums/new.thread', ['new_thread' => '1']) ?>" method="POST" enctype="multipart/form-data">
 
       <!-- Título (columna completa) -->
@@ -116,7 +116,7 @@ require Core::view('head', 'core');
       <div class="mb-3">
         <div class="g-recaptcha" data-sitekey="tu_site_key"></div>
       </div>
-      <button type="submit" class="btn btn-primary">Crear Hilo</button>
+      <button type="submit" class="btn btn-primary">Publicar Anuncio</button>
     </form>
   </div>
 </section>

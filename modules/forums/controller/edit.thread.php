@@ -147,14 +147,14 @@ if (isset($_GET['edit_thread']))
     if ($update['status'])
     {
       // Verifica que las imagenes que se quieren subir y las imagenes actuales no superen la cantidad de 9
-      $imagesc = loadClass('core/db')->getCount('f_threads_images', 'id', [$thread_id, 'thread_id']);
+      $imagesc = loadClass('core/db')->getCount('f_threads_images', 'id', ['thread_id', $thread_id]);
       $images_count = 0;
-
+      $images_request = 0;
       if (isset($_FILES['images']) && is_array($_FILES['images']['name']))
       {
-        foreach ($_FILES['images']['name'] as $image)
+        foreach ($_FILES['images']['size'] as $size)
         {
-          if ($_FILES['images']['size'][$image] > 0)
+          if ($size > 0)
           {
             $images_request++;
           }
@@ -178,33 +178,27 @@ if (isset($_GET['edit_thread']))
         if ($thread['status'] === 0)
         {
           $msg[] = 'Se ha modificado la publicación correctamente, pero el anuncio ha sido marcado como no publicado';
-          setTI([$msg]);
-          redirect('anuncio/' . $slug);
-          exit;
         }
         // Verifica si se subieron las imagenes correctamente
         elseif ($imagens[0] === true)
         {
-          // Si se subió al menos una foto, se elimina cualquier imagen vacia (evita dejar la imagen default)
-          if ($imagens[1][0] != 'null')
-          {
-
-            loadClass('forums/threads')->deleteEmptyImages($thread_id);
-          }
-
-          $msg[] = 'Se ha acutalizado la publicación correctamente';
-          setTI([$msg]);
-          redirect('anuncio/' . $slug);
-          exit;
+          $msg[] = 'Se ha modificado la publicación correctamente';
         }
         else
         {
           $msg[] = 'Se ha acutalizado la publicación pero no se ha podido subir las imagenes';
-          $msg[] = $imagens[1];
-          setTI([$msg]);
-          redirect('anuncio/' . $slug);
-          exit;
         }
+
+        // Si se subió al menos una foto, se elimina cualquier imagen vacia (evita dejar la imagen default)
+        if ($imagens[1][0] != 'null')
+        {
+          Error_log(12);
+          loadClass('forums/threads')->deleteEmptyImages($thread_id);
+        }
+        error_log(1);
+        setTI([$msg]);
+        redirect('anuncio/' . $slug);
+        exit;
       }
       else
       {

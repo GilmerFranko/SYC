@@ -111,9 +111,6 @@ if (isset($_GET['new_thread']))
     {
       // Si contiene spam, cambia el estado del hilo
       $thread['status'] = 0;
-
-      // Envia notificación al usuario
-      newNotification($m_id, 0, 'spamInThread', $thread_id);
     }
 
     // Verifica que exista la ubicacion
@@ -140,6 +137,10 @@ if (isset($_GET['new_thread']))
             }
             if ($thread['status'] === 0)
             {
+              // Envia notificación al usuario
+              newNotification($m_id, 0, 'spamInThread', $thread_id);
+
+
               $msg[] = 'Se ha creado la publicación correctamente, pero el anuncio ha sido marcado como no publicado';
               setTI([$msg]);
               redirect('anuncio/' . $slug);
