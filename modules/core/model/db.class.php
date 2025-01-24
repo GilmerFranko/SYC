@@ -35,17 +35,25 @@ class Db extends Model
    */
   public function getCount($table = null, $column = null, $where = null)
   {
-    $query = $this->db->query('SELECT COUNT(`' . $column . '`) FROM `' . $table . '` WHERE `' . $where[0] . '` = \'' . $this->db->real_escape_string($where[1]) . '\'');
-    error_log('SELECT COUNT(`' . $column . '`) FROM `' . $table . '` WHERE `' . $where[0] . '` = \'' . $where[1] . '\'');
+    // Escapa el valor de $where[1] si es una cadena, y asegúrate de que esté entre comillas si no es numérico.
+    $whereValue = is_numeric($where[1]) ? $where[1] : "'" . $this->db->real_escape_string($where[1]) . "'";
+
+    error_log('SELECT COUNT(`' . $column . '`) FROM `' . $table . '` WHERE `' . $where[0] . '` = ' . $whereValue);
+    // Construir la consulta SQL con el valor corregido.
+    $query = $this->db->query('SELECT COUNT(`' . $column . '`) FROM `' . $table . '` WHERE `' . $where[0] . '` = ' . $whereValue);
+
+    // Log de la consulta para depuración.
+
+    // Ejecutar la consulta y devolver el resultado.
     if ($query == true && $query->num_rows > 0)
     {
       $result = $query->fetch_row();
-      //
       return $result[0];
     }
 
     return 0;
   }
+
 
   /**
    * Obtiene uno o más columnas de una fila
