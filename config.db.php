@@ -14,6 +14,6 @@
 
 //'p:localhost';  // PERSISTENTE
 $db['hostname'] = 'localhost';    // Nombre del servidor MySQL
-$db['database'] = 'sexoycontacto';    // Nombre de la base de datos
+$db['database'] = 'gf_milanuncios';    // Nombre de la base de datos
 $db['username'] = 'root';      // Nombre del usuario de la base de datos
 $db['userpass'] = '';				// Contraseña del usuario de la base de datos

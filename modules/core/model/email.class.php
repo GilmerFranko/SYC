@@ -42,24 +42,24 @@ class Email
         {
             // Configuración del servidor SMTP
             //$mail->isSMTP();
-            /* $mail->Host = 'mail.sexoycontacto.es'; // Cambia esto por el servidor SMTP que estés usando
+            /* $mail->Host = 'mail..es'; // Cambia esto por el servidor SMTP que estés usando
             $mail->SMTPAuth = true;
-            $mail->Username = 'no-reply@sexoycontacto.es'; // Cambia esto por tu correo electrónico
+            $mail->Username = 'no-reply@.es'; // Cambia esto por tu correo electrónico
             $mail->Password = 'KPpq2&edzn970qgdL'; // Cambia esto por tu contraseña
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
              $mail->Port = 465; // Cambia esto por el puerto que utilices (587 es común para TLS)*/
 
             // Configuración del servidor SMTP
             $mail->isSMTP();
-            $mail->Host = 'mail.sexoycontacto.es'; // Cambia esto por el host SMTP proporcionado por Plesk
+            $mail->Host = 'mail..es'; // Cambia esto por el host SMTP proporcionado por Plesk
             $mail->SMTPAuth = true;
-            $mail->Username = 'no-reply@sexoycontacto.es'; // Tu dirección de correo en Plesk
+            $mail->Username = 'no-reply@.es'; // Tu dirección de correo en Plesk
             $mail->Password = 'KPpq2&edzn970qgdL'; // La contraseña de tu correo electrónico
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Puedes probar con `PHPMailer::ENCRYPTION_SMTPS` si es necesario
             $mail->Port = 587; // Plesk generalmente usa el puerto 587 para STARTTLS, o 465 para SMTPS
 
             // Configuración del remitente y destinatarios
-            $mail->setFrom('no-reply@sexoycontacto.es',  $config['script_name']); // Cambia esto por el nombre que desees mostrar
+            $mail->setFrom('no-reply@.es',  $config['script_name']); // Cambia esto por el nombre que desees mostrar
             $mail->addAddress($email);
 
             // Contenido del correo
