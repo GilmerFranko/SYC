@@ -70,18 +70,18 @@ require Core::view('head', 'core');
           <!-- Título -->
           <div class="mb-4">
             <label for="title" class="form-label">Título</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Escriba un título descriptivo" required>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Escriba un título descriptivo" required value="Titulo ejemplo">
           </div>
 
           <!-- Foro -->
           <div class="row mb-4">
             <div class="col-md-6 mb-3 mb-md-0">
               <label for="email" class="form-label">Correo Electrónico</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="email@ejemplo.com" required>
+              <input type="email" class="form-control" id="email" name="email" placeholder="email@ejemplo.com" required value="email@ejemplo.com">
             </div>
             <div class="col-md-6">
               <label for="phone" class="form-label">Teléfono</label>
-              <input type="tel" class="form-control" id="phone" name="phone" placeholder="666 666 666" required>
+              <input type="tel" class="form-control" id="phone" name="phone" placeholder="666 666 666" required value="666 666 666">
             </div>
           </div>
 
@@ -109,13 +109,13 @@ require Core::view('head', 'core');
           <div class="row mb-4">
             <div class="col-md-6 mb-3 mb-md-0">
               <label for="fee" class="form-label">Precio (€)</label>
-              <input type="number" class="form-control" id="fee" name="fee" placeholder="0" required>
+              <input type="number" class="form-control" id="fee" name="fee" placeholder="0" required value="0">
             </div>
             <div class="col-md-6">
               <label for="availability" class="form-label">Disponibilidad</label>
               <select class="form-select" id="availability" name="availability" required>
-                <option value="" selected>Seleccionar disponibilidad</option>
-                <option value="available">Disponible</option>
+                <option value="">Seleccionar disponibilidad</option>
+                <option value="available" selected>Disponible</option>
                 <option value="reserved">Reservado</option>
                 <option value="sold">Vendido</option>
               </select>
@@ -125,7 +125,7 @@ require Core::view('head', 'core');
           <!-- Descripción -->
           <div class="mb-4">
             <label for="content" class="form-label">Descripción</label>
-            <textarea class="form-control" id="content" name="content" rows="5" placeholder="Describa su anuncio en detalle..." required></textarea>
+            <textarea class="form-control" id="content" name="content" rows="5" placeholder="Describa su anuncio en detalle..." required>Descripción</textarea>
           </div>
 
           <!-- Imágenes -->
@@ -246,7 +246,6 @@ require Core::view('head', 'core');
       const phone = $form.find('input[name="phone"]').val()
       const subforum_id = $form.find('select[name="subforum_id"]').val()
       const forum_id = $form.find('select[name="forum_id"]').val()
-      const age = $form.find('input[name="age"]').val()
       const fee = $form.find('input[name="fee"]').val()
       const content = $('#content').val()
 
@@ -272,11 +271,6 @@ require Core::view('head', 'core');
       if (!forum_id || isNaN(forum_id)) {
         errors.push('Debes seleccionar una categoría');
       }
-
-      if (!age || isNaN(age) || age < 18) {
-        errors.push('Debes introducir una edad mayor a 18');
-      }
-
       if (!fee || isNaN(fee)) {
         errors.push('Debes introducir una tarifa numérica');
       }

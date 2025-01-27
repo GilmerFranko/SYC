@@ -184,16 +184,6 @@ class threads extends Model
       $where[] = '(t.`title` LIKE "%' . $words . '%" OR t.`content` LIKE "%' . $words . '%")';
     }
 
-    // Filtrar por rango de edad
-    if (!empty($params['age_from']))
-    {
-      $where[] = 't.`age` >= ' . (int) $params['age_from'];
-    }
-    if (!empty($params['age_to']))
-    {
-      $where[] = 't.`age` <= ' . (int) $params['age_to'];
-    }
-
     // Filtrar por estado
     $where[] = 't.`status` = ' . 1;
 
@@ -461,7 +451,7 @@ class threads extends Model
    */
   public function getThreadByIdBasic($id)
   {
-    $data = getColumns('f_threads', ['id', 'subforum_id', 'member_id', 'title', 'email', 'phone', 'age', 'fee', 'content', 'status', 'views_count', 'replies_count', 'likes_count', 'count_favorites', 'ip_address', 'report_count', 'created_at', 'updated_at'], ['id', $id]);
+    $data = getColumns('f_threads', ['id', 'subforum_id', 'member_id', 'title', 'email', 'phone', 'fee', 'content', 'status', 'views_count', 'replies_count', 'likes_count', 'count_favorites', 'ip_address', 'report_count', 'created_at', 'updated_at'], ['id', $id]);
     $data['member'] = getColumns('members', ['member_id', 'name', 'pp_thumb_photo'], ['member_id', $data['member_id']]);
     return $data;
   }

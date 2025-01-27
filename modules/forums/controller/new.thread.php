@@ -51,12 +51,6 @@ if (isset($_GET['new_thread']))
     $msg[] = 'Debes seleccionar una categoría';
   }
 
-  // Verifica si no se ha introducido una edad mayor a 18
-  if (!isset($_POST['age']) || empty($_POST['age']) || !is_numeric($_POST['age']) || $_POST['age'] < 18)
-  {
-    $msg[] = 'Debes introducir una edad mayor a 18';
-  }
-
   // Verifica si no se ha introducido una tarifa numérica
   if (!isset($_POST['fee']) || empty($_POST['fee']) || !is_numeric($_POST['fee']))
   {
@@ -80,7 +74,6 @@ if (isset($_GET['new_thread']))
       'email' => cleanString($_POST['email']),
       'phone' => cleanString($_POST['phone']),
       'subforum_id' => cleanString($_POST['subforum_id']),
-      'age' => cleanString($_POST['age']),
       'fee' => cleanString($_POST['fee']),
       'created_at' => time(),
       'ip_address' => Core::model('extra', 'core')->getIp()

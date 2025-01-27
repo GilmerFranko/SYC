@@ -86,19 +86,13 @@ foreach ($subforums['data'] as $subforum)
       </div>
 
       <div class="row">
-        <div class="col-md-4">
-          <div class="mb-3">
-            <label for="age" class="form-label">Edad</label>
-            <input type="number" class="form-control" id="age" name="age" value="<?= $thread['age'] ?>" required>
-          </div>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="mb-3">
             <label for="fee" class="form-label">Tarifa €</label>
             <input type="number" class="form-control" id="fee" name="fee" value="<?= $thread['fee'] ?>" required>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="mb-3">
             <label for="disponibilidad" class="form-label">Disponibilidad</label>
             <input type="text" class="form-control" id="disponibilidad" name="disponibilidad" value="Disponible" disabled>
@@ -281,10 +275,6 @@ foreach ($subforums['data'] as $subforum)
 
       if (!forum_id || isNaN(forum_id)) {
         errors.push('Debes seleccionar una categoría');
-      }
-
-      if (!age || isNaN(age) || age < 18) {
-        errors.push('Debes introducir una edad mayor a 18');
       }
 
       if (!fee || isNaN(fee)) {

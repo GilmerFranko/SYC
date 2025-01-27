@@ -66,12 +66,6 @@ if (isset($_GET['edit_thread']))
     $msg[] = 'El telefono debe tener al menos 9 digitos y ser un numero';
   }
 
-  // Verifica si no se ha introducido una edad mayor a 18
-  if (!isset($_POST['age']) || empty($_POST['age']) || !is_numeric($_POST['age']) || $_POST['age'] < 18)
-  {
-    $msg[] = 'Debes introducir una edad mayor a 18';
-  }
-
   // Verifica si no se ha introducido una tarifa numérica
   if (!isset($_POST['fee']) || empty($_POST['fee']) || !is_numeric($_POST['fee']))
   {
@@ -104,7 +98,6 @@ if (isset($_GET['edit_thread']))
       'title' => cleanString($_POST['title']),
       'email' => cleanString($_POST['email']),
       'phone' => cleanString($_POST['phone']),
-      'age' => cleanString($_POST['age']),
       'fee' => cleanString($_POST['fee'])
     ];
 

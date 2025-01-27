@@ -35,24 +35,6 @@ if (!empty($words) && strlen($words) < 3)
   $errors[] = "Las palabras clave deben tener al menos 3 caracteres.";
 }
 
-// Validar el rango de edad (age_from y age_to)
-$age_from = isset($_GET['age_from']) ? (int)escape($_GET['age_from']) : null;
-$age_to = isset($_GET['age_to']) ? (int)escape($_GET['age_to']) : null;
-
-if ($age_from && !is_numeric($age_from))
-{
-  $errors[] = "Edad 'Desde' inválida.";
-}
-if ($age_to && !is_numeric($age_to))
-{
-  $errors[] = "Edad 'Hasta' inválida.";
-}
-if ($age_from && $age_to && $age_from > $age_to)
-{
-  // Validar que la edad 'Desde' no sea mayor que 'Hasta'
-  $errors[] = "El rango de edad es inválido.";
-}
-
 // Validar el orden de la búsqueda
 $order_by = isset($_GET['order_by']) ? escape($_GET['order_by']) : '';
 if ($order_by && !in_array($order_by, ['asc', 'desc']))
@@ -75,8 +57,6 @@ $params = [
   'forum_id' => $forum_id,
   'subforum_id' => $subforum_id,
   'words' => $words,
-  'age_from' => $age_from,
-  'age_to' => $age_to,
   'order_by' => $order_by
 ];
 
