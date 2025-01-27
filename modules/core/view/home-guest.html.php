@@ -37,7 +37,7 @@ require Core::view('menu', 'core');
 									<a href="<?= gLink('forums/view.searches', ['forum_id' => $contact['id']]) ?>" class=" cat1"><?= $contact['name'] ?></a>
 									&nbsp;
 
-									<!-- Ubicaciones -->
+									<!-- Subforos -->
 									<?php
 									$subforums = loadClass('forums/subforums')->getSubforumsByForumId($contact['id']);
 									if ($subforums['rows'] > 0)
@@ -60,7 +60,7 @@ require Core::view('menu', 'core');
 										endforeach;
 									} ?>
 
-									<!-- /Ubicaciones -->
+									<!-- /Subforos -->
 								</div>
 							</div>
 						</div>

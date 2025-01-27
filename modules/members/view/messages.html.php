@@ -14,11 +14,11 @@
 require Core::view('head', 'core');
 
 ?>
+<!-- Header -->
+<?php require Core::view('menu', 'core'); ?>
+<!-- / Header -->
 
-<section>
-  <!-- Header -->
-  <?php require Core::view('menu', 'core'); ?>
-  <!-- / Header -->
+<section class="first-section">
 
   <div class="container">
     <div class="row">

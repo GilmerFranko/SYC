@@ -1,10 +1,10 @@
 <?php defined('SYC') || exit; ?>
 
 <?php require Core::view('head', 'core'); ?>
+<?php require Core::view('menu', 'core'); ?>
 
 <!-- Body -->
-<section id="viewNotifications">
-  <?php require Core::view('menu', 'core'); ?>
+<section id="viewNotifications" class="first-section">
   <div class="alert alert-success text-center mb-4">
     <h5 class="m-0">Notificaciones</h5>
   </div>

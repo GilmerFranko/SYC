@@ -12,7 +12,7 @@
  *
  */
 
-$page['name'] = 'Ubicaciones';
+$page['name'] = 'SubForos';
 $page['code'] = 'adminSubforums';
 
 $page_index = isset($_GET['page']) ? escape($_GET['page']) : 1;

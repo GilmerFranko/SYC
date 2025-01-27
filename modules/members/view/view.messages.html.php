@@ -12,11 +12,11 @@
 require Core::view('head', 'core');
 $lastMessageId = 0; // Variable para almacenar el ID del último mensaje
 ?>
+<!-- Header -->
+<?php require Core::view('menu', 'core'); ?>
+<!-- / Header -->
 
-<section>
-  <!-- Header -->
-  <?php require Core::view('menu', 'core'); ?>
-  <!-- / Header -->
+<section class="first-section">
 
   <div class="container">
     <div class="row">

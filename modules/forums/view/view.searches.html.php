@@ -14,15 +14,15 @@ require Core::view('head', 'core');
 
 $title_name = isset($subforum_name) ? "en <strong>{$subforum_name}</strong>" : '';
 ?>
+<!-- Header -->
+<?php require Core::view('menu', 'core'); ?>
+<!-- / Header -->
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>
 
-<section>
-  <!-- Header -->
-  <?php require Core::view('menu', 'core'); ?>
-  <!-- / Header -->
+<section class="first-section">
   <div class="container">
     <div class="row">
       <div class="container">
@@ -32,9 +32,6 @@ $title_name = isset($subforum_name) ? "en <strong>{$subforum_name}</strong>" : '
             <div style="font-size: 12px; text-align: center; margin: 0 0 10px 0px">
               Encontrados <strong><?= $search_results['pages']['results'] ?></strong> anuncios <?= $title_name ?>
             </div>
-            <!--paginador-->
-            <?php echo $search_results['pages']['paginator']; ?>
-            <!--fin_paginador-->
             <?php if ($search_results['rows'] > 0): ?>
               <?php foreach ($search_results['data'] as $thread)
               {
