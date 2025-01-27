@@ -6,7 +6,7 @@
  *-------------------------------------------------------
  * @author Gilmer Franco <gil2017.com@gmail.com>
  *=======================================================
- * @Description Vista de contacto
+ * @Description Vista de foro
  *
  *
  */

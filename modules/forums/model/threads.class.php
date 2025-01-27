@@ -15,7 +15,7 @@ class threads extends Model
   /**
    * Inserta un nuevo thread en la base de datos
    *
-   * @param int $location_id
+   * @param int $subforum_id
    * @param int $member_id
    * @param string $title
    * @param string $content
@@ -65,14 +65,14 @@ class threads extends Model
 
   /**
    * @Description Obtiene todos los threads de un foro
-   * @param int $location_id
+   * @param int $subforum_id
    * @param int $page El n mero de p gina
    * @return array|boolean Un array con los threads
    */
-  public function getThreadsByLocationId(int $location_id, string $short_url, int $limit = 20)
+  public function getThreadsBySubforumId(int $subforum_id, string $short_url, int $limit = 20)
   {
     $where = [
-      'location_id' => $location_id
+      'subforum_id' => $subforum_id
     ];
 
     $total_query = $this->db->query(
@@ -83,7 +83,7 @@ class threads extends Model
       INNER JOIN 
         `members` AS m ON t.`member_id` = m.`member_id`
       WHERE 
-        t.`location_id` = "' . $location_id . '" AND
+        t.`subforum_id` = "' . $subforum_id . '" AND
         t.`status` = 1'
     );
 
@@ -102,7 +102,7 @@ class threads extends Model
       INNER JOIN 
         `members` AS m ON t.`member_id` = m.`member_id`
       WHERE 
-        t.`location_id` = "' . $location_id . '" AND
+        t.`subforum_id` = "' . $subforum_id . '" AND
         t.`status` = 1 
       ORDER BY 
         t.`position` DESC 
@@ -124,7 +124,7 @@ class threads extends Model
 
   /**
    * @Description Obtiene todos los threads de un usuario
-   * @param int $location_id
+   * @param int $subforum_id
    * @param int $page El n mero de p gina
    * @return array|boolean Un array con los threads
    */
@@ -165,16 +165,16 @@ class threads extends Model
     $where = [];
     $bindings = [];
 
-    // Filtrar por categoría (contact_id)
-    if (!empty($params['contact_id']))
+    // Filtrar por categoría (forum_id)
+    if (!empty($params['forum_id']))
     {
-      $where[] = 'l.`contact_id` = "' . $this->db->real_escape_string($params['contact_id']) . '"';
+      $where[] = 'l.`forum_id` = "' . $this->db->real_escape_string($params['forum_id']) . '"';
     }
 
-    // Filtrar por ubicación (location_id)
-    if (!empty($params['location_id']))
+    // Filtrar por ubicación (subforum_id)
+    if (!empty($params['subforum_id']))
     {
-      $where[] = 't.`location_id` = "' . $this->db->real_escape_string($params['location_id']) . '"';
+      $where[] = 't.`subforum_id` = "' . $this->db->real_escape_string($params['subforum_id']) . '"';
     }
 
     // Filtrar por palabras clave (en el título o contenido)
@@ -214,8 +214,8 @@ class threads extends Model
       'SELECT COUNT(*) 
         FROM `f_threads` AS t
         INNER JOIN `members` AS m ON t.`member_id` = m.`member_id`
-        INNER JOIN `f_locations` AS l ON t.`location_id` = l.`id`
-        INNER JOIN `f_contacts` AS c ON l.`contact_id` = c.`id`
+        INNER JOIN `f_subforums` AS l ON t.`subforum_id` = l.`id`
+        INNER JOIN `f_forums` AS c ON l.`forum_id` = c.`id`
         ' . $where_clause
     );
 
@@ -228,7 +228,7 @@ class threads extends Model
     $query = $this->db->query(
       'SELECT 
             t.*,
-            c.`id` AS contact_id,
+            c.`id` AS forum_id,
             m.`name` AS member_name,
             m.`member_id` AS member_id
         FROM 
@@ -236,9 +236,9 @@ class threads extends Model
         INNER JOIN 
             `members` AS m ON t.`member_id` = m.`member_id`
         INNER JOIN 
-            `f_locations` AS l ON t.`location_id` = l.`id`
+            `f_subforums` AS l ON t.`subforum_id` = l.`id`
         INNER JOIN 
-            `f_contacts` AS c ON l.`contact_id` = c.`id`
+            `f_forums` AS c ON l.`forum_id` = c.`id`
         ' . $where_clause . '
         ORDER BY 
             t.`position` ' . $order_by . ' 
@@ -259,15 +259,15 @@ class threads extends Model
     return $data;
   }
 
-  public function searchThreadsByLocationName($params, $page = 1, $limit = 20)
+  public function searchThreadsBySubforumName($params, $page = 1, $limit = 20)
   {
     $where = [];
     $bindings = [];
 
-    // Filtrar por ubicacion (contact_id)
-    if (!empty($params['location_name']))
+    // Filtrar por subforo (forum_id)
+    if (!empty($params['subforum_name']))
     {
-      $where[] = 'l.name = "' . $this->db->real_escape_string($params['location_name']) . '"';
+      $where[] = 'l.name = "' . $this->db->real_escape_string($params['subforum_name']) . '"';
     }
 
     // Filtrar por estado
@@ -290,8 +290,8 @@ class threads extends Model
       'SELECT COUNT(*) 
         FROM `f_threads` AS t
         INNER JOIN `members` AS m ON t.`member_id` = m.`member_id`
-        INNER JOIN `f_locations` AS l ON t.`location_id` = l.`id`
-        INNER JOIN `f_contacts` AS c ON l.`contact_id` = c.`id`
+        INNER JOIN `f_subforums` AS l ON t.`subforum_id` = l.`id`
+        INNER JOIN `f_forums` AS c ON l.`forum_id` = c.`id`
         ' . $where_clause
     );
 
@@ -304,7 +304,7 @@ class threads extends Model
     $query = $this->db->query(
       'SELECT 
             t.*,
-            c.`id` AS contact_id,
+            c.`id` AS forum_id,
             m.`name` AS member_name,
             m.`member_id` AS member_id
         FROM 
@@ -312,9 +312,9 @@ class threads extends Model
         INNER JOIN 
             `members` AS m ON t.`member_id` = m.`member_id`
         INNER JOIN 
-            `f_locations` AS l ON t.`location_id` = l.`id`
+            `f_subforums` AS l ON t.`subforum_id` = l.`id`
         INNER JOIN 
-            `f_contacts` AS c ON l.`contact_id` = c.`id`
+            `f_forums` AS c ON l.`forum_id` = c.`id`
         ' . $where_clause . '
         ORDER BY 
             t.`position` ' . $order_by . ' 
@@ -339,7 +339,7 @@ class threads extends Model
 
   /**
    * @Description Obtiene todos los threads guardados en favoritos por un usuario
-   * @param int $location_id
+   * @param int $subforum_id
    * @param int $page El n mero de p gina
    * @return array|boolean Un array con los threads
    */
@@ -402,15 +402,15 @@ class threads extends Model
 
   /**
    * @Description Obtiene todos los threads de un foro
-   * @param int $location_url
+   * @param int $subforum_url
    * @param int $page El n mero de p gina
    * @return array|boolean Un array con los threads
    */
-  public function getThreadsByLocationUrl($location_url, $page = 1, $limit = 20)
+  public function getThreadsBySubforumUrl($subforum_url, $page = 1, $limit = 20)
   {
-    if ($location = getColumns('f_locations', ['id'], ['short_url', $location_url]))
+    if ($subforum = getColumns('f_subforums', ['id'], ['short_url', $subforum_url]))
     {
-      return $this->getThreadsByLocationId($location['id'], $page, $limit);
+      return $this->getThreadsBySubforumId($subforum['id'], $page, $limit);
     }
     else
     {
@@ -461,7 +461,7 @@ class threads extends Model
    */
   public function getThreadByIdBasic($id)
   {
-    $data = getColumns('f_threads', ['id', 'location_id', 'member_id', 'title', 'email', 'phone', 'age', 'fee', 'content', 'status', 'views_count', 'replies_count', 'likes_count', 'count_favorites', 'ip_address', 'report_count', 'created_at', 'updated_at'], ['id', $id]);
+    $data = getColumns('f_threads', ['id', 'subforum_id', 'member_id', 'title', 'email', 'phone', 'age', 'fee', 'content', 'status', 'views_count', 'replies_count', 'likes_count', 'count_favorites', 'ip_address', 'report_count', 'created_at', 'updated_at'], ['id', $id]);
     $data['member'] = getColumns('members', ['member_id', 'name', 'pp_thumb_photo'], ['member_id', $data['member_id']]);
     return $data;
   }
@@ -632,14 +632,14 @@ class threads extends Model
   }
 
   /**
-   * Obtiene la cantidad de todos los threads de una ubicación (location)
+   * Obtiene la cantidad de todos los threads de una ubicación (subforum)
    *
-   * @param int $location_id
+   * @param int $subforum_id
    * @return int
    */
-  public function getCountThreadsByLocationId($location_id)
+  public function getCountThreadsBySubforumId($subforum_id)
   {
-    return loadClass('core/db')->getCount('f_threads', 'id', ['location_id', $location_id]);
+    return loadClass('core/db')->getCount('f_threads', 'id', ['subforum_id', $subforum_id]);
   }
 
   /**

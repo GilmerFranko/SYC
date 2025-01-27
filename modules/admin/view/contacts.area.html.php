@@ -7,7 +7,7 @@
  * @author Gilmer Franco <gil2017.com@gmail.com>
  *=======================================================
  *
- * @Description Vista de la lista de formularios de contacto
+ * @Description Vista de la lista de formularios de foro
  *
  *
  */
@@ -31,7 +31,7 @@
             {
                 while ($contact = $contacts['data']->fetch_assoc())
                 { ?>
-                    <tr id="contact_<?php echo $contact['id']; ?>">
+                    <tr id="forum_<?php echo $contact['id']; ?>">
                         <td>#<?php echo $contact['id']; ?></td>
                         <td><?php echo $contact['member_id']; ?></td>
                         <td><?php echo Core::model('extra', 'core')->getHighlight($search, $contact['name']); ?></td>

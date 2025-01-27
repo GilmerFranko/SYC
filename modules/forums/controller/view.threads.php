@@ -11,27 +11,27 @@
  *
  */
 
-if (!isset($_GET['location_url']) or empty($_GET['location_url']))
+if (!isset($_GET['subforum_url']) or empty($_GET['subforum_url']))
 {
   redirect('core/home-guest');
 }
 
-$location_url = escape($_GET['location_url']);
+$subforum_url = escape($_GET['subforum_url']);
 
-if (!$location = getColumns('f_locations', ['id', 'short_url', 'contact_id'], ['short_url', $location_url]))
+if (!$subforum = getColumns('f_subforums', ['id', 'short_url', 'forum_id'], ['short_url', $subforum_url]))
 {
   redirect('core/home-guest');
 }
 
-if (!$threads = loadClass('forums/threads')->getThreadsByLocationId($location['id'], $location['short_url'], 4))
+if (!$threads = loadClass('forums/threads')->getThreadsBySubforumId($subforum['id'], $subforum['short_url'], 4))
 {
   $msg[] = 'No hay anuncios para mostrar';
 }
 
 
-if (!$contact = loadClass('forums/f_contacts')->getContactById($location['contact_id']))
+if (!$contact = loadClass('forums/f_forums')->getForumById($subforum['forum_id']))
 {
-  $msg[] = 'El contacto no existe';
+  $msg[] = 'El foro no existe';
 }
 
 
@@ -43,11 +43,11 @@ if (!empty($msg))
 }
 
 if ($session->is_member)
-  loadClass('forums/locations')->registerVisit($location['id'], $m_id, $session->memberData['ip_address']);
+  loadClass('forums/subforums')->registerVisit($subforum['id'], $m_id, $session->memberData['ip_address']);
 
 /* Se definen estas variables para el modulo search */
-$_GET['location_id'] = $location['id'];
-$_GET['contact_id'] = $contact['id'];
+$_GET['subforum_id'] = $subforum['id'];
+$_GET['forum_id'] = $contact['id'];
 
 $page['name'] = $contact['name'];
 $page['code'] = 'newThread';

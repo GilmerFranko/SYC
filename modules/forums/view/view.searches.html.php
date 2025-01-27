@@ -12,7 +12,7 @@
 
 require Core::view('head', 'core');
 
-$title_name = isset($location_name) ? "en <strong>{$location_name}</strong>" : '';
+$title_name = isset($subforum_name) ? "en <strong>{$subforum_name}</strong>" : '';
 ?>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
@@ -39,10 +39,10 @@ $title_name = isset($location_name) ? "en <strong>{$location_name}</strong>" : '
               <?php foreach ($search_results['data'] as $thread)
               {
                 // Carga el contácto correspondiente
-                $contact = loadClass('forums/f_contacts')->getContactById($thread['contact_id']);
+                $contact = loadClass('forums/f_forums')->getForumById($thread['forum_id']);
 
                 // Carga el foro correspondiente
-                $location = loadClass('forums/locations')->getLocationById($thread['location_id']);
+                $subforum = loadClass('forums/subforums')->getSubforumById($thread['subforum_id']);
 
                 require Core::view('thread.piece', 'forums');
               } ?>

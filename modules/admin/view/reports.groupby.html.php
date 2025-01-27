@@ -158,7 +158,7 @@
             html: data.msg,
             classes: 'green darken-1'
           });
-          window.location.href = '<?= gLink('admin/reports') ?>';
+          window.Subforum.href = '<?= gLink('admin/reports') ?>';
         } else {
           M.toast({
             html: data.msg,

@@ -31,7 +31,7 @@ class Site extends Model
      *
      * @param array $contact
      * @param boolean $email
-     * @return int $contact_id
+     * @return int $forum_id
      */
     public function newContact($contact = null, $email = true)
     {
@@ -51,12 +51,12 @@ class Site extends Model
 
 
     /**
-     * Obtiene los contactos
+     * Obtiene los foros
      *
      * @param string $search
      * @param int $limit
      * @param int $member_id
-     * @return objectMySQL $contacts
+     * @return objectMySQL $forums
      */
     function getContacts($search = '', $limit = 20)
     {
@@ -67,7 +67,7 @@ class Site extends Model
         $query = $this->db->query('SELECT COUNT(`id`) FROM `site_contacts` ' . $where);
         list($result['total']) = $query->fetch_row();
         // PAGINADOR
-        $result['pages'] = Core::model('paginator', 'core')->pageIndex(array('admin', 'contacts', null, array('search' => $search)), $result['total'], $limit);
+        $result['pages'] = Core::model('paginator', 'core')->pageIndex(array('admin', 'forums', null, array('search' => $search)), $result['total'], $limit);
         // EJECUTA LA CONSULTA
         $query = $this->db->query('SELECT `id`, `member_id`, `name`, `email`, `title`, `content`, `date` FROM `site_contacts` ' . $where . ' ORDER BY `id` DESC LIMIT ' . $result['pages']['limit']);
         //
@@ -85,13 +85,13 @@ class Site extends Model
     /**
      * Borra un contacto
      *
-     * @param integer $contact_id
+     * @param integer $forum_id
      * @return boolean
      */
-    function deleteContact($contact_id = null)
+    function deleteContact($forum_id = null)
     {
         // BORRAR PALABRA
-        $query = $this->db->query('DELETE FROM `site_contacts` WHERE `id` = \'' . $contact_id . '\' LIMIT 1');
+        $query = $this->db->query('DELETE FROM `site_contacts` WHERE `id` = \'' . $forum_id . '\' LIMIT 1');
         //
         if ($query == true)
         {

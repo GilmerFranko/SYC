@@ -5,7 +5,7 @@
         <th>ID</th>
         <th>Titulo</th>
         <th>Autor</th>
-        <th>Contacto</th>
+        <th>Foro</th>
         <th>Region</th>
         <th>Visitas</th>
         <th>Estado</th>
@@ -21,8 +21,8 @@
             <td><?php echo $thread['id']; ?></td>
             <td><?php echo htmlspecialchars($thread['title']); ?></td>
             <td><?php echo htmlspecialchars($thread['member_name']); ?></td>
-            <td><?php echo htmlspecialchars($thread['contact_name']); ?></td>
-            <td><?php echo htmlspecialchars($thread['location_name']); ?></td>
+            <td><?php echo htmlspecialchars($thread['forum_name']); ?></td>
+            <td><?php echo htmlspecialchars($thread['subforum_name']); ?></td>
             <td><?php echo $thread['views_count']; ?></td>
             <td><?php echo ($thread['status'] == 1 ? '<span class="green-text">Activo</span>' : '<span class="red-text">Inactivo</span>'); ?></td>
             <td><?php echo date('d/m/Y H:i', $thread['created_at']); ?></td>

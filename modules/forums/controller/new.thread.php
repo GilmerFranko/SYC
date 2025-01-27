@@ -40,13 +40,13 @@ if (isset($_GET['new_thread']))
   }
 
   // Verifica si no se ha seleccionado una ubicación
-  if (!isset($_POST['location_id']) || empty($_POST['location_id']) || !is_numeric($_POST['location_id']))
+  if (!isset($_POST['subforum_id']) || empty($_POST['subforum_id']) || !is_numeric($_POST['subforum_id']))
   {
     $msg[] = 'Debes seleccionar una ubicación';
   }
 
   // Verifica si no se ha seleccionado una categoría
-  if (!isset($_POST['contact_id']) || empty($_POST['contact_id']) || !is_numeric($_POST['contact_id']))
+  if (!isset($_POST['forum_id']) || empty($_POST['forum_id']) || !is_numeric($_POST['forum_id']))
   {
     $msg[] = 'Debes seleccionar una categoría';
   }
@@ -79,14 +79,14 @@ if (isset($_GET['new_thread']))
       'title' => cleanString($_POST['title']),
       'email' => cleanString($_POST['email']),
       'phone' => cleanString($_POST['phone']),
-      'location_id' => cleanString($_POST['location_id']),
+      'subforum_id' => cleanString($_POST['subforum_id']),
       'age' => cleanString($_POST['age']),
       'fee' => cleanString($_POST['fee']),
       'created_at' => time(),
       'ip_address' => Core::model('extra', 'core')->getIp()
     ];
 
-    $contact_id = cleanString($_POST['contact_id']);
+    $forum_id = cleanString($_POST['forum_id']);
 
     // El BBCode recibido desde el formulario
     $bbcode = $_POST['content'] ?? '';
@@ -113,14 +113,14 @@ if (isset($_GET['new_thread']))
       $thread['status'] = 0;
     }
 
-    // Verifica que exista la ubicacion
+    // Verifica que exista la subforo
     // Que esté activa
-    // Y pertenezca al contacto (foro)
-    if ($location = loadClass('forums/locations')->getLocationById($thread['location_id']))
+    // Y pertenezca al foro (foro)
+    if ($subforum = loadClass('forums/subforums')->getSubforumById($thread['subforum_id']))
     {
-      if (loadClass('forums/locations')->isActive($location['id']))
+      if (loadClass('forums/subforums')->isActive($subforum['id']))
       {
-        if ($location['contact_id'] == $contact_id)
+        if ($subforum['forum_id'] == $forum_id)
         {
           if ($thread_id = loadClass('forums/threads')->newThread($thread))
           {
@@ -170,7 +170,7 @@ if (isset($_GET['new_thread']))
         }
         else
         {
-          $msg[] = 'La ubicación no pertenece al contacto (foro)';
+          $msg[] = 'La ubicación no pertenece al foro (foro)';
         }
       }
       else
@@ -192,8 +192,8 @@ if (isset($_GET['new_thread']))
 
 
 
-// Carga todos los contactos
-$contacts = loadClass('forums/f_contacts')->getAllContacts();
+// Carga todos los foros
+$forums = loadClass('forums/f_forums')->getAllForums();
 
 // Carga todos los foros
-$locations = loadClass('forums/locations')->getAllLocations();
+$subforums = loadClass('forums/subforums')->getAllSubforums();

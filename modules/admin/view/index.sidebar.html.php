@@ -82,7 +82,7 @@ $totalTSZ = loadClass('admin/thread')->getTotalThreadsStatusZero();
               } ?>>
             <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'contacts'); ?>">
               <i class="material-icons">contact_mail</i>
-              Contactos
+              Forumos
             </a>
           </li>
           <li><a href="#" class="waves-effect waves-blue grey-text">Anuncios</a></li>
@@ -109,23 +109,23 @@ $totalTSZ = loadClass('admin/thread')->getTotalThreadsStatusZero();
             </a>
           </li>
 
-          <li <?php if ($sSection == 'contacts.views')
+          <li <?php if ($sSection == 'forums.views')
               {
                 echo ' class="active"';
               } ?>>
-            <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'contacts.views'); ?>">
+            <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'forums.views'); ?>">
               <i class="material-icons">receipt</i>
               Contáctos
             </a>
           </li>
 
-          <li <?php if ($sSection == 'views.locations')
+          <li <?php if ($sSection == 'views.subforums')
               {
                 echo ' class="active"';
               } ?>>
-            <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'views.locations'); ?>">
-              <i class="material-icons">location_on</i>
-              Ubicaciones
+            <a class="waves-effect waves-blue" href="<?php echo $extra->generateUrl('admin', 'views.subforums'); ?>">
+              <i class="material-icons">subforum_on</i>
+              SubForos
             </a>
           </li>
           <li <?php if ($sSection == 'reports')

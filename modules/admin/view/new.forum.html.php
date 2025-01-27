@@ -7,7 +7,7 @@
  * @author Gilmer Franco <gil2017.com@gmail.com>
  *=======================================================
  *
- * @Description Vista de nueva categoria contacto
+ * @Description Vista de nueva categoria foro
  *
  *
  */
@@ -15,11 +15,11 @@
 require Core::view('head', 'core');
 ?>
 
-<section id="adminNewContact">
+<section id="adminNewForum">
   <div class="card-panel green lighten-4 green-text text-darken-4 flow-text center-align"><?= $page['name'] ?></div>
-  <div class="sectionContacts container">
+  <div class="sectionForums container">
     <div class="row">
-      <form class="col s12" id="newContactForm" method="POST" action="<?php echo Core::model('extra', 'core')->generateUrl('admin', 'new.contact', null, array('do' => 'new')); ?>" enctype="multipart/form-data">
+      <form class="col s12" id="newForumForm" method="POST" action="<?php echo Core::model('extra', 'core')->generateUrl('admin', 'new.contact', null, array('do' => 'new')); ?>" enctype="multipart/form-data">
 
         <div class="input-field">
           <label for="name">Nombre</label>
@@ -27,7 +27,7 @@ require Core::view('head', 'core');
         </div>
 
         <div class="input-field">
-          <label for="short_url">URL Corta (ejemplo: contacto-hombres)</label>
+          <label for="short_url">URL Corta (ejemplo: foro-hombres)</label>
           <textarea name="short_url" id="short_url" class="materialize-textarea" length="1000" required><?php echo Core::model('extra', 'core')->getInputValue('short_url', 'post'); ?></textarea>
         </div>
 
@@ -55,7 +55,7 @@ require Core::view('head', 'core');
         </div>
 
         <br>
-        <button class="btn" type="submit"><i class="material-icons right notranslate">send</i>Crear nuevo contacto</button>
+        <button class="btn" type="submit"><i class="material-icons right notranslate">send</i>Crear nuevo foro</button>
       </form>
     </div>
   </div>

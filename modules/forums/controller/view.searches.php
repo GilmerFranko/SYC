@@ -11,17 +11,17 @@
  *
  */
 
-// Validar y obtener el ID de la categoría (contact_id)
-$contact_id = isset($_GET['contact_id']) ? (int)escape($_GET['contact_id']) : null;
-if ($contact_id && !is_numeric($contact_id))
+// Validar y obtener el ID de la categoría (forum_id)
+$forum_id = isset($_GET['forum_id']) ? (int)escape($_GET['forum_id']) : null;
+if ($forum_id && !is_numeric($forum_id))
 {
   // Si el ID de la categoría no es válido
   $errors[] = "Categoría inválida.";
 }
 
-// Validar y obtener el ID de la ubicación (location_id)
-$location_id = isset($_GET['location_id']) ? (int)escape($_GET['location_id']) : null;
-if ($location_id && !is_numeric($location_id))
+// Validar y obtener el ID de la ubicación (subforum_id)
+$subforum_id = isset($_GET['subforum_id']) ? (int)escape($_GET['subforum_id']) : null;
+if ($subforum_id && !is_numeric($subforum_id))
 {
   // Si el ID de la ubicación no es válido
   $errors[] = "Ubicación inválida.";
@@ -72,8 +72,8 @@ if (!empty($errors))
 // Si no hay errores, proceder con la búsqueda
 $threads_model = loadClass('forums/threads');
 $params = [
-  'contact_id' => $contact_id,
-  'location_id' => $location_id,
+  'forum_id' => $forum_id,
+  'subforum_id' => $subforum_id,
   'words' => $words,
   'age_from' => $age_from,
   'age_to' => $age_to,

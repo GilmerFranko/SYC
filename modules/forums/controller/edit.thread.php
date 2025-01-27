@@ -231,11 +231,11 @@ if (!$thread = loadClass('forums/threads')->getThreadByIdBasic($thread_id))
 
 if (empty($msg))
 {
-  // Carga todos los contactos
-  $contacts = loadClass('forums/f_contacts')->getAllContacts();
+  // Carga todos los foros
+  $forums = loadClass('forums/f_forums')->getAllForums();
 
   // Carga todos los foros
-  $locations = loadClass('forums/locations')->getAllLocations();
+  $subforums = loadClass('forums/subforums')->getAllSubforums();
 
   // Carga todas las imagenes
   $images = loadClass('forums/threads')->getImagesByThreadId($thread['id']);

@@ -504,7 +504,7 @@ nav {
 }
 
 @media (max-width: 768px) {
-  .ubicaciones-items {
+  .subforos-items {
     display: none;
   }
 

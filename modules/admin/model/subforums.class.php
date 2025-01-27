@@ -11,7 +11,7 @@
  *
  *
  */
-class locations extends Model
+class subforums extends Model
 {
 
 
@@ -20,14 +20,14 @@ class locations extends Model
    * @param int $page El n mero de p gina
    * @return array|boolean Un array con los foros
    */
-  public function getAllLocations($page = 1, $limit = 10)
+  public function getAllSubforums($page = 1, $limit = 10)
   {
 
     // Calcular el límite inferior y superior 
     $lowerLimit = ($page - 1) * $limit;
     $upperLimit = $limit;
 
-    $query = $this->db->query('SELECT l.*, c.name AS contact_name FROM `f_locations` AS l INNER JOIN `f_contacts` AS c ON l.`contact_id` = c.`id` ORDER BY `id` DESC LIMIT ' . $lowerLimit . ',' . $upperLimit);
+    $query = $this->db->query('SELECT l.*, c.name AS forum_name FROM `f_subforums` AS l INNER JOIN `f_forums` AS c ON l.`forum_id` = c.`id` ORDER BY `id` DESC LIMIT ' . $lowerLimit . ',' . $upperLimit);
     $data['rows'] = $query->num_rows;
     // Obtener los resultados de la consulta
     if ($query and $data['rows'] > 0)
@@ -37,7 +37,7 @@ class locations extends Model
         $data['data'][] = $row;
       }
       // Paginador
-      $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('admin', 'views.locations', null, null), $data['rows'], $limit);
+      $data['pages'] = Core::model('paginator', 'core')->pageIndex(array('admin', 'views.subforums', null, null), $data['rows'], $limit);
       return $data;
     }
     return $data;
@@ -46,7 +46,7 @@ class locations extends Model
 
   /**
    * @Description Guarda un nuevo foro
-   * @param int $contact_id El ID del contacto donde se va a guardar el foro
+   * @param int $forum_id El ID del foro donde se va a guardar el foro
    * @param string $name El nombre del foro
    * @param string $description La descripci n del foro
    * @param string $visibility La visibilidad del foro
@@ -54,9 +54,9 @@ class locations extends Model
    * @param string $status El estatus del foro
    * @return int El ID del nuevo foro
    */
-  public function newLocation($data)
+  public function newSubforum($data)
   {
-    if ($last_id = loadClass('core/db')->smartInsert('f_locations', $data))
+    if ($last_id = loadClass('core/db')->smartInsert('f_subforums', $data))
     {
       return $last_id;
     }
@@ -66,9 +66,9 @@ class locations extends Model
     }
   }
 
-  public function updateLocation($locationId, $data)
+  public function updateSubforum($subforumId, $data)
   {
-    if ($last_id = loadClass('core/db')->smartInsert('f_locations', $data, ['id', $locationId]))
+    if ($last_id = loadClass('core/db')->smartInsert('f_subforums', $data, ['id', $subforumId]))
     {
       return $last_id;
     }
@@ -79,13 +79,13 @@ class locations extends Model
   }
 
   /**
-   * @Description Elimina un foro (ubicacion)
+   * @Description Elimina un foro (subforo)
    * @param int $id El ID del foro
    * @return bool True si se eliminó, false si no
    */
-  public function deleteLocation($id)
+  public function deleteSubforum($id)
   {
-    return loadClass('core/db')->deleteRow('f_locations', $id);
+    return loadClass('core/db')->deleteRow('f_subforums', $id);
   }
 
   /**
@@ -95,7 +95,7 @@ class locations extends Model
    */
   public function hasThreads($id)
   {
-    return (bool)$this->db->count('threads', array('location_id' => $id));
+    return (bool)$this->db->count('threads', array('subforum_id' => $id));
   }
 
   /**
@@ -104,7 +104,7 @@ class locations extends Model
    */
   public function getAllForums()
   {
-    return $this->db->select('locations');
+    return $this->db->select('subforums');
   }
 
   /**
@@ -115,7 +115,7 @@ class locations extends Model
   public function getLastPost($id)
   {
     $where = array(
-      'location_id' => $id,
+      'subforum_id' => $id,
       'ORDER' => array('created_at' => 'DESC'),
       'LIMIT' => 1
     );
@@ -123,34 +123,34 @@ class locations extends Model
     return $this->db->select('posts', $where);
   }
 
-  public function getLocationById($id)
+  public function getSubforumById($id)
   {
-    return getColumns('f_locations', ['id', 'name', 'short_url', 'description', 'status', 'contact_id'], array('id', $id), 1);
+    return getColumns('f_subforums', ['id', 'name', 'short_url', 'description', 'status', 'forum_id'], array('id', $id), 1);
   }
 
   /**
-   * Comprueba si existe una ubicacion en la base de datos con el name pasado.
+   * Comprueba si existe una subforo en la base de datos con el name pasado.
    *
    */
-  public function existsLocationByName($name)
+  public function existsSubforumByName($name)
   {
-    return loadClass('core/db')->getCount('f_locations', 'id', array('name', $name));
+    return loadClass('core/db')->getCount('f_subforums', 'id', array('name', $name));
   }
 
   /**
    * Comprueba si existe una Ubicacion (foro) en la base de datos
    * No se tendrá en cuenta el mismo ID pasado
    */
-  public function existsLocation($location_id, $contact_id, $name)
+  public function existsSubforum($subforum_id, $forum_id, $name)
   {
-    $query = $this->db->query('SELECT `id` FROM `f_locations` WHERE `id` != ' . $location_id . ' AND `contact_id` = ' . $contact_id . ' AND  `name` = \'' . $name . '\'');
+    $query = $this->db->query('SELECT `id` FROM `f_subforums` WHERE `id` != ' . $subforum_id . ' AND `forum_id` = ' . $forum_id . ' AND  `name` = \'' . $name . '\'');
     return $query == true && $query->num_rows > 0;
   }
 
   /* Comprueba que no exista un short_url igual registrado*/
-  public function existsShortUrl($location_id, $short_url)
+  public function existsShortUrl($subforum_id, $short_url)
   {
-    $query = $this->db->query('SELECT `id` FROM `f_locations` WHERE `short_url` = \'' . $short_url . '\' AND `id` != ' . $location_id);
+    $query = $this->db->query('SELECT `id` FROM `f_subforums` WHERE `short_url` = \'' . $short_url . '\' AND `id` != ' . $subforum_id);
     return $query == true && $query->num_rows > 0;
   }
 }

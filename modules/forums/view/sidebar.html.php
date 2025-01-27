@@ -1,7 +1,7 @@
 <?php
 
 /* Optiene los foros mas visitados */
-$f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit = 50);
+$f_most_visited = loadClass('forums/subforums')->getMostVisitedSubforums($limit = 50);
 
 ?>
 
@@ -41,10 +41,10 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
   </div>
 
   <?php
-  $locations_in = loadClass('forums/locations')->getTop10LocationsWithMostThreads();
-  /*usort($locations_in, function ($a, $b)
+  $subforums_in = loadClass('forums/subforums')->getTop10SubforumsWithMostThreads();
+  /*usort($subforums_in, function ($a, $b)
   {
-    return strcmp($b['contact_name'], $a['contact_name']);
+    return strcmp($b['forum_name'], $a['forum_name']);
   });*/
   ?>
   <!-- LAS 10 PROVINCIAS CON MAS ANUNCIOS -->
@@ -53,10 +53,10 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
     <div class="meca">
       CON MÁS ANUNCIOS
     </div>
-    <?php foreach ($locations_in as $location_in)
+    <?php foreach ($subforums_in as $subforum_in)
     { ?>
       <div class="item-menu-sidebar">
-        <a class="item-text" href="<?= gLink('f/' . $location_in['short_url']) ?>"><strong><?= strtoupper($location_in['contact_name'] . ' EN ' . $location_in['name']) ?></strong></a>
+        <a class="item-text" href="<?= gLink('f/' . $subforum_in['short_url']) ?>"><strong><?= strtoupper($subforum_in['forum_name'] . ' EN ' . $subforum_in['name']) ?></strong></a>
       </div>
     <?php } ?>
   </div>
@@ -134,7 +134,7 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
   // Si la sección es 'view.searches'
   if ($sSection == 'view.searches')
   {
-    $contacts_in = loadClass('forums/f_contacts')->getAllContacts();
+    $forums_in = loadClass('forums/f_forums')->getAllForums();
   ?>
     <!-- CONTACTOS -->
     <div class="menu-sidebar1 row">
@@ -142,10 +142,10 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
       <div class="meca">
         MENÚ
       </div>
-      <?php foreach ($contacts_in['data'] as $contact_in)
+      <?php foreach ($forums_in['data'] as $forum_in)
       { ?>
-        <div class="item-menu-sidebar <?= ($contact_in['id'] == $contact_id) ? 'item-menu-sidebar-active' : '' ?>">
-          <a class="item-text" href="<?= gLink('forums/view.searches', ['contact_id' => $contact_in['id']]) ?>"><strong><?= $contact_in['name'] ?></strong></a>
+        <div class="item-menu-sidebar <?= ($forum_in['id'] == $forum_id) ? 'item-menu-sidebar-active' : '' ?>">
+          <a class="item-text" href="<?= gLink('forums/view.searches', ['forum_id' => $forum_in['id']]) ?>"><strong><?= $forum_in['name'] ?></strong></a>
         </div>
       <?php } ?>
     </div>
@@ -154,7 +154,7 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
   // Si la sección es 'view.threads'
   elseif ($sSection == 'view.threads')
   {
-    $locations_in = loadClass('forums/locations')->getLocationsByContactId($contact['id']);
+    $subforums_in = loadClass('forums/subforums')->getSubforumsByForumId($contact['id']);
   ?>
     <!-- CONTACTOS -->
     <div class="menu-sidebar1 row">
@@ -162,10 +162,10 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
       <div class="meca">
         MENÚ
       </div>
-      <?php foreach ($locations_in['data'] as $location_in)
+      <?php foreach ($subforums_in['data'] as $subforum_in)
       { ?>
-        <div class="item-menu-sidebar <?= ($location_in['short_url'] == $location_url) ? 'item-menu-sidebar-active' : '' ?>">
-          <a class="item-text" href="<?= gLink('f/' . $location_in['short_url']) ?>"><strong><?= strtoupper($contact['name'] . ' EN ' . $location_in['name']) ?></strong></a>
+        <div class="item-menu-sidebar <?= ($subforum_in['short_url'] == $subforum_url) ? 'item-menu-sidebar-active' : '' ?>">
+          <a class="item-text" href="<?= gLink('f/' . $subforum_in['short_url']) ?>"><strong><?= strtoupper($contact['name'] . ' EN ' . $subforum_in['name']) ?></strong></a>
         </div>
       <?php } ?>
     </div>
@@ -179,7 +179,7 @@ $f_most_visited = loadClass('forums/locations')->getMostVisitedLocations($limit 
     </div>
     <?php /*foreach ($f_most_visited['data']  as $i  => $forum_mv): ?>
       <div class="item-menu-sidebar">
-        <div class="item-text"><a href="<?= gLink('f/' . $forum_mv['short_url']) ?>"><span class="text-success"><?= ($i + 1) ?></span>. <?= ucfirst(strtolower($forum_mv['contact_name'])) . ' en ' . $forum_mv['name'] ?></a></div>
+        <div class="item-text"><a href="<?= gLink('f/' . $forum_mv['short_url']) ?>"><span class="text-success"><?= ($i + 1) ?></span>. <?= ucfirst(strtolower($forum_mv['forum_name'])) . ' en ' . $forum_mv['name'] ?></a></div>
       </div>
     <?php endforeach; */ ?>
   </div>-->

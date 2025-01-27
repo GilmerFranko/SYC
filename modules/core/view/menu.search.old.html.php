@@ -1,13 +1,13 @@
 <?php
-// Carga todos los contactos
-$contacts_search = loadClass('forums/f_contacts')->getAllContacts();
+// Carga todos los foros
+$forums_search = loadClass('forums/f_forums')->getAllForums();
 
 // Carga todos los foros
-$locations_search = loadClass('forums/locations')->getAllLocations();
+$subforums_search = loadClass('forums/subforums')->getAllSubforums();
 
-$contact_id = isset($_GET['contact_id']) ? $_GET['contact_id'] : '';
+$forum_id = isset($_GET['forum_id']) ? $_GET['forum_id'] : '';
 
-$location_id = isset($_GET['location_id']) ? $_GET['location_id'] : '';
+$subforum_id = isset($_GET['subforum_id']) ? $_GET['subforum_id'] : '';
 
 $age_from = isset($_GET['age_from']) ? $_GET['age_from'] : '';
 
@@ -95,25 +95,25 @@ $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : '';
       <div class="row">
         <!-- Select de Categorías -->
         <div class="col col-sm-5 col-md-4 ">
-          <select id="search-category" name="contact_id" class="form-select">
+          <select id="search-category" name="forum_id" class="form-select">
             <option selected value="">Categorías</option>
-            <?php foreach ($contacts_search['data'] as $contact_search) : ?>
-              <option value="<?= $contact_search['id'] ?>" <?php if ($contact_id == $contact_search['id']) echo 'selected' ?>><?= $contact_search['name'] ?></option>
+            <?php foreach ($forums_search['data'] as $forum_search) : ?>
+              <option value="<?= $forum_search['id'] ?>" <?php if ($forum_id == $forum_search['id']) echo 'selected' ?>><?= $forum_search['name'] ?></option>
             <?php endforeach; ?>
 
           </select>
         </div>
-        <!-- Select de Ubicaciones -->
+        <!-- Select de Subforos -->
         <div class="col col-sm-3 col-md-3 ">
-          <select id="search-location" name="location_id" class="form-select">
-            <option selected value="">Ubicaciones</option>
-            <?php foreach ($locations_search['data'] as $location_search)
+          <select id="search-subforum" name="subforum_id" class="form-select">
+            <option selected value="">Subforos</option>
+            <?php foreach ($subforums_search['data'] as $subforum_search)
             {
-              // Si se ha seleccionado un contacto 
-              if ($contact_id and $contact_id == $location_search['contact_id'])
+              // Si se ha seleccionado un foro 
+              if ($forum_id and $forum_id == $subforum_search['forum_id'])
               {
-                // Muestra las ubicaciones de ese contacto y si la ubicación coincide con la ubicación seleccionada se marca como seleccionada
-                echo '<option value="' . $location_search['id'] . '" ' . ($location_id == $location_search['id'] ? 'selected' : '') . '>' . $location_search['name'] . '</option>';
+                // Muestra las subforos de ese foro y si la ubicación coincide con la ubicación seleccionada se marca como seleccionada
+                echo '<option value="' . $subforum_search['id'] . '" ' . ($subforum_id == $subforum_search['id'] ? 'selected' : '') . '>' . $subforum_search['name'] . '</option>';
               }
             } ?>
 
@@ -167,21 +167,21 @@ $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : '';
 </div>
 
 <script>
-  const contacts_s = <?= json_encode($contacts_search) ?>;
-  const locations_s = <?= json_encode($locations_search) ?>;
+  const forums_s = <?= json_encode($forums_search) ?>;
+  const subforums_s = <?= json_encode($subforums_search) ?>;
 
   $(document).ready(function() {
     // Maneja el cambio en la categoría
     $('#search-category').on('change', function() {
-      const selectedContact = $(this).val();
-      const $locationSelect = $('#search-location');
+      const selectedForum = $(this).val();
+      const $subforumSelect = $('#search-subforum');
 
-      $locationSelect.empty();
+      $subforumSelect.empty();
 
-      // Filtra y agrega las ubicaciones correspondientes a la categoría seleccionada
-      locations_s.data.forEach(function(location) {
-        if (location.contact_id == selectedContact) {
-          $locationSelect.append('<option value="' + location.id + '">' + location.name + '</option>');
+      // Filtra y agrega las subforos correspondientes a la categoría seleccionada
+      subforums_s.data.forEach(function(subforum) {
+        if (subforum.forum_id == selectedForum) {
+          $subforumSelect.append('<option value="' + subforum.id + '">' + subforum.name + '</option>');
         }
       });
     });

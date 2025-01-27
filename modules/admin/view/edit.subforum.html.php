@@ -21,35 +21,35 @@ require Core::view('head', 'core');
       <div class="col s12">
         <div class="card">
           <div class="card-content">
-            <form action="<?php echo gLink('admin/edit.location', ['edit_location' => $location['id']]); ?>" method="post">
-              <input type="hidden" name="location_id" value=" <?= $location['id']; ?>" />
+            <form action="<?php echo gLink('admin/edit.subforum', ['edit_subforum' => $subforum['id']]); ?>" method="post">
+              <input type="hidden" name="subforum_id" value=" <?= $subforum['id']; ?>" />
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="name" name="name" type="text" class="validate" value="<?php echo $location['name']; ?>" required>
+                  <input id="name" name="name" type="text" class="validate" value="<?php echo $subforum['name']; ?>" required>
                   <label for="name">Nombre</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <label for="short_url">URL Corta (ejemplo: contacto-hombres)</label>
-                  <textarea name="short_url" id="short_url" class="materialize-textarea" length="1000" required><?php echo Core::model('extra', 'core')->getInputValue('short_url', 'post'); ?><?= $location['short_url']; ?></textarea>
+                  <label for="short_url">URL Corta (ejemplo: tecnologia-antigua)</label>
+                  <textarea name="short_url" id="short_url" class="materialize-textarea" length="1000" required><?php echo Core::model('extra', 'core')->getInputValue('short_url', 'post'); ?><?= $subforum['short_url']; ?></textarea>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input id="description" type="text" class="validate" name="description" value="<?php echo $location['description']; ?>">
+                  <input id="description" type="text" class="validate" name="description" value="<?php echo $subforum['description']; ?>">
                   <label for="description">Descripción</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <input type="hidden" name="contact_id" value="<?= $location['contact_id']; ?>">
-                  <select name=" contact_id1111" disabled>
-                    <?php foreach (loadClass('admin/f_contacts')->getAllContacts()['data'] as $contact): ?>
-                      <option value="<?php echo $contact['id']; ?>" <?php echo ($location['contact_id'] == $contact['id']) ? 'selected' : ''; ?>><?php echo $contact['name']; ?></option>
+                  <input type="hidden" name="forum_id" value="<?= $subforum['forum_id']; ?>">
+                  <select name=" forum_id1111" disabled>
+                    <?php foreach (loadClass('admin/f_forums')->getAllForums()['data'] as $contact): ?>
+                      <option value="<?php echo $contact['id']; ?>" <?php echo ($subforum['forum_id'] == $contact['id']) ? 'selected' : ''; ?>><?php echo $contact['name']; ?></option>
                     <?php endforeach; ?>
                   </select>
-                  <label>Contacto <span class="text-red">(Desactivado por seguridad)</span></label>
+                  <label>Forumo <span class="text-red">(Desactivado por seguridad)</span></label>
                 </div>
               </div>
               <div class="row">

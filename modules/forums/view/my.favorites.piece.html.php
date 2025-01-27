@@ -12,14 +12,14 @@
  */
 
 
-if (!$location = getColumns('f_locations', ['id', 'contact_id'], ['id', $thread['location_id']]))
+if (!$subforum = getColumns('f_subforums', ['id', 'forum_id'], ['id', $thread['subforum_id']]))
 {
   gourl('core/home-guest');
 }
 
-if (!$contact = loadClass('forums/f_contacts')->getContactById($location['contact_id']))
+if (!$contact = loadClass('forums/f_forums')->getForumById($subforum['forum_id']))
 {
-  $msg[] = 'El contacto no existe';
+  $msg[] = 'El foro no existe';
 }
 
 require Core::view('thread.piece', 'forums');

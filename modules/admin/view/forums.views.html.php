@@ -7,7 +7,7 @@
  * @author Gilmer Franco <gil2017.com@gmail.com>
  *=======================================================
  *
- * @Description Vista de los formularios de contacto
+ * @Description Vista de los formularios de foro
  *
  *
  */
@@ -33,9 +33,9 @@ require Core::view('head', 'core');
     </thead>
     <tbody>
       <?php
-      if ($contacts['rows'] > 0)
+      if ($forums['rows'] > 0)
       {
-        foreach ($contacts['data'] as $contact)
+        foreach ($forums['data'] as $contact)
         { ?>
           <tr>
             <td><?= $contact['id']; ?></td>
@@ -43,7 +43,7 @@ require Core::view('head', 'core');
             <td><?= $contact['status']; ?></td>
             <td><?= $contact['visibility']; ?></td>
             <td>
-              <a class="btn-floating btn-small waves-effect waves-light blue" href="<?= gLink('admin/edit.contact', ['contact_id' => $contact['id']]) ?>"><i class="material-icons">edit</i></a>
+              <a class="btn-floating btn-small waves-effect waves-light blue" href="<?= gLink('admin/edit.forum', ['forum_id' => $contact['id']]) ?>"><i class="material-icons">edit</i></a>
               <a class="btn-floating btn-small waves-effect waves-light red" href=""><i class="material-icons">delete</i></a>
             </td>
           </tr>

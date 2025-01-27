@@ -21,7 +21,7 @@ require Core::view('head', 'core');
       <div class="col s12">
         <div class="card">
           <div class="card-content">
-            <form action="<?php echo gLink('admin/new.location', ['new_location' => true]); ?>" method="post">
+            <form action="<?php echo gLink('admin/new.subforum', ['new_subforum' => true]); ?>" method="post">
               <div class="row">
                 <div class="input-field col s12">
                   <input id="name" name="name" type="text" class="validate" required>
@@ -30,7 +30,7 @@ require Core::view('head', 'core');
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <label for="short_url">URL Corta (ejemplo: contacto-hombres)</label>
+                  <label for="short_url">URL Corta (ejemplo: foro-hombres)</label>
                   <input name="short_url" id="short_url" type="text" class="validate" length="64" required>
                 </div>
               </div>
@@ -42,12 +42,12 @@ require Core::view('head', 'core');
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <select name="contact_id">
-                    <?php foreach (loadClass('admin/f_contacts')->getAllContacts()['data'] as $contact): ?>
+                  <select name="forum_id">
+                    <?php foreach (loadClass('admin/f_forums')->getAllForums()['data'] as $contact): ?>
                       <option value="<?php echo $contact['id']; ?>"><?php echo $contact['name']; ?></option>
                     <?php endforeach; ?>
                   </select>
-                  <label>Contacto</label>
+                  <label>Foro</label>
                 </div>
               </div>
               <div class="row">

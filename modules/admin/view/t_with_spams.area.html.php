@@ -5,7 +5,7 @@
         <th>ID</th>
         <th>Titulo</th>
         <th>Autor</th>
-        <th>Contacto</th>
+        <th>Foro</th>
         <th>Region</th>
         <th>Visitas</th>
         <th>Estado</th>
@@ -21,8 +21,8 @@
             <td><?= $thread['id']; ?></td>
             <td><?= loadClass('core/extra')->getHighlight($search, $thread['title']) ?></td>
             <td><?= $thread['member_name']; ?></td>
-            <td><?= $thread['contact_name']; ?></td>
-            <td><?= $thread['location_name']; ?></td>
+            <td><?= $thread['forum_name']; ?></td>
+            <td><?= $thread['subforum_name']; ?></td>
             <td><?= $thread['views_count']; ?></td>
             <td><?= ($thread['status'] == 1 ? '<span class="green-text">Activo</span>' : '<span class="red-text">Inactivo</span>'); ?></td>
             <td><?= date('d/m/Y H:i', $thread['created_at']); ?></td>

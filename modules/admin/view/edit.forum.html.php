@@ -7,7 +7,7 @@
  * @author Gilmer Franco <gil2017.com@gmail.com>
  *=======================================================
  *
- * @Description Vista de editar contacto (categoria)
+ * @Description Vista de editar foro (categoria)
  *
  *
  */
@@ -21,8 +21,8 @@ require Core::view('head', 'core');
       <div class="col s12">
         <div class="card">
           <div class="card-content">
-            <form action="<?php echo gLink('admin/edit.contact', ['edit_contact' => $contact['id']]); ?>" method="post" enctype="multipart/form-data">
-              <input type="hidden" name="contact_id" value=" <?= $contact['id']; ?>" />
+            <form action="<?php echo gLink('admin/edit.forum', ['edit_contact' => $contact['id']]); ?>" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="forum_id" value=" <?= $contact['id']; ?>" />
               <div class="row">
                 <div class="input-field col s12">
                   <input id="name" name="name" type="text" class="validate" value="<?php echo $contact['name']; ?>" required>
@@ -31,7 +31,7 @@ require Core::view('head', 'core');
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <label for="short_url">URL Corta (ejemplo: contacto-hombres)</label>
+                  <label for="short_url">URL Corta (ejemplo: tecnologia-antigua)</label>
                   <textarea name="short_url" id="short_url" class="materialize-textarea" length="1000" required><?php echo Core::model('extra', 'core')->getInputValue('short_url', 'post'); ?><?= $contact['short_url']; ?></textarea>
                 </div>
               </div>

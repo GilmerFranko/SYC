@@ -17,16 +17,16 @@ class thread extends Model
   {
     $where = [];
 
-    // Filtrar por categoría (contact_id)
-    if (!empty($params['contact_id']))
+    // Filtrar por categoría (forum_id)
+    if (!empty($params['forum_id']))
     {
-      $where[] = 'l.`contact_id` = "' . $this->db->real_escape_string($params['contact_id']) . '"';
+      $where[] = 'l.`forum_id` = "' . $this->db->real_escape_string($params['forum_id']) . '"';
     }
 
-    // Filtrar por ubicación (location_id)
-    if (!empty($params['location_id']))
+    // Filtrar por ubicación (subforum_id)
+    if (!empty($params['subforum_id']))
     {
-      $where[] = 't.`location_id` = "' . $this->db->real_escape_string($params['location_id']) . '"';
+      $where[] = 't.`subforum_id` = "' . $this->db->real_escape_string($params['subforum_id']) . '"';
     }
 
     // Filtrar por palabras clave (en el título o contenido)
@@ -60,16 +60,16 @@ class thread extends Model
       'SELECT COUNT(*) 
         FROM `f_threads` AS t
         INNER JOIN `members` AS m ON t.`member_id` = m.`member_id`
-        INNER JOIN `f_locations` AS l ON t.`location_id` = l.`id`
-        INNER JOIN `f_contacts` AS c ON l.`contact_id` = c.`id`
+        INNER JOIN `f_subforums` AS l ON t.`subforum_id` = l.`id`
+        INNER JOIN `f_forums` AS c ON l.`forum_id` = c.`id`
         ' . $where_clause
     );
 
     error_log('SELECT COUNT(*) 
         FROM `f_threads` AS t
         INNER JOIN `members` AS m ON t.`member_id` = m.`member_id`
-        INNER JOIN `f_locations` AS l ON t.`location_id` = l.`id`
-        INNER JOIN `f_contacts` AS c ON l.`contact_id` = c.`id`
+        INNER JOIN `f_subforums` AS l ON t.`subforum_id` = l.`id`
+        INNER JOIN `f_forums` AS c ON l.`forum_id` = c.`id`
         ' . $where_clause);
     list($data['total']) = $total_query->fetch_row();
 
@@ -80,10 +80,10 @@ class thread extends Model
     $query = $this->db->query(
       'SELECT 
             t.*,
-            c.`id` AS contact_id,
-            c.`name` AS contact_name,
-            l.`id` AS location_id,
-            l.`name` AS location_name,
+            c.`id` AS forum_id,
+            c.`name` AS forum_name,
+            l.`id` AS subforum_id,
+            l.`name` AS subforum_name,
             m.`name` AS member_name,
             m.`member_id` AS member_id
         FROM 
@@ -91,9 +91,9 @@ class thread extends Model
         INNER JOIN 
             `members` AS m ON t.`member_id` = m.`member_id`
         INNER JOIN 
-            `f_locations` AS l ON t.`location_id` = l.`id`
+            `f_subforums` AS l ON t.`subforum_id` = l.`id`
         INNER JOIN 
-            `f_contacts` AS c ON l.`contact_id` = c.`id`
+            `f_forums` AS c ON l.`forum_id` = c.`id`
         ' . $where_clause . '
         ORDER BY 
             t.`created_at` ' . $order_by . ' 
@@ -139,8 +139,8 @@ class thread extends Model
     $query = $this->db->query(
       'SELECT 
         t.*,
-        c.`name` AS contact_name,
-        l.`name` AS location_name,
+        c.`name` AS forum_name,
+        l.`name` AS subforum_name,
         m.`member_id` AS member_id,
         m.`name` AS member_name,
         m.`pp_thumb_photo` AS member_pp
@@ -149,9 +149,9 @@ class thread extends Model
       INNER JOIN 
           `members` AS m ON t.`member_id` = m.`member_id`
       INNER JOIN 
-          `f_locations` AS l ON t.`location_id` = l.`id`
+          `f_subforums` AS l ON t.`subforum_id` = l.`id`
       INNER JOIN 
-          `f_contacts` AS c ON l.`contact_id` = c.`id`
+          `f_forums` AS c ON l.`forum_id` = c.`id`
       WHERE 
           ' . $column . ' = "' . $escapedIdentifier . '"'
     );

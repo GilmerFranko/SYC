@@ -73,7 +73,7 @@ require Core::view('head', 'core');
             <input type="text" class="form-control" id="title" name="title" placeholder="Escriba un título descriptivo" required>
           </div>
 
-          <!-- Contacto -->
+          <!-- Foro -->
           <div class="row mb-4">
             <div class="col-md-6 mb-3 mb-md-0">
               <label for="email" class="form-label">Correo Electrónico</label>
@@ -88,17 +88,17 @@ require Core::view('head', 'core');
           <!-- Categoría y Ubicación -->
           <div class="row mb-4">
             <div class="col-md-6 mb-3 mb-md-0">
-              <label for="contact_id" class="form-label">Categorías</label>
-              <select class="form-select" id="contact_id" name="contact_id" required>
+              <label for="forum_id" class="form-label">Categorías</label>
+              <select class="form-select" id="forum_id" name="forum_id" required>
                 <option selected disabled>Selecciona una categoría</option>
-                <?php foreach ($contacts['data'] as $contact) : ?>
+                <?php foreach ($forums['data'] as $contact) : ?>
                   <option value="<?= $contact['id'] ?>"><?= $contact['name'] ?></option>
                 <?php endforeach; ?>
               </select>
             </div>
             <div class="col-md-6">
-              <label for="location_id" class="form-label">Provincias y Ciudades</label>
-              <select class="form-select" id="location_id" name="location_id" required>
+              <label for="subforum_id" class="form-label">Provincias y Ciudades</label>
+              <select class="form-select" id="subforum_id" name="subforum_id" required>
                 <option selected disabled>Selecciona una provincia/ciudad</option>
                 <option disabled>Primero debes seleccionar una categoría</option>
               </select>
@@ -151,8 +151,8 @@ require Core::view('head', 'core');
   const preview = document.getElementById('image-preview');
   let archivosSeleccionados = []; // Array para almacenar los archivos seleccionados
 
-  const contacts = <?= json_encode($contacts) ?>;
-  const locations = <?= json_encode($locations) ?>;
+  const forums = <?= json_encode($forums) ?>;
+  const subforums = <?= json_encode($subforums) ?>;
 
   document.getElementById('images').addEventListener('change', function(event) {
     Array.from(event.target.files).forEach((file) => {
@@ -219,18 +219,18 @@ require Core::view('head', 'core');
 
 
     // Maneja el cambio en la categoría
-    $('#contact_id').on('change', function() {
-      const selectedContact = $(this).val();
-      const $locationSelect = $('#location_id');
+    $('#forum_id').on('change', function() {
+      const selectedForum = $(this).val();
+      const $subforumSelect = $('#subforum_id');
 
       // Limpia las opciones previas
-      $locationSelect.empty();
-      $locationSelect.append('<option selected disabled>Selecciona una provincia/ciudad</option>');
+      $subforumSelect.empty();
+      $subforumSelect.append('<option selected disabled>Selecciona una provincia/ciudad</option>');
 
-      // Filtra y agrega las ubicaciones correspondientes a la categoría seleccionada
-      locations.data.forEach(function(location) {
-        if (location.contact_id == selectedContact) {
-          $locationSelect.append('<option value="' + location.id + '">' + location.name + '</option>');
+      // Filtra y agrega las subforos correspondientes a la categoría seleccionada
+      subforums.data.forEach(function(subforum) {
+        if (subforum.forum_id == selectedForum) {
+          $subforumSelect.append('<option value="' + subforum.id + '">' + subforum.name + '</option>');
         }
       });
     });
@@ -244,8 +244,8 @@ require Core::view('head', 'core');
       const title = $form.find('input[name="title"]').val()
       const email = $form.find('input[name="email"]').val()
       const phone = $form.find('input[name="phone"]').val()
-      const location_id = $form.find('select[name="location_id"]').val()
-      const contact_id = $form.find('select[name="contact_id"]').val()
+      const subforum_id = $form.find('select[name="subforum_id"]').val()
+      const forum_id = $form.find('select[name="forum_id"]').val()
       const age = $form.find('input[name="age"]').val()
       const fee = $form.find('input[name="fee"]').val()
       const content = $('#content').val()
@@ -265,11 +265,11 @@ require Core::view('head', 'core');
         errors.push('El teléfono debe tener al menos 9 dígitos y ser un número');
       }
 
-      if (!location_id || isNaN(location_id)) {
+      if (!subforum_id || isNaN(subforum_id)) {
         errors.push('Debes seleccionar una ubicación');
       }
 
-      if (!contact_id || isNaN(contact_id)) {
+      if (!forum_id || isNaN(forum_id)) {
         errors.push('Debes seleccionar una categoría');
       }
 

@@ -16,5 +16,5 @@ $page['name'] = 'Inicio';
 $page['code'] = 'homeGuest';
 
 
-// Optiene todos los contactos
-$contacts = loadClass('admin/f_contacts')->getAllContacts();
+// Optiene todos los foros
+$forums = loadClass('admin/f_forums')->getAllForums();

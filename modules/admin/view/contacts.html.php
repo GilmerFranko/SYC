@@ -7,7 +7,7 @@
  * @author Gilmer Franco <gil2017.com@gmail.com>
  *=======================================================
  *
- * @Description Vista de los formularios de contacto
+ * @Description Vista de los formularios de foro
  *
  *
  */

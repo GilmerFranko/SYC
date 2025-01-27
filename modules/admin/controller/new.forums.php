@@ -12,8 +12,8 @@
  *
  */
 
-$page['name'] = 'Nueva categoria contacto';
-$page['code'] = 'adminNewContact';
+$page['name'] = 'Nueva categoria foro';
+$page['code'] = 'adminNewForum';
 
 
 // COMPROBAR SI SE HA ESPECIFICADO ACCION Y TIPO
@@ -41,34 +41,34 @@ if (isset($_GET['do']))
         'created_at' => time()
       ];
 
-      if ($image_url = loadClass('core/extra')->uploadImage($_FILES['image'], $config['contacts_path']))
+      if ($image_url = loadClass('core/extra')->uploadImage($_FILES['image'], $config['forums_path']))
       {
         $contact['image'] = $image_url;
 
-        $result = loadClass('admin/f_contacts')->newContact($contact);
+        $result = loadClass('admin/f_forums')->newForum($contact);
 
         if ($result)
         {
-          $msg[] = 'El contacto se ha creado correctamente';
+          $msg[] = 'El foro se ha creado correctamente';
         }
         else
         {
-          $msg[] = 'No se ha podido crear el contacto';
+          $msg[] = 'No se ha podido crear el foro';
           // Elimina imagen subida
-          loadClass('core/extra')->deleteImage($image_url, $config['contacts_path']);
+          loadClass('core/extra')->deleteImage($image_url, $config['forums_path']);
         }
       }
       else
       {
         $msg[] = 'No se ha podido cargar la imagen';
         // Elimina imagen subida
-        loadClass('core/extra')->deleteImage($image_url, $config['contacts_path']);
+        loadClass('core/extra')->deleteImage($image_url, $config['forums_path']);
       }
     }
     // Mostrar mensajes de error o éxito
     setToast([$msg]);
 
     // Recargar la página
-    redirect('admin/contacts.views');
+    redirect('admin/forums.views');
   }
 }

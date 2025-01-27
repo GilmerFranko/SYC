@@ -13,8 +13,8 @@
 
 
 // Validar las palabras clave
-$location_name = isset($_GET['location_name']) ? trim(escape($_GET['location_name'])) : '';
-if (!empty($location_name) && strlen($location_name) < 3)
+$subforum_name = isset($_GET['subforum_name']) ? trim(escape($_GET['subforum_name'])) : '';
+if (!empty($subforum_name) && strlen($subforum_name) < 3)
 {
   // Si las palabras clave son demasiado cortas
   $errors[] = "Las palabras clave deben tener al menos 3 caracteres.";
@@ -32,14 +32,14 @@ if (!empty($errors))
 // Si no hay errores, proceder con la búsqueda
 $threads_model = loadClass('forums/threads');
 $params = [
-  'location_name' => $location_name
+  'subforum_name' => $subforum_name
 ];
 
 // Ejecutar la búsqueda con los parámetros validados
-$search_results = $threads_model->searchThreadsByLocationName($params);
+$search_results = $threads_model->searchThreadsBySubforumName($params);
 
 // Configurar la página
-$page['name'] = "Anuncios en " . $location_name;
+$page['name'] = "Anuncios en " . $subforum_name;
 $page['code'] = 'searchResults';
 
 // Mostrar la página

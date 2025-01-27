@@ -152,7 +152,7 @@ if (isset($_POST['ajax']))
                                     }
                                 }
                                 // MUESTRA MENSAJE SATISFACTORIO
-                                die('1:La cuenta de ' . $member['name'] . ' ha sido editada correctamente. <a href="#" class="btn-flat toast-action" onclick="window.location.reload(); return false;">Actualizar</a>.');
+                                die('1:La cuenta de ' . $member['name'] . ' ha sido editada correctamente. <a href="#" class="btn-flat toast-action" onclick="window.Subforum.reload(); return false;">Actualizar</a>.');
                             }
                             else
                             {

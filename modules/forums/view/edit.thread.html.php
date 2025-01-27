@@ -13,13 +13,13 @@
 
 require Core::view('head', 'core');
 
-foreach ($locations['data'] as $location)
+foreach ($subforums['data'] as $subforum)
 {
-  if ($location['id'] == $thread['location_id'])
+  if ($subforum['id'] == $thread['subforum_id'])
   {
-    $locationSelected['id'] = $location['id'];
-    $locationSelected['name'] = $location['name'];
-    $locationSelected['contact_id'] = $location['contact_id'];
+    $subforumSelected['id'] = $subforum['id'];
+    $subforumSelected['name'] = $subforum['name'];
+    $subforumSelected['forum_id'] = $subforum['forum_id'];
   }
 }
 ?>
@@ -63,11 +63,11 @@ foreach ($locations['data'] as $location)
       <div class="row">
         <div class="col-md-6">
           <div class="mb-3">
-            <label for="contact_id" class="form-label">Categorías</label>
+            <label for="forum_id" class="form-label">Categorías</label>
             <small>No puedes modificar la cargoria</small>
-            <select class="form-select" id="contact_id" name="contact_id" disabled>
-              <?php foreach ($contacts['data'] as $contact) : ?>
-                <?php if ($contact['id'] == $locationSelected['contact_id']): ?>
+            <select class="form-select" id="forum_id" name="forum_id" disabled>
+              <?php foreach ($forums['data'] as $contact) : ?>
+                <?php if ($contact['id'] == $subforumSelected['forum_id']): ?>
                   <option value="<?= $contact['id'] ?>"><?= $contact['name'] ?></option>
                 <?php endif; ?>
               <?php endforeach; ?>
@@ -76,10 +76,10 @@ foreach ($locations['data'] as $location)
         </div>
         <div class="col-md-6">
           <div class="mb-3">
-            <label for="location_id" class="form-label">Provincias y Ciudades</label>
+            <label for="subforum_id" class="form-label">Provincias y Ciudades</label>
             <small>No puedes modificar la ubicación</small>
-            <select class="form-select" id="location_id" name="location_id" disabled>
-              <option value="<?= $locationSelected['id'] ?>" selected><?= $locationSelected['name'] ?></option>
+            <select class="form-select" id="subforum_id" name="subforum_id" disabled>
+              <option value="<?= $subforumSelected['id'] ?>" selected><?= $subforumSelected['name'] ?></option>
             </select>
           </div>
         </div>
@@ -145,8 +145,8 @@ foreach ($locations['data'] as $location)
   let archivosSeleccionados = []; // Array para almacenar los archivos seleccionados
   let deletedImages = []; // Array para almacenar los IDs de imágenes eliminadas
 
-  const contacts = <?= json_encode($contacts) ?>;
-  const locations = <?= json_encode($locations) ?>;
+  const forums = <?= json_encode($forums) ?>;
+  const subforums = <?= json_encode($subforums) ?>;
 
   // Manejar la eliminación de imágenes existentes
   preview.addEventListener('click', function(event) {
@@ -229,18 +229,18 @@ foreach ($locations['data'] as $location)
 
 
     // Maneja el cambio en la categoría
-    $('#contact_id').on('change', function() {
-      const selectedContact = $(this).val();
-      const $locationSelect = $('#location_id');
+    $('#forum_id').on('change', function() {
+      const selectedForum = $(this).val();
+      const $subforumSelect = $('#subforum_id');
 
       // Limpia las opciones previas
-      $locationSelect.empty();
-      $locationSelect.append('<option selected disabled>Selecciona una provincia/ciudad</option>');
+      $subforumSelect.empty();
+      $subforumSelect.append('<option selected disabled>Selecciona una provincia/ciudad</option>');
 
-      // Filtra y agrega las ubicaciones correspondientes a la categoría seleccionada
-      locations.data.forEach(function(location) {
-        if (location.contact_id == selectedContact) {
-          $locationSelect.append('<option value="' + location.id + '">' + location.name + '</option>');
+      // Filtra y agrega las subforos correspondientes a la categoría seleccionada
+      subforums.data.forEach(function(subforum) {
+        if (subforum.forum_id == selectedForum) {
+          $subforumSelect.append('<option value="' + subforum.id + '">' + subforum.name + '</option>');
         }
       });
     });
@@ -254,8 +254,8 @@ foreach ($locations['data'] as $location)
       const title = $form.find('input[name="title"]').val()
       const email = $form.find('input[name="email"]').val()
       const phone = $form.find('input[name="phone"]').val()
-      const location_id = $form.find('select[name="location_id"]').val()
-      const contact_id = $form.find('select[name="contact_id"]').val()
+      const subforum_id = $form.find('select[name="subforum_id"]').val()
+      const forum_id = $form.find('select[name="forum_id"]').val()
       const age = $form.find('input[name="age"]').val()
       const fee = $form.find('input[name="fee"]').val()
       const content = $('#content').val()
@@ -275,11 +275,11 @@ foreach ($locations['data'] as $location)
         errors.push('El teléfono debe tener al menos 9 dígitos y ser un número');
       }
 
-      if (!location_id || isNaN(location_id)) {
+      if (!subforum_id || isNaN(subforum_id)) {
         errors.push('Debes seleccionar una ubicación');
       }
 
-      if (!contact_id || isNaN(contact_id)) {
+      if (!forum_id || isNaN(forum_id)) {
         errors.push('Debes seleccionar una categoría');
       }
 

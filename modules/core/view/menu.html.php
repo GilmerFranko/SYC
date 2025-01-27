@@ -88,7 +88,7 @@
     <div class="body-menu-head">
       <div class="align-items-center brand-logo">
         <!-- Logo -->
-        <img class="" src="<?= $extra->getLogo() ?>" alt="" onclick="location.href='<?php echo $config['base_url'] ?>'">
+        <img class="" src="<?= $extra->getLogo() ?>" alt="" onclick="subforum.href='<?php echo $config['base_url'] ?>'">
       </div>
 
       <div class="menu-head-left">
@@ -182,7 +182,7 @@
     </div>
 
     <div class="footer-menu-head d-flex align-items-center justify-content-center text-white">
-      <strong><?= strtoupper($config['script_name']) ?> </strong>&nbsp; &nbsp; Anuncios de contactos para tener <?= $_ENV['Sup'] ?>
+      <strong><?= strtoupper($config['script_name']) ?> </strong>&nbsp; &nbsp; Anuncios de foros para tener <?= $_ENV['Sup'] ?>
     </div>
   </nav>
   <?php require Core::view('submenu.search', 'core'); ?>

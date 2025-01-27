@@ -36,9 +36,9 @@ if (!empty($msg))
   exit;
 }
 
-// Optener ubicacion y contacto
-$location = loadClass('forums/locations')->getLocationById($thread['location_id']);
-$contact = loadClass('forums/f_contacts')->getContactById($location['contact_id']);
+// Optener subforo y foro
+$subforum = loadClass('forums/subforums')->getSubforumById($thread['subforum_id']);
+$contact = loadClass('forums/f_forums')->getForumById($subforum['forum_id']);
 
 $isFavorite = $thread['member_favorites'] > 0 ? true : false;
 
