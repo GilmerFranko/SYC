@@ -20,107 +20,133 @@ require Core::view('head', 'core');
 <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sceditor@3/minified/themes/default.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/sceditor.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sceditor@3/minified/formats/bbcode.min.js"></script>-->
+<style>
+  .border-dashed {
+    border-style: dashed !important;
+  }
 
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  /* Custom styles for the navbar brand */
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+
+  /* Custom styles for form controls */
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+  }
+
+  /* Custom styles for the card */
+  .card {
+    border: none;
+    border-radius: 0.5rem;
+  }
+
+  .card-header {
+    background-color: transparent;
+  }
+
+  /* Custom transition for hover states */
+  .btn,
+  .nav-link {
+    transition: all 0.2s ease-in-out;
+  }
+</style>
 <section>
   <div class="container mt-5">
-    <h2 class="mb-4">Publicar Anuncio</h2>
-    <form id="new_thread_form" action="<?= gLink('forums/new.thread', ['new_thread' => '1']) ?>" method="POST" enctype="multipart/form-data">
-
-      <!-- Título (columna completa) -->
-      <div class="mb-3">
-        <label for="title" class="form-label">Título</label>
-        <input type="text" class="form-control" id="title" name="title" value="Título de prueba" required>
+    <div class="card shadow-sm">
+      <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+        <h4 class="card-title mb-1">Publicar Anuncio</h4>
+        <p class="text-muted small">Complete los detalles de su anuncio a continuación</p>
       </div>
+      <div class="card-body">
+        <form id="new_thread_form" action="<?= gLink('forums/new.thread', ['new_thread' => '1']) ?>" method="POST" enctype="multipart/form-data">
 
-      <div class="row">
-        <div class="col-md-6">
-          <div class="mb-3">
-            <label for="email" class="form-label">Correo Electrónico</label>
-            <input type="email" class="form-control" id="email" name="email" value="example@example.com" required>
+          <!-- Título -->
+          <div class="mb-4">
+            <label for="title" class="form-label">Título</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Escriba un título descriptivo" required>
           </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mb-3">
-            <label for="phone" class="form-label">Teléfono</label>
-            <small class="form-text text-muted">No introduzca el prefijo +34</small>
-            <input type="tel" class="form-control" id="phone" name="phone" value="666 666 666" required>
-          </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-6">
-          <div class="mb-3">
-            <label for="contact_id" class="form-label">Categorías</label>
-            <select class="form-select" id="contact_id" name="contact_id" required>
-              <option selected disabled>Selecciona una categoría</option>
-              <?php foreach ($contacts['data'] as $contact) : ?>
-                <option value="<?= $contact['id'] ?>"><?= $contact['name'] ?></option>
-              <?php endforeach; ?>
-            </select>
+          <!-- Contacto -->
+          <div class="row mb-4">
+            <div class="col-md-6 mb-3 mb-md-0">
+              <label for="email" class="form-label">Correo Electrónico</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="email@ejemplo.com" required>
+            </div>
+            <div class="col-md-6">
+              <label for="phone" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="phone" name="phone" placeholder="666 666 666" required>
+            </div>
           </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mb-3">
-            <label for="location_id" class="form-label">Provincias y Ciudades</label>
-            <select class="form-select" id="location_id" name="location_id" required>
-              <option selected disabled>Selecciona una provincia/ciudad</option>
-              <option disabled>Primero debes seleccionar una categoria</option>
-            </select>
-          </div>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-4">
-          <div class="mb-3">
-            <label for="age" class="form-label">Edad</label>
-            <input type="number" class="form-control" id="age" name="age" value="25" required>
+          <!-- Categoría y Ubicación -->
+          <div class="row mb-4">
+            <div class="col-md-6 mb-3 mb-md-0">
+              <label for="contact_id" class="form-label">Categorías</label>
+              <select class="form-select" id="contact_id" name="contact_id" required>
+                <option selected disabled>Selecciona una categoría</option>
+                <?php foreach ($contacts['data'] as $contact) : ?>
+                  <option value="<?= $contact['id'] ?>"><?= $contact['name'] ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="location_id" class="form-label">Provincias y Ciudades</label>
+              <select class="form-select" id="location_id" name="location_id" required>
+                <option selected disabled>Selecciona una provincia/ciudad</option>
+                <option disabled>Primero debes seleccionar una categoría</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="mb-3">
-            <label for="fee" class="form-label">Tarifa €</label>
-            <input type="number" class="form-control" id="fee" name="fee" value="10" required>
+
+          <!-- Precio y Disponibilidad -->
+          <div class="row mb-4">
+            <div class="col-md-6 mb-3 mb-md-0">
+              <label for="fee" class="form-label">Precio (€)</label>
+              <input type="number" class="form-control" id="fee" name="fee" placeholder="0" required>
+            </div>
+            <div class="col-md-6">
+              <label for="availability" class="form-label">Disponibilidad</label>
+              <select class="form-select" id="availability" name="availability" required>
+                <option value="" selected>Seleccionar disponibilidad</option>
+                <option value="available">Disponible</option>
+                <option value="reserved">Reservado</option>
+                <option value="sold">Vendido</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="mb-3">
-            <label for="disponibilidad" class="form-label">Disponibilidad</label>
-            <input type="text" class="form-control" id="disponibilidad" name="disponibilidad" value="Disponible" disabled>
+
+          <!-- Descripción -->
+          <div class="mb-4">
+            <label for="content" class="form-label">Descripción</label>
+            <textarea class="form-control" id="content" name="content" rows="5" placeholder="Describa su anuncio en detalle..." required></textarea>
           </div>
-        </div>
-      </div>
 
-      <div class="mb-3">
-        <label for="content" class="form-label">Contenido</label>
-        <textarea class="form-control" id="content" name="content" rows="5" maxlength="10000" required>[b]Texto en negrita[/b], [i]Texto en cursiva[/i], [url]http://example.com[/url]</textarea>
-      </div>
+          <!-- Imágenes -->
+          <div class="mb-4">
+            <label class="form-label">Imágenes</label>
+            <div class="position-relative">
+              <label for="images" class="d-flex flex-column align-items-center justify-content-center p-5 border-2 border-dashed rounded bg-light" style="cursor: pointer;">
+                <p class="text-muted mb-0 text-center">Arrastre las imágenes o haga clic para seleccionar</p>
+                <input id="images" type="file" class="d-none" name="images[]" multiple accept="image/*">
+              </label>
+            </div>
+            <small class="text-muted d-block mt-2">Máximo 9 imágenes. Tamaño recomendado: 800x800 píxeles</small>
+          </div>
 
-      <div class="mb-3">
-        <label for="images" class="form-label">Imágenes</label>
-        <input type="file" class="form-control" id="images" name="images[]" multiple accept="image/jpg, image/jpeg, image/png">
-        <div id="image-preview" class="mt-3 d-flex flex-wrap"></div>
-        <small class="form-text text-muted">
-          Puedes subir un máximo de 9 imágenes, siendo el tamaño ideal 800 píxeles de ancho por 800 píxeles de alto.<br>
-          Los anuncios no se publicarán si presentan las siguientes situaciones:<br>
-          - No incluyen imágenes. Cualquier anuncio sin fotos será eliminado de inmediato.<br>
-          - Contienen imágenes explícitas de genitales.<br>
-          - Alguna de las imágenes está rota o invertida.<br>
-          - Las fotos no son coherentes con el contenido del anuncio.<br>
-          - Si deseas publicar un anuncio con fotos de rostro visible, es necesario enviar una selfie haciendo ✌️ con dos dedos. Esta foto no será publicada, pero servirá para que los usuarios sepan que el anuncio está verificado.<br>
-          - Las imágenes que aparezcan en gris están bloqueadas y no se mostrarán.
-        </small>
+          <!-- Botón Enviar -->
+          <button type="submit" class="btn btn-primary w-100 py-2">Publicar Anuncio</button>
+        </form>
       </div>
-
-      <div class="mb-3">
-        <div class="g-recaptcha" data-sitekey="tu_site_key"></div>
-      </div>
-      <button type="submit" class="btn btn-primary">Publicar Anuncio</button>
-    </form>
+    </div>
   </div>
 </section>
-
 <script>
   const preview = document.getElementById('image-preview');
   let archivosSeleccionados = []; // Array para almacenar los archivos seleccionados
@@ -277,3 +303,6 @@ require Core::view('head', 'core');
     });
   });
 </script>
+
+<!-- FOOTER -->
+<?php require Core::view('footer', 'core'); ?>

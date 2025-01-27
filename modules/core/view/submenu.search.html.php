@@ -71,43 +71,12 @@ $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : '';
 
 
 <style>
-  .menu-search {
-
-    .form-select,
-    .form-control {
-      border: var(--bs-border-width) solid var(--primary);
-      color: var(--primary-dark);
-      font-weight: bold;
-      font-size: 0.8rem !important;
-      /* Tamaño de fuente reducido */
-      padding: 0rem 0.5rem !important;
-      /* Espaciado reducido */
-    }
-
-    .form-select {
-      height: 28px;
-      /* Ajusta la altura del select */
-      border-radius: 2px !important;
-    }
-
-    .form-control {
-      height: 28px;
-      /* Ajusta la altura del input */
-      border-radius: 2px !important;
-    }
-
-    .row>* {
-      padding: 0 2px !important;
-    }
-  }
-
   .search-bar {
-    background-color: #c298bc;
+    background-color: unset;
     padding: 10px;
     display: flex;
     justify-content: center;
     margin-bottom: 18px;
-    box-shadow: 0 0 5px #000;
   }
 
   .search-bar form {
@@ -118,27 +87,18 @@ $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : '';
     max-width: 1000px;
   }
 
-  .form-select,
-  .form-control {
-    font-size: 16px;
-    padding: 5px;
-    height: 40px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
   .btn-submenu {
-    color: white;
+    background-color: var(--primary-200);
     padding: 8px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     display: flex;
+    transition: background-color 0.3s ease;
   }
 
-  .btn-primary:hover {
-    background-color: #8e44ad;
+  .btn-submenu:hover {
+    background-color: var(--primary-300);
   }
 
   @media (max-width: 768px) {

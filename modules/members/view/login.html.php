@@ -22,7 +22,7 @@ require Core::view('head', 'core');
 </style>
 <?php require Core::view('menu', 'core') ?>
 <!-- Body -->
-<section class="first-section content" id="main">
+<section class="content" id="main">
 
   <div class="logo">
     <img src="<?php echo Core::model('extra', 'core')->getLogo(); ?>" alt="Logo" width="160" />

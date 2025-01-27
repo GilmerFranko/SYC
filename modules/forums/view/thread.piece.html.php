@@ -40,7 +40,7 @@ $contact = $contact ?? ['name' => ''];
 $thread_url = loadClass('forums/threads')->getThreadUrl($thread['id']);
 ?>
 
-<div class="card thread-card">
+<div class="card thread-card shadow-sm" style="border:none;">
   <div class="card-header">
     <div><?php echo $contact['name']; ?></div>
     <div class="subheader">

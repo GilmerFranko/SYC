@@ -29,9 +29,8 @@ require Core::view('menu', 'core');
 				{ ?>
 					<div class="col-sm-6 col-md-6 col-lg-6" style="height: 10px 0">
 						<div class="row" style="padding: 10px">
-							<div class="" style="background: #f2e3f2; border-radius: 50px; display:flex;align-items: center;max-height: 65px; height: 55px;">
+							<div class="" style="background: var(--primary); border-radius: 4px; display:flex;align-items: center;max-height: 65px; height: 55px;">
 
-								<img src="<?php echo $config['contacts_url'] . '/' . $contact['image'] ?>" alt="Contactos hombres">
 								<div class="categoria">
 
 									<!-- Titulo Contacto -->

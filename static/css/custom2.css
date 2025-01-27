@@ -3,11 +3,11 @@
 :root {
   --red: red;
   --green: #3f8a66 !important;
-  --primary: #391334;
-  --primary-dark: #3a003a;
-  --primary-200: #5c395c;
-  --primary-300: #85427e;
-  --primary-light: #5d3a56;
+  --primary: #01415b;
+  --primary-dark: #283845;
+  --primary-200: #a6bc09;
+  --primary-300: #019587;
+  --primary-light: #ccea8d;
 
   --darkgray: #202123;
   --darkgray2: #2f4553;
@@ -15,6 +15,9 @@
   --gray2: #557086;
   --grey-200: #b1bad3;
   --blue: #1475e0;
+
+  --darkbrown: #767771;
+  --darkbrown2: #353535;
 
   --darkgreen: #2b5329;
   --darkgreen2: #1a361c;
@@ -24,25 +27,23 @@
 }
 
 section {
-  background-color: #fff;
   margin: 0 auto;
-  padding-bottom: 60px;
+  padding: 10px 0;
 }
 
 a {
-  color: var(--primary-200) !important;
+  color: white !important;
   text-decoration-line: none;
   &:hover {
-    color: var(--primary) !important;
+    color: var(--primary-300) !important;
   }
 }
 
 body {
-  background-color: #ffd5df;
+  background-color: #f9fafb;
   /*font-family: Verdana, Helvetica, sans-serif;*/
   font-family: Arial, "sans-serif", "Apple Color Emoji", "Segoe UI Emoji",
     "Noto Color Emoji";
-  color: var(--primary-light);
 }
 
 /* Colores menu dropdown */
@@ -62,7 +63,7 @@ nav {
 }
 
 nav {
-  background-color: #a86aa1;
+  background-color: var(--primary);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#A86AA0', endColorstr='#F8EEF7',GradientType=1 );
   box-shadow: 0 0 5px #000;
   width: auto;
@@ -88,27 +89,20 @@ nav {
 
 .btn {
   color: white !important;
-  &:hover {
-    color: white !important;
-  }
+  border: none;
 }
 
 /** Colores botones */
 .btn-primary {
-  background: none;
-  border: 1px solid var(--primary-light) !important;
-  color: var(--primary-light) !important;
+  background: var(--primary-dark);
+  color: white;
   span {
-    color: var(--primary-light) !important;
+    color: var(--primary) !important;
   }
 
   &:hover {
-    background: none;
-    border: 1px solid var(--primary) !important;
-    color: var(--primary) !important;
-    span {
-      color: var(--primary) !important;
-    }
+    background-color: var(--darkgray2);
+    color: white !important;
   }
 }
 
@@ -127,15 +121,15 @@ nav {
 }
 
 .btn-tertiary {
-  background-color: #b1bad3;
+  background-color: var(--primary-300);
   /* Opción 1 */
   /* background-color: #f5f5f5; /* Opción 2 */
-  color: #2f4553;
+  color: white;
 
   /* Opción 1 */
   /* color: #4c4422; /* Opción 2 */
   span {
-    color: #2f4553;
+    color: white;
     /* Opción 1 */
     /* color: #4c4422; /* Opción 2 */
   }
@@ -235,10 +229,10 @@ nav {
 /* Colores de textos */
 
 .text-primary {
-  color: var(--primary-light) !important;
+  color: var(--primary) !important;
 
   &:hover {
-    color: var(--primary) !important;
+    color: var(--primary-200) !important;
   }
 }
 
@@ -258,13 +252,11 @@ nav {
 }
 
 .thread-card .card-header {
-  background: #f4e8f2;
-  border: 2px solid #e6d9e4;
-  border-radius: 5px;
+  background: var(--primary-200);
   padding: 0 2px 0 0;
   display: flex;
   justify-content: space-between;
-  color: var(--primary-light);
+  color: white;
 }
 
 .thread-card .card-header > div:first-child {
@@ -308,6 +300,8 @@ nav {
 
 .card-footer {
   display: flex;
+  background-color: unset;
+  border-top: none !important;
 }
 
 .thread-card .card-footer .chip {
