@@ -79,7 +79,7 @@ $count_autorenew = $thread['count_renewals'];
 
         </div>
         <div class="preAviso0" style="display: <?= (isset($_COOKIE['hasAcceptedAdultContent']) ? 'block' : 'none') ?>;">
-          <div class="card thread-card">
+          <div class="card thread-card shadow-sm">
 
             <div class="card-header" style="font-size: 14px">
               <div style="width: auto;"> Ref: <?php echo obtenerExtension($thread['slug']); ?></div>
