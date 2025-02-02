@@ -24,7 +24,7 @@ require Core::view('head', 'core');
   <div class="container">
     <div class="row">
 
-      <div class="col col-sm-12 col-md-9 col-lg-10">
+      <div class="col col-sm-12 col-md-9 col-lg-12">
         <div class="preAviso mt-4"></div>
 
         <div class="preAviso0" style="display: <?= (isset($_COOKIE['hasAcceptedAdultContent']) ? 'block' : 'none') ?>;">
@@ -41,19 +41,23 @@ require Core::view('head', 'core');
             <!-- Paginador -->
             <?php echo $threads['pages']['paginator']; ?>
           <?php else: ?>
-            <div class="card">
-              <div class="card-content">
-                <span class="card-title">
-                  No hay anuncios
-                </span>
+            <div class="d-flex flex-column align-items-center justify-content-center py-4 px-3">
+              <div class="rounded-circle bg-light p-3 mb-3">
+                <i class="bi bi-search" style="font-size: 2rem;"></i>
               </div>
+              <h3 class="h5 font-weight-bold mb-2">No se encontraron resultados</h3>
+              <p class="text-center mb-3" style="max-width: 500px;">
+                No hemos podido encontrar lo que buscas. Intenta ajustar los filtros o usar términos de búsqueda diferentes.
+              </p>
+              <!--<div class="d-flex gap-2">
+                  <button class="btn btn-primary btn-outline-secondary btn-sm" onclick="window.location.reload()">
+                    <i class="bi bi-arrow-clockwise mr-1" style="font-size: 1rem;"></i>
+                    Reiniciar búsqueda
+                  </button>
+                </div>-->
             </div>
           <?php endif ?>
         </div>
-      </div>
-      <div class="menu-sidebar1 col d-none d-sm-none d-md-flex col-md-3 col-lg-2">
-        <!-- SIDEBAR Solo para escritorio -->
-        <?php require Core::view('sidebar', 'forums'); ?>
       </div>
     </div>
 </section>
