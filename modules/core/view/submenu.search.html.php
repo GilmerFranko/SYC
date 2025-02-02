@@ -28,7 +28,7 @@ $age_to = isset($_GET['age_to']) ? $_GET['age_to'] : '';
 
 $words = isset($_GET['words']) ? $_GET['words'] : '';
 
-$order_by = isset($_GET['order_by']) ? $_GET['order_by'] : '';
+$order_by = isset($_GET['order_by']) ? $_GET['order_by'] : '';/*
 ?>
 
 <form class="d-flex justify-content-center align-items-center search-bar menu-search" action="<?= gLink('forums/view.searches') ?>">
@@ -116,6 +116,82 @@ $order_by = isset($_GET['order_by']) ? $_GET['order_by'] : '';
       display: none !important;
     }
   }
+</style>
+*/ ?>
+
+
+<!-- Main Content -->
+<form class="d-flex justify-content-center align-items-center search-bar menu-search" action="<?= gLink('forums/view.searches') ?>">
+  <div class="container my-4">
+    <!-- Search Section -->
+    <div class="search-container mb-4">
+      <h1 class="text-white mb-3"><strong>Explora las comunidades</strong></h1>
+      <p class="text-primary-light mb-4">Encuentra las mejores discusiones y comparte conocimiento</p>
+
+      <div class="row g-3 sub-search-container">
+        <div class="col-md-3">
+          <select class="form-select" name="subforum_id">
+            <option value="" selected disabled>Selecciona una sección</option>
+            <?php foreach ($forums_search['data'] as $forum_search) : ?>
+              <option value="<?= $forum_search['id'] ?>" <?php if ($forum_id == $forum_search['id']) echo 'selected' ?>><?= $forum_search['name'] ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="col-md-5">
+          <input type="search" class="form-control" placeholder="¿Qué buscas?" name="words" value="<?= $words ?>">
+        </div>
+        <div class="col-md-3">
+          <select class="form-select me-2" name="order_by">
+            <option value="">Orden por fecha</option>
+            <option value="asc" <?php if ($order_by == 'asc') echo 'selected' ?>>Más recientes</option>
+            <option value="desc" <?php if ($order_by == 'desc') echo 'selected' ?>>Más antiguos</option>
+          </select>
+        </div>
+        <div class="col-md-1">
+          <button type="submit" class="form-select" style="border: none !important;!i;!;background: none;color: white;"><i class="material-icons">search</i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<style>
+  .navbar {
+    background-color: var(--primary) !important;
+  }
+
+  .btn-register {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+  }
+
+
+  .category-icon {
+    color: var(--primary);
+    font-size: 1.5rem;
+    margin-right: 10px;
+  }
+
+  .search-container {
+    background-color: var(--primary);
+    padding: 2rem;
+    border-radius: 8px;
+  }
+
+  .see-all {
+    color: #00a896;
+    text-decoration: none;
+  }
+
+  .join-section {
+    background-color: #e8f4e5;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  .sub-search-container {}
 </style>
 
 <script>

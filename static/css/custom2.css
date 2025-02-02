@@ -6,7 +6,7 @@
   --primary: #01415b;
   --primary-dark: #283845;
   --primary-200: #a6bc09;
-  --primary-300: #019587;
+  --primary-300: #198c7f;
   --primary-light: #ccea8d;
 
   --darkgray: #202123;
@@ -27,7 +27,6 @@
 }
 
 section {
-  margin: 0 auto;
   padding: 10px 0;
 }
 
@@ -40,7 +39,7 @@ a {
 }
 
 body {
-  background-color: #f9fafb;
+  background-color: #f8faf3;
   /*font-family: Verdana, Helvetica, sans-serif;*/
   font-family: Arial, "sans-serif", "Apple Color Emoji", "Segoe UI Emoji",
     "Noto Color Emoji";
@@ -62,16 +61,6 @@ nav {
   }
 }
 
-nav {
-  background-color: var(--primary);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#A86AA0', endColorstr='#F8EEF7',GradientType=1 );
-  box-shadow: 0 0 5px #000;
-  width: auto;
-  padding: 0;
-  position: relative;
-  height: 200px;
-}
-
 /* Colores check */
 .form-check-input:checked {
   background-color: var(--primary-300);
@@ -89,12 +78,12 @@ nav {
 
 .btn {
   color: white !important;
-  border: none;
 }
 
 /** Colores botones */
 .btn-primary {
-  background: var(--primary-dark);
+  background: var(--primary);
+  border: none;
   color: white;
   span {
     color: var(--primary) !important;
@@ -102,6 +91,14 @@ nav {
 
   &:hover {
     background-color: var(--darkgray2);
+    color: white !important;
+  }
+}
+
+.btn-primary-200 {
+  background-color: var(--primary-200);
+  color: white;
+  span {
     color: white !important;
   }
 }
@@ -240,6 +237,15 @@ nav {
   color: var(--primary-dark) !important;
 }
 
+.text-primary-200 {
+  color: var(--primary-200) !important;
+}
+.text-primary-300 {
+  color: var(--primary-300) !important;
+}
+.text-primary-light {
+  color: var(--primary-light) !important;
+}
 .text-secondary {
   color: var(--green) !important;
 }
@@ -249,14 +255,16 @@ nav {
 /* Threads HILOS */
 .thread-card {
   margin-bottom: 1.5rem;
+  border: none;
 }
 
 .thread-card .card-header {
-  background: var(--primary-200);
+  background: var(--primary-dark);
   padding: 0 2px 0 0;
   display: flex;
   justify-content: space-between;
-  color: white;
+  color: var(--bs-white);
+  border-bottom: none;
 }
 
 .thread-card .card-header > div:first-child {
@@ -348,6 +356,7 @@ nav {
 .thread-content {
   color: var(--bs-gray-800);
   font-size: 13px;
+  margin: 10px 0 15px 0;
 }
 .thread-card .card-body {
   padding: 6px !important;
