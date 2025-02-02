@@ -91,6 +91,8 @@
 
 	<link href="https://emoji-css.afeld.me/emoji.css" rel="stylesheet">
 
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 	<!--Import night.css-->
 
 	<!--<link type="text/css" rel="stylesheet" href="<?php echo $config['base_url']; ?>/static/css/night.css?<?php echo time() ?>" />-->
