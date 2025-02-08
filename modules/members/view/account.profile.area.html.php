@@ -13,6 +13,14 @@
 ?>
 <article id="memberAccountProfile" class="py-4">
   <div class="container">
+    <!-- Área para la foto de perfil -->
+    <div class="text-center mb-4">
+      <div id="profilePhotoArea" class="border rounded p-3" style="cursor: pointer;">
+        <img id="pp_main_photo" src="<?= $config['avatar_url'] . '/' . $session->memberData['pp_main_photo'] ?>" alt="Foto de perfil" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+        <div id="uploadText" class="mt-2">Arrastra y suelta una imagen aquí o haz clic para seleccionar una.</div>
+      </div>
+      <input type="file" id="profilePhotoInput" name="avatar_pc" accept="image/*" style="display: none;">
+    </div>
     <div class="row mb-3">
       <div class="col-md-6">
         <label for="name" class="form-label">Nombre de usuario</label>

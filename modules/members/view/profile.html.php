@@ -13,16 +13,16 @@
 ?>
 <!-- Header -->
 <?php require Core::view('head', 'core'); ?>
+<?php require Core::view('menu', 'core'); ?>
 <!-- / Header -->
 
 <section class="">
-  <?php require Core::view('menu', 'core'); ?>
 
   <div class="container">
     <div class="row">
       <!-- Tarjeta de Perfil -->
       <div class="col-md-8 offset-md-2">
-        <div class="card" style="border:none;">
+        <div class="card shadow-sm" style="border:none;">
           <div class="card-body text-center">
             <!-- Imagen de Perfil -->
             <img src="<?= $config['avatar_url'] . '/' . $profileData['pp_main_photo']  ?>" alt="Foto de perfil" class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover;">
@@ -41,7 +41,7 @@
 
             <!-- Botón de editar (solo visible si el perfil pertenece al usuario) -->
             <?php if ($isOwner): ?>
-              <a href="editar_perfil.php?id=<?= $profileData['member_id']; ?>" class="btn btn-primary">
+              <a href="<?= gLink('members/account', ['r_id' => $profileData['member_id']]) ?>" class="btn btn-primary">
                 <i class="bi bi-pencil-square"></i> Editar Perfil
               </a>
             <?php else: ?>

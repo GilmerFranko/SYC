@@ -207,7 +207,7 @@ class Account extends Model
     }
     else
     {
-      $message = array('Extensi&oacute;n ' . $avatar['type'] . ' no permitida (S&oacute;lo JPG y PNG)', 'error');
+      $message = array('Extensión ' . $avatar['type'] . ' no permitida (Sólo JPG y PNG)', 'error');
     }
 
     //
